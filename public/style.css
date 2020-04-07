@@ -35,8 +35,7 @@ body, html {
 }
 
 .navitem-logo img {
-    padding: 10px;
-    width: 90px;
+    width: 100px;
     cursor: pointer;
 }
 
