@@ -17,6 +17,14 @@
     justify-self: s;
 } */
 
+.btn-container{
+    display: flex;
+}
+.btn-container a{
+   justify-content: space-between;
+}
+
+
 .row#first{
 display: flex;
 justify-content: space-around;
