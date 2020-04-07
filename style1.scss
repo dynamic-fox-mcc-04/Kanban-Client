@@ -1,0 +1,60 @@
+$bg-color: darkgreen;
+$def-font: 'Courier New', Courier, monospace;
+$font-color: white;
+$def-border: 1px solid yellow;
+$def-margin: 3vh;
+$def-padding: 2vh;
+$align-def: center;
+$flex-def: flex;
+$def-dir: row;
+
+
+
+body {
+    background-color: $bg-color;
+    font-family: $def-font;
+}
+
+h1 {
+    color: $font-color
+}
+
+// nav {
+//     width: 100vw;
+//     height: 20vh;
+
+
+// }
+
+.dashboard {
+    width: 94vw;
+    margin: 1vh;
+    padding: 1vh;
+    border: $def-border;
+    flex-direction: $def-dir;
+    display: $flex-def;
+    align-items: $align-def;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.dashboard div {
+    width: 20vw;
+    margin: $def-margin;
+}
+
+#board1 {
+    background-color: pink;
+}
+
+#board2 {
+    background-color: sandybrown;
+}
+
+#board3 {
+    background-color: orchid;
+}
+
+#board4 {
+    background-color: cyan;
+}
