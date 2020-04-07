@@ -1,0 +1,36 @@
+.jumbotron{
+    /* height: 50%;
+     */
+     padding: 0;
+    background-color: #333333;
+    color: white;
+    text-align: center;
+  
+}
+
+.jumbotron.container{
+    display: flex;
+    align-items: flex-end;
+}
+
+/* .jumbotron.container button{
+    justify-self: s;
+} */
+
+.row#first{
+display: flex;
+justify-content: space-around;
+}
+
+h1{
+    margin: 0;
+}
+
+.col{
+    background-color: white;
+}
+
+.row{
+    background-color: #e1f4f3;
+    border: 3px solid;
+}
