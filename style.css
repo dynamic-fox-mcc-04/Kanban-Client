@@ -1,7 +1,10 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-image: url("/img/bg.jpg");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow: hidden;
 }
 
@@ -13,37 +16,49 @@ body {
 }
 
 .navbar {
-  background-color: #be0c39;
-  height: 64px;
+  background-color: #1b1b1b;
+  height: 60px;
+  opacity: 32%;
 }
 
 .content {
-  background-color: #ff1e566e;
   height: 100%;
   display: flex;
-  white-space: nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 1px solid;
-  overflow-x: scroll;
-  max-width: 80%;
+  overflow-x: auto;
 }
 
 .card-list {
   display: flex;
   flex-direction: column;
-  background-color: #cfcfcf;
-  margin: 10px;
+  background-color: #e7ebeb;
+  margin: 5px;
   width: 240px;
   border-radius: 3px;
 }
 
-.card-content {
+.card-content-box {
   display: flex;
   flex-direction: column;
   min-height: auto;
   max-height: 450px;
   overflow-y: auto;
+}
+
+.card-content {
+  background-color: white;
+  margin: 4px;
+  border-radius: 2px;
+  padding: 10px;
+  box-shadow: 1px 0px 2px 0px grey;
+}
+
+.card-btn button {
+  height: 32px;
+  width: 100%;
+  text-align: left;
+  background-color: #e7ebeb;
 }
 
 /*# sourceMappingURL=style.css.map */

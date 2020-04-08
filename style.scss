@@ -1,20 +1,25 @@
 $bgColor :white;
-$navColor : #be0c39;
+$navColor : rgb(27, 27, 27);
 $contentColor : #ff1e566e; 
-$cardColor : rgb(207, 207, 207);
+$cardColor : #e7ebeb;
 
-
-
-@function getCardHeightVal($value){
- 
+@mixin bacgroundImage($path, $position:0 0, $repeat:no-repeat, $size:cover){
+    background: {
+        image : url($path);
+        position: $position;
+        repeat : $repeat;
+        size : $size
+    };
 }
+
 
 
 body {
     margin : 0;
     padding: 0;
-    background-color : $bgColor;
+    @include bacgroundImage('/img/bg.jpg');
     overflow: hidden;
+    
 }
 
 
@@ -29,20 +34,18 @@ body {
 
 .navbar {
     background-color: $navColor;
-    height: 64px;
+    height:60px;
+    opacity: 32%;
+
 }
 
 .content {
-    background-color: $contentColor;
+    
     height: 100%;
     display:flex;
-    white-space: nowrap;
-    // flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    border: 1px solid;
-    overflow-x: scroll;
-    max-width: 80%;
+    overflow-x: auto;
    
 }
 
@@ -50,25 +53,34 @@ body {
     display: flex;
     flex-direction: column; 
     background-color: $cardColor;
-    margin: 10px;
+    margin: 5px;
     width: 240px;
     border-radius: 3px;
-  
-   
 }
 
-.card-content {
+.card-content-box {
     display: flex;
     flex-direction: column;
     min-height: auto;
     max-height: 450px;
-    overflow-y: auto;
-    
-    
-  
+    overflow-y: auto;   
 }
 
+.card-content {
+    background-color: $bgColor;
+    margin: 4px;
+    border-radius: 2px;
+    padding: 10px;
+    box-shadow: 1px 0px 2px 0px grey;
+}
 
+.card-btn button {
+    height:32px;
+    width: 100%;
+    text-align: left;   
+    background-color: $cardColor; 
+    
+}
 
 
 
