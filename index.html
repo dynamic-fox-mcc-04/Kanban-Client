@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>KANBAN</title>
+</head>
+<body>
+    <div id="container-header">
+        <div>Back Log</div>
+        <div>Product</div>
+        <div>Development</div>
+        <div>Done</div>
+    </div>
+    <div id="container-item">
+        <div id="container-backlog" class="overflow-auto scrollbar scrollbar-primary">back log
+           <div class="item">
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                  <h5 class="card-title">Primary card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+            
+            <div class="card border-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Header</div>
+                <div class="card-body text-primary">
+                  <h5 class="card-title">Primary card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+              </div>
+
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+            </div>
+           
+        </div>
+        <div id="container-product" class="overflow-auto">Product
+            <div>item 1</div>
+            <div>item 2</div>
+            <div>item 3</div>
+            <div>item 4</div>
+        </div>
+        <div id="container-development" class="overflow-auto">Development
+            <div>item 1</div>
+            <div>item 2</div>
+            <div>item 3</div>
+            <div>item 4</div>
+        </div>
+        <div id="container-done" class="overflow-auto">Done
+            <div>item 1</div>
+            <div>item 2</div>
+            <div>item 3</div>
+            <div>item 4</div>
+        </div>
+    </div>
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="main.js"></script>
+</body>
+</html>
