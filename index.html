@@ -1,151 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
     <title>Kanbanwa!</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Header -->
     <div class="jumbotron">
-        <div class="container">
-            <div>
-                <h1>Kanbanwa!</h1>
-                <p>Your free trello-like app</p>
-            </div>
-            <div> <button type="button" class="btn btn-danger">Logout</button></div>
-
+      <div class="container">
+        <div>
+          <h1>Kanbanwa!</h1>
+          <p>Your free trello-like app</p>
         </div>
+        <div><button type="button" class="btn btn-danger">Logout</button></div>
+      </div>
     </div>
     <!-- End Header -->
 
     <!-- MAIN PAGE -->
-    <div class="container">
-        <!-- row 1 -->
-        <div class="row" id="first">
-            <div>Prelog</div>
-            <div>Todo</div>
-            <div>OnProcess</div>
-            <div>Completed</div>
-        </div>
-        <!-- end row 1 -->
+    <div class="container" id="app">
+      <!-- row 1 -->
+      <div class="row" id="first">
+        <div>Prelog</div>
+        <div>Todo</div>
+        <div>OnProcess</div>
+        <div>Completed</div>
+      </div>
+      <!-- end row 1 -->
 
-        <!-- Row 2 -->
-        <div class="row">
-            <!-- Column 1 -->
-            <div class="col" id="first">
-                <!-- Main card -->
-                <div class="card" id="first">
-                    <div class="card-body">
-                        <!-- <h4 class="card-title">Prelog</h4>
+      <!-- Row 2 -->
+      <div class="row">
+        <!-- Column 1 -->
+        <div class="col" id="first">
+          <!-- Main card -->
+          <div class="card" id="first">
+            <div class="card-body">
+              <!-- <h4 class="card-title">Prelog</h4>
                         <p class="card-text">Write your task here</p> -->
 
-                        <form>
-                            <label>Add Your New Task</label>
-                            <input type="text" name="" id="task" placeholder="Write your task here">
-                            <div class="btn-container">
-                                <a href="#" class="card-link"><button class="btn btn-secondary"> Cancel</button></a>
-                                <a href="#" class="card-link"><button class="btn btn-dark"> Add</button></a>
-                            </div>
-                        </form>
-
-                    </div>
+              <form @submit.prevent="addTask">
+                <label>Add Your New Task</label>
+                <input
+                  type="text"
+                  id="task"
+                  placeholder="Write your task here"
+                  v-model="user.task"
+                  required
+                />
+                <div class="btn-container">
+                  <a href="#" class="card-link"
+                    ><button class="btn btn-secondary">Cancel</button></a
+                  >
+                  <a href="#" class="card-link"
+                    ><button type="submit" class="btn btn-dark">Add</button></a
+                  >
                 </div>
-                <!-- End of main card -->
-
-                <div class="card bg-primary">
-                    <div class="card-body">
-                        <h4 class="card-title">{{title}}</h4>
-                        <p class="card-text">{{task}}</p>
-                        <a href="#" class="card-link"><button class="btn btn-secondary"> Undo</button></a>
-                        <a href="#" class="card-link"><button class="btn btn-dark"> Next</button></a>
-
-                    </div>
-                </div>
+              </form>
             </div>
-            <!-- End of Column 1 -->
+          </div>
+          <!-- End of main card -->
 
-            <!-- Column 2 -->
-            <div class="col" id="second">
+          <div class="card bg-primary" v-if="prelog.task">
+            <div class="card-body">
+              <h4 class="card-title">Prelog</h4>
+              <p class="card-text">{{prelog.task}}</p>
+              <a href="#" class="card-link"
+                ><button @click="cancelTask" class="btn btn-secondary">
+                  Undo
+                </button></a
+              >
+              <a href="#" class="card-link"
+                ><button @click="addTodo" class="btn btn-dark">Next</button></a
+              >
+            </div>
+          </div>
+        </div>
+        <!-- End of Column 1 -->
 
-                <!-- main card -->
-                <!-- <div class="card" id="second">
+        <!-- Column 2 -->
+        <div class="col" id="second">
+          <!-- main card -->
+          <!-- <div class="card" id="second">
                     <div class="card-body">
                  
                     </div>
                 </div> -->
-                <!-- End of main card -->
-                <div class="card bg-warning">
-                    <div class="card-body">
-                        <h4 class="card-title">{{title}}</h4>
-                        <p class="card-text">{{task}}</p>
-                        <a href="#" class="card-link"><button class="btn btn-secondary"> Undo</button></a>
-                        <a href="#" class="card-link"><button class="btn btn-dark"> Next</button></a>
-                    </div>
-                </div>
-
+          <!-- End of main card -->
+          <div class="card bg-warning" v-if="todo.task">
+            <div class="card-body">
+              <h4 class="card-title">Todo</h4>
+              <p class="card-text">{{todo.task}}</p>
+              <a href="#" class="card-link"
+                ><button @click="cancelTodo" class="btn btn-secondary">
+                  Undo
+                </button></a
+              >
+              <a href="#" class="card-link"
+                ><button @click="addProcess" class="btn btn-dark">
+                  Next
+                </button></a
+              >
             </div>
+          </div>
+        </div>
 
-            <!-- End Of Colum 2 -->
+        <!-- End Of Colum 2 -->
 
-            <!-- Column 3 -->
-            <div class="col">
-
-                <!-- main card -->
-                <div class="card">
-                    <div class="card-body">
-                        <!-- <h4 class="card-title">Card title</h4>
+        <!-- Column 3 -->
+        <div class="col">
+          <!-- main card -->
+          <div class="card">
+            <div class="card-body">
+              <!-- <h4 class="card-title">Card title</h4>
                         <p class="card-text">Some example text. Some example text.</p>
                         <a href="#" class="card-link">Card link</a>
                         <a href="#" class="card-link">Another link</a> -->
-                    </div>
-
-                </div>
-                <!-- End of Main Card -->
-                <div class="card bg-info">
-                    <div class="card-body">
-                        <h4 class="card-title">{{title}}</h4>
-                        <p class="card-text">{{task}}</p>
-                        <a href="#" class="card-link"><button class="btn btn-secondary"> Undo</button></a>
-                        <a href="#" class="card-link"><button class="btn btn-dark"> Done</button></a>
-                    </div>
-                </div>
-
             </div>
-            <!-- End of Column 3 -->
+          </div>
+          <!-- End of Main Card -->
+          <div class="card bg-info" v-if="process.task">
+            <div class="card-body">
+              <h4 class="card-title">Process</h4>
+              <p class="card-text">{{process.task}}</p>
+              <a href="#" class="card-link"
+                ><button @click="cancelProcess" class="btn btn-secondary">
+                  Undo
+                </button></a
+              >
+              <a href="#" class="card-link"
+                ><button @click="addComplete" class="btn btn-dark">
+                  Done
+                </button></a
+              >
+            </div>
+          </div>
+        </div>
+        <!-- End of Column 3 -->
 
-            <!-- Column 4 -->
-            <div class="col">
-
-                <!-- main card -->
-                <div class="card">
-                    <!-- <div class="card-body">
+        <!-- Column 4 -->
+        <div class="col">
+          <!-- main card -->
+          <!-- <div class="card"> -->
+          <!-- <div class="card-body">
                         <h4 class="card-title">Card title</h4>
                         <p class="card-text">Some example text. Some example text.</p>
                         <a href="#" class="card-link">Card link</a>
                         <a href="#" class="card-link">Another link</a>
                     </div> -->
+          <!-- </div> -->
+          <!-- End of main card -->
 
-                </div>
-                <!-- End of main card -->
-
-                <div class="card bg-success">
-                    <div class="card-body">
-                        <h4 class="card-title">{{title}}</h4>
-                        <p class="card-text">{{task}}</p>
-                        <a href="#" class="card-link"><button class="btn btn-secondary"> Undo</button></a>
-                    </div>
-                </div>
+          <div class="card bg-success" v-if="completed.task">
+            <div class="card-body">
+              <h4 class="card-title">Complete</h4>
+              <p class="card-text">{{completed.task}}</p>
+              <a href="#" class="card-link"
+                ><button @click="cancelComplete" class="btn btn-secondary">Undo</button></a
+              >
             </div>
-            <!-- End of column 4 -->
+          </div>
         </div>
-        <!-- End row 2 -->
-
+        <!-- End of column 4 -->
+      </div>
+      <!-- End row 2 -->
     </div>
     <!-- END OF MAIN PAGE -->
 
@@ -163,10 +189,12 @@
     <!--  *=========================================================================== -->
     <!--  *=========================================================================== -->
     <!-- END OF FIREBASE -->
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script src="main.js"></script>
+  </body>
 </html>
