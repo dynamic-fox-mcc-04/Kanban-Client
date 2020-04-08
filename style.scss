@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+$roboto-slab : Helvetica Neue, Helvetica, Arial, sans-serif;
+$lobster : 'Lobster', cursive;
+
 $bgColor :white;
 $navColor : rgb(27, 27, 27);
 $contentColor : #ff1e566e; 
 $cardColor : #e7ebeb;
+$cardColorHover : #ccd3d3;
 
 @mixin bacgroundImage($path, $position:0 0, $repeat:no-repeat, $size:cover){
     background: {
@@ -12,35 +19,98 @@ $cardColor : #e7ebeb;
     };
 }
 
-
-
 body {
     margin : 0;
     padding: 0;
-    @include bacgroundImage('/img/bg.jpg');
     overflow: hidden;
+    font-family: $roboto-slab;
+}
+
+.login-container, .register-container {
+    //  top: 50%;
+    // left: 50%;
+    // margin-right:-50%;
+    // transform: translate(-50%, -50%);
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.login-form, .register-form {
+  
+    margin: auto;
+   top: 50px;
+    display: flex;
+    flex-direction:row;
+    justify-content: flex-start;
+    width: 600px;
+    height: 450px;
+    border-radius: 2px;
+  
+    box-shadow: 5px 0px 10px 0px rgb(177, 177, 177);
+}
+
+.left {
+   margin: 10px;
+    
+}
+
+.right {
+    background-color:#b0eacd;
+    width: 200px;
+    flex: 1;
     
 }
 
 
-
-.container{
-    
-    display:flex;
-    flex-direction:column;
+//dashboard
+.container {
+    margin: 0;
+    padding: 0;
     height: 100vh;
     width: 100vw;
+    display:flex;
+    flex-direction:column;
+    background-color: #d7385e;
+    // @include bacgroundImage('/img/bg.jpg');
 }
 
 .navbar {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
     background-color: $navColor;
     height:60px;
     opacity: 32%;
+    justify-content: space-between;
 
+} 
+
+.kanban-title h4 {
+    color: white;
+    flex: 1;
+    margin: 5px;
+    font-family: $lobster;
 }
 
+.navbar #logout-btn {
+    opacity: 100%;
+    color: white;
+    border: none;
+    margin: 5px;
+    background-color:rgb(201, 201, 201);
+    border-radius: 2px;
+    width: 64px; 
+   
+}
+
+.navbar #logout-btn:hover {
+    cursor: pointer; 
+    opacity: 50%;
+}
+
+
+
 .content {
-    
     height: 100%;
     display:flex;
     justify-content: flex-start;
@@ -58,6 +128,16 @@ body {
     border-radius: 3px;
 }
 
+.card-title h3 {
+    font-size: 14px;
+    padding: 5px;
+    margin-top: 10px;
+ 
+}
+
+.card-title {
+    height: 40px;
+}
 .card-content-box {
     display: flex;
     flex-direction: column;
@@ -70,8 +150,10 @@ body {
     background-color: $bgColor;
     margin: 4px;
     border-radius: 2px;
-    padding: 10px;
+    padding: 5px;
     box-shadow: 1px 0px 2px 0px grey;
+    font-size: 14px;
+ 
 }
 
 .card-btn button {
@@ -79,7 +161,20 @@ body {
     width: 100%;
     text-align: left;   
     background-color: $cardColor; 
-    
+    border: 0;
+    padding: 5px;
+    border-radius: 3px;
+   
+}
+
+.card-btn button:hover {
+   background-color: $cardColorHover;
+   cursor: pointer;
+  
+}
+
+.card-btn {
+    padding: 5px;
 }
 
 
