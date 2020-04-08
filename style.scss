@@ -4,7 +4,7 @@
 $roboto-slab : Helvetica Neue, Helvetica, Arial, sans-serif;
 $lobster : 'Lobster', cursive;
 
-$bgColor :white;
+$bgColor : #216353;
 $navColor : rgb(27, 27, 27);
 $contentColor : #ff1e566e; 
 $cardColor : #e7ebeb;
@@ -33,11 +33,12 @@ body {
     // transform: translate(-50%, -50%);
     margin-top: 5%;
     margin-bottom: 5%;
+    border-radius: 4px;
 }
 .login-form, .register-form {
   
     margin: auto;
-   top: 50px;
+    top: 50px;
     display: flex;
     flex-direction:row;
     justify-content: flex-start;
@@ -48,17 +49,40 @@ body {
     box-shadow: 5px 0px 10px 0px rgb(177, 177, 177);
 }
 
+
+
+h2 {
+    color: $bgColor;
+    font-size: 24px;
+}
+
 .left {
    margin: 10px;
     
 }
 
 .right {
-    background-color:#b0eacd;
+    background-color:$bgColor;
     width: 200px;
     flex: 1;
     
 }
+
+.right h1 {
+    color: white;
+    font-family: $lobster;
+    text-align: center;
+    font-size: 64px;
+    margin-top: 40%;
+    opacity: 90%;
+}
+
+.left form input[type=text]:focus {
+    border-bottom: 1px solid $bgColor;
+    box-shadow: 0 1px 0 0 #000;
+  }
+
+
 
 
 //dashboard
@@ -69,7 +93,7 @@ body {
     width: 100vw;
     display:flex;
     flex-direction:column;
-    background-color: #d7385e;
+    background-color:$bgColor;
     // @include bacgroundImage('/img/bg.jpg');
 }
 
@@ -109,7 +133,6 @@ body {
 }
 
 
-
 .content {
     height: 100%;
     display:flex;
@@ -147,7 +170,7 @@ body {
 }
 
 .card-content {
-    background-color: $bgColor;
+    background-color: white;
     margin: 4px;
     border-radius: 2px;
     padding: 5px;

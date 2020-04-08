@@ -10,6 +10,7 @@ body {
 .login-container, .register-container {
   margin-top: 5%;
   margin-bottom: 5%;
+  border-radius: 4px;
 }
 
 .login-form, .register-form {
@@ -24,14 +25,33 @@ body {
   box-shadow: 5px 0px 10px 0px #b1b1b1;
 }
 
+h2 {
+  color: #216353;
+  font-size: 24px;
+}
+
 .left {
   margin: 10px;
 }
 
 .right {
-  background-color: #b0eacd;
+  background-color: #216353;
   width: 200px;
   flex: 1;
+}
+
+.right h1 {
+  color: white;
+  font-family: "Lobster", cursive;
+  text-align: center;
+  font-size: 64px;
+  margin-top: 40%;
+  opacity: 90%;
+}
+
+.left form input[type=text]:focus {
+  border-bottom: 1px solid #216353;
+  box-shadow: 0 1px 0 0 #000;
 }
 
 .container {
@@ -41,7 +61,7 @@ body {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  background-color: #d7385e;
+  background-color: #216353;
 }
 
 .navbar {
