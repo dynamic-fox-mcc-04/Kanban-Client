@@ -1,0 +1,57 @@
+.jumbotron {
+  /* height: 50%;
+     */
+  padding: 0;
+  background-color: #333333;
+  color: white;
+  text-align: center;
+}
+
+.form-control {
+  /* background-color: grey; */
+  border: gray solid 7px;
+  /* color: white; */
+}
+
+/* .jumbotron.container {
+  display: flex;
+  align-items: flex-end;
+} */
+
+/* .jumbotron.container button{
+    justify-self: s;
+} */
+
+/* .btn-container {
+  display: flex;
+}
+.btn-container a {
+  justify-content: space-between;
+}
+
+.row#first {
+  display: flex;
+  justify-content: space-around;
+}
+
+h1 {
+  margin: 0;
+}
+
+.col {
+  background-color: white;
+}
+ */
+
+.row#first {
+  background-color: #e1f4f3;
+  border: 3px solid;
+}
+
+.row#second {
+  background-color: honeydew;
+  border: 1px solid;
+}
+
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */
