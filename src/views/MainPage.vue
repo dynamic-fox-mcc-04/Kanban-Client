@@ -134,8 +134,7 @@ export default {
             projectId: 0,
             projectTitle: "",
             title: "",
-            invitee: "",
-            category: ""
+            invitee: ""
         }
     },
     methods: {
