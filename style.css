@@ -1,5 +1,10 @@
+#app {
+  background-color: khaki;
+  font-family: "Courier New", Courier, monospace;
+}
+
 body {
-  background-color: darkgreen;
+  background-color: khaki;
   font-family: "Courier New", Courier, monospace;
 }
 
@@ -7,7 +12,7 @@ h1 {
   color: white;
 }
 
-.dashboard {
+.board-tasks {
   width: 94vw;
   margin: 1vh;
   padding: 1vh;
@@ -19,24 +24,24 @@ h1 {
   text-align: center;
 }
 
-.dashboard div {
+.board-tasks div {
   width: 20vw;
   margin: 3vh;
 }
 
-#board1 {
+.subboard1 {
   background-color: pink;
 }
 
-#board2 {
+.subboard2 {
   background-color: sandybrown;
 }
 
-#board3 {
+.subboard3 {
   background-color: orchid;
 }
 
-#board4 {
+.subboard4 {
   background-color: cyan;
 }
 

@@ -1,4 +1,4 @@
-$bg-color: darkgreen;
+$bg-color: khaki;
 $def-font: 'Courier New', Courier, monospace;
 $font-color: white;
 $def-border: 1px solid yellow;
@@ -8,6 +8,12 @@ $align-def: center;
 $flex-def: flex;
 $def-dir: row;
 
+#app {
+
+    background-color: $bg-color;
+    font-family: $def-font;
+
+}
 
 
 body {
@@ -26,7 +32,7 @@ h1 {
 
 // }
 
-.dashboard {
+.board-tasks {
     width: 94vw;
     margin: 1vh;
     padding: 1vh;
@@ -38,23 +44,23 @@ h1 {
     text-align: center;
 }
 
-.dashboard div {
+.board-tasks div {
     width: 20vw;
     margin: $def-margin;
 }
 
-#board1 {
+.subboard1 {
     background-color: pink;
 }
 
-#board2 {
+.subboard2 {
     background-color: sandybrown;
 }
 
-#board3 {
+.subboard3 {
     background-color: orchid;
 }
 
-#board4 {
+.subboard4 {
     background-color: cyan;
 }
