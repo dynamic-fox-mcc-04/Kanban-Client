@@ -10703,7 +10703,7 @@ var _default = {
   props: ['message', 'isLogin', 'isInLogin', 'logVal'],
   data: function data() {
     return {
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://intense-basin-29706.herokuapp.com',
       form: {
         email: '',
         password: ''
@@ -20530,7 +20530,7 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _default = (0, _socket.default)('http://localhost:3000');
+var _default = (0, _socket.default)('https://intense-basin-29706.herokuapp.com');
 
 exports.default = _default;
 },{"socket.io-client":"node_modules/socket.io-client/lib/index.js"}],"src/components/task.vue":[function(require,module,exports) {
@@ -20576,7 +20576,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = {
   data: function data() {
     return {
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://intense-basin-29706.herokuapp.com',
       editTitle: ''
     };
   },
@@ -28491,7 +28491,7 @@ var _default = {
   data: function data() {
     return {
       titleChg: '',
-      baseUrl: 'http://localhost:3000'
+      baseUrl: 'https://intense-basin-29706.herokuapp.com'
     };
   },
   components: {
@@ -29293,7 +29293,7 @@ var _default = {
       message: "Hello World",
       isLogin: false,
       isInLogin: true,
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'https://intense-basin-29706.herokuapp.com',
       status: {
         'Pre-Log': [],
         'To-Do': [],
@@ -32749,7 +32749,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46081" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33273" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
