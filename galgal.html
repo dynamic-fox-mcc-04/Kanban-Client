@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Style -->
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/button.css">
+    <link rel="stylesheet" href="./css/form.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="7037893425-v7235p82vjisjcsfpv4fsefhcb77226k.apps.googleusercontent.com">
+    <title>Kanban</title>
+</head>
+<body>
+    
+    <!-- <header>
+        <nav id="navbar"class="d-flex justify-content-between">
+            <button id="toShowTodo" class="learn-more">Home</button>
+            <h1 id="kanban-title">KanbanKu.co.id</h1>
+            <button id="logout" class="learn-more">Logout</button>
+        </nav>
+    </header> -->
+    <!-- <main class="form" id="login">
+        <div class="form-conatiner login-container">
+            <form>
+                <h1>Login</h1>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                <span>or use your account</span>
+                <input type="email" placeholder="Email" id="login-email"/>
+                <input type="password" placeholder="Password" id="login-password"/>
+                <button>Login</button>
+            </form>
+        </div>
+    </main> -->
+    <main class="form" id="register">
+        
+    </main>
+    <main id="kanban" class="d-flex justify-content-around">
+        <div class="container" id="todo">
+            <div class="container-header d-flex justify-content-between align-items-center">
+                <div class="container-icon">
+                </div>
+                <h4 class="title">Todo</h4>
+                <a href="" id="add-todo">          
+                </a>
+            </div>
+            <div class="container-main d-flex flex-column" data-spy="scroll">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h6 class="card-title">Kerja</h6>
+                        <a href="" class="remove-task"></a>
+                    </div>
+                    <div class="card-main">
+                        <p class="card-description">
+                            description: 
+                                Lalalala
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h6 class="card-title">Kerja</h6>
+                        <a href="" class="remove-task"></a>
+                    </div>
+                    <div class="card-main">
+                        <p class="card-description">
+                            description: 
+                                Lalalala
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="in_progress">
+            <div class="container-header d-flex justify-content-between align-items-center">
+                <div class="container-icon">
+                </div>
+                <h4 class="title">In Progress</h4>
+                <a href="" id="add-todo">
+                </a>
+            </div>
+            <div class="container-main">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class="card-main">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="done">
+            <div class="container-header d-flex justify-content-between align-items-center">
+                <div class="container-icon">
+                </div>
+                <h4 class="title">Done</h4>
+                <a href="" id="add-todo">
+                </a>
+            </div>
+            <div class="container-main">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class="card-main">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="backlog">
+            <div class="container-header d-flex justify-content-between align-items-center">
+                <div class="container-icon">
+                </div>
+                <h4 class="title">Backlog</h4>
+                <a href="" id="add-todo">
+                </a>
+            </div>
+            <div class="container-main">
+                <div class="card">
+                    <div class="card-header">
+
+                    </div>
+                    <div class="card-main">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <div id="app"></div>
+    <script src="./src/main.js"></script>
+</body>
+</html>

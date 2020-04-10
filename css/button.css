@@ -1,0 +1,33 @@
+.brk-btn 
+{
+    position: relative;
+    background: none;
+    color: aqua;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 0.2em solid aqua;
+    padding: 0.5em 1em;
+}
+
+button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: inherit;
+    font-family: inherit;
+  }
+  button.learn-more {
+    -webkit-transition: all 0.5s cubic-bezier(0.65, -0.25, 0.25, 1.95);
+    transition: all 0.5s cubic-bezier(0.65, -0.25, 0.25, 1.95);
+    font-weight: 900;
+    color: #202121;
+    background: #fff;
+    text-transform: uppercase;
+  }
+  button.learn-more:hover, button.learn-more:focus, button.learn-more:active {
+    letter-spacing: 0.125rem;
+  }
