@@ -10992,11 +10992,13 @@ var _default = {
         // event.preventDefault();
         localStorage.ProjectId = this.selected;
         this.selected = "";
-        return this.getProjects(); // this.getProjects();
+        return this.getProjects(); // this.getCurrentProjects;
+        // this.getProjects();
       } else {
         // event.preventDefault();
         localStorage.setItem("ProjectId", this.selected);
-        this.selected = ""; // this.getProjects();
+        this.selected = "";
+        return this.getProjects(); // this.getProjects();
       }
     },
     addContributor: function addContributor() {
@@ -11015,6 +11017,8 @@ var _default = {
       }).then(function (result) {
         // console.log(result);
         _this2.getProjects();
+
+        _this2.selectedUser = "";
       }).catch(function (err) {
         console.log(err);
       });
@@ -11081,7 +11085,9 @@ var _default = {
         // event.preventDefault();
         var data = result.data;
         var projects = data.projects;
-        _this5.projects = projects; // console.log("YA", projects);
+        _this5.projects = projects;
+
+        _this5.getUsers(); // console.log("YA", projects);
         // if (this.currentProjects === 0) {
         // projects.map(project => {
         //   // event.preventDefault()
@@ -11091,6 +11097,7 @@ var _default = {
         //   });
         // });
         // }
+
 
         projects.filter(function (project) {
           if (project.ProjectId == localStorage.ProjectId) {
@@ -11140,6 +11147,7 @@ var _default = {
       this.isLogin = false;
       this.projects = [];
       this.tasks = [];
+      this.currentProjects = [];
     },
     addTask: function addTask(event) {
       var _this7 = this;
@@ -12202,7 +12210,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58076" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58328" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -362,6 +362,7 @@ export default {
         .then((result) => {
           // console.log(result);
           this.getProjects();
+          this.selectedUser = ""
         })
         .catch((err) => {
           console.log(err);
@@ -425,6 +426,7 @@ export default {
           const { data } = result;
           const { projects } = data;
           this.projects = projects;
+          this.getUsers()
           // console.log("YA", projects);
           // if (this.currentProjects === 0) {
           // projects.map(project => {
