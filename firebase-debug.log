@@ -1,0 +1,107 @@
+[debug] [2020-04-10T20:38:50.947Z] ----------------------------------------------------------------------
+[debug] [2020-04-10T20:38:50.950Z] Command:       D:\nodejs\node.exe C:\Users\donna-pc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-04-10T20:38:50.950Z] CLI Version:   8.0.2
+[debug] [2020-04-10T20:38:50.950Z] Platform:      win32
+[debug] [2020-04-10T20:38:50.951Z] Node Version:  v12.14.1
+[debug] [2020-04-10T20:38:50.952Z] Time:          Sat Apr 11 2020 03:38:50 GMT+0700 (Indochina Time)
+[debug] [2020-04-10T20:38:50.952Z] ----------------------------------------------------------------------
+[debug] [2020-04-10T20:38:50.952Z] 
+[debug] [2020-04-10T20:38:50.964Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-10T20:38:50.964Z] > authorizing via signed-in user
+[debug] [2020-04-10T20:38:50.965Z] [iam] checking project project-kanban-achrams for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-04-10T20:38:50.969Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/project-kanban-achrams:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-04-10T20:39:12.011Z] [iam] error while checking permissions, command may fail: FirebaseError: Server Error. connect ETIMEDOUT 74.125.24.95:443
+[debug] [2020-04-10T20:39:12.013Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/project-kanban-achrams  
+ 
+[debug] [2020-04-10T20:39:12.527Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 10 Apr 2020 20:40:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'project-kanban-achrams'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-04-10T20:39:12.534Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/project-kanban-achrams/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2020-04-10T20:39:14.380Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 10 Apr 2020 20:40:25 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting[project-kanban-achrams]: beginning deploy...
+[info] i  hosting[project-kanban-achrams]: found 4 files in public
+[debug] [2020-04-10T20:39:14.396Z] [hosting] hash cache [cHVibGlj] stored for 4 files
+[debug] [2020-04-10T20:39:14.397Z] [hosting][hash queue][FINAL] {"max":1,"min":0,"avg":0,"active":0,"complete":4,"success":4,"errored":0,"retried":0,"total":4,"elapsed":5}
+[debug] [2020-04-10T20:39:14.397Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/project-kanban-achrams/versions/2b940e1c1de098e3:populateFiles  
+ <request body omitted>
+[debug] [2020-04-10T20:39:15.955Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 10 Apr 2020 20:40:27 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-10T20:39:15.956Z] [hosting][populate queue][FINAL] {"max":1561,"min":1561,"avg":1561,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1561}
+[debug] [2020-04-10T20:39:15.956Z] [hosting] uploads queued: 0
+[debug] [2020-04-10T20:39:15.956Z] [hosting][upload queue][FINAL] {"max":0,"min":9999999999,"avg":0,"active":0,"complete":0,"success":0,"errored":0,"retried":0,"total":0,"elapsed":1586551155956}
+[info] +  hosting[project-kanban-achrams]: file upload complete
+[debug] [2020-04-10T20:39:15.958Z] [hosting] deploy completed after 1576ms
+[debug] [2020-04-10T20:39:34.937Z] [
+  {
+    "config": {
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "project-kanban-achrams"
+    },
+    "site": "project-kanban-achrams",
+    "version": "sites/project-kanban-achrams/versions/2b940e1c1de098e3"
+  }
+]
+[info] i  hosting[project-kanban-achrams]: finalizing version...
+[debug] [2020-04-10T20:39:34.940Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/project-kanban-achrams/versions/2b940e1c1de098e3?updateMask=status  
+ {"status":"FINALIZED"}
+[debug] [2020-04-10T20:40:16.980Z] Error: connect ETIMEDOUT 74.125.68.95:443
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1134:16)
+[error] 
+[error] Error: Server Error. connect ETIMEDOUT 74.125.68.95:443
+[debug] [2020-04-10T20:40:37.207Z] ----------------------------------------------------------------------
+[debug] [2020-04-10T20:40:37.210Z] Command:       D:\nodejs\node.exe C:\Users\donna-pc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-04-10T20:40:37.210Z] CLI Version:   8.0.2
+[debug] [2020-04-10T20:40:37.210Z] Platform:      win32
+[debug] [2020-04-10T20:40:37.210Z] Node Version:  v12.14.1
+[debug] [2020-04-10T20:40:37.211Z] Time:          Sat Apr 11 2020 03:40:37 GMT+0700 (Indochina Time)
+[debug] [2020-04-10T20:40:37.211Z] ----------------------------------------------------------------------
+[debug] [2020-04-10T20:40:37.212Z] 
+[debug] [2020-04-10T20:40:37.222Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-10T20:40:37.222Z] > authorizing via signed-in user
+[debug] [2020-04-10T20:40:37.222Z] [iam] checking project project-kanban-achrams for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-04-10T20:40:37.226Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/project-kanban-achrams:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-04-10T20:40:38.644Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 10 Apr 2020 20:41:49 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1113","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-10T20:40:38.647Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/project-kanban-achrams  
+ 
+[debug] [2020-04-10T20:40:39.017Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 10 Apr 2020 20:41:50 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'project-kanban-achrams'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-04-10T20:40:39.023Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/project-kanban-achrams/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2020-04-10T20:41:21.118Z] Error: connect ETIMEDOUT 74.125.200.95:443
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1134:16)
+[error] 
+[error] Error: Server Error. connect ETIMEDOUT 74.125.200.95:443
+[debug] [2020-04-10T20:46:08.958Z] ----------------------------------------------------------------------
+[debug] [2020-04-10T20:46:08.961Z] Command:       D:\nodejs\node.exe C:\Users\donna-pc\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-04-10T20:46:08.961Z] CLI Version:   8.0.2
+[debug] [2020-04-10T20:46:08.962Z] Platform:      win32
+[debug] [2020-04-10T20:46:08.962Z] Node Version:  v12.14.1
+[debug] [2020-04-10T20:46:08.963Z] Time:          Sat Apr 11 2020 03:46:08 GMT+0700 (Indochina Time)
+[debug] [2020-04-10T20:46:08.963Z] ----------------------------------------------------------------------
+[debug] [2020-04-10T20:46:08.963Z] 
+[debug] [2020-04-10T20:46:08.975Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-10T20:46:08.976Z] > authorizing via signed-in user
+[debug] [2020-04-10T20:46:08.976Z] [iam] checking project project-kanban-achrams for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-04-10T20:46:08.980Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/project-kanban-achrams:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-04-10T20:46:10.401Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 10 Apr 2020 20:47:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1117","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-10T20:46:10.403Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/project-kanban-achrams  
+ 
