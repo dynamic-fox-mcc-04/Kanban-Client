@@ -50,7 +50,7 @@ export default {
         fetchTask () {
             axios({
                 method:"GET",
-                url: "http://localhost:3000/task",
+                url: "https://ancient-mesa-33338.herokuapp.com/task",
                 headers:{
                     access_token: localStorage.access_token
                 } 
@@ -82,7 +82,7 @@ export default {
             // console.log(formValue.title)
             axios({
                 method: 'POST',
-                url: 'http://localhost:3000/task',
+                url: 'https://ancient-mesa-33338.herokuapp.com/task',
                 headers:{
                     access_token: localStorage.access_token
                 },
@@ -102,7 +102,7 @@ export default {
             // console.log(id)
             axios({
                 method: 'DELETE',
-                url:'http://localhost:3000/task/'+id,
+                url:'https://ancient-mesa-33338.herokuapp.com/task/'+id,
                 headers:{
                     access_token: localStorage.access_token
                 }
@@ -125,7 +125,7 @@ export default {
             }
             axios({
                 method:'patch',
-                url:'http://localhost:3000/task/'+data.id,
+                url:'https://ancient-mesa-33338.herokuapp.com/task/'+data.id,
                 headers:{
                     access_token: localStorage.access_token
                 },
@@ -151,7 +151,7 @@ export default {
             }
             axios({
                 method:'patch',
-                url:'http://localhost:3000/task/'+data.id,
+                url:'https://ancient-mesa-33338.herokuapp.com/task/'+data.id,
                 headers:{
                     access_token: localStorage.access_token
                 },

@@ -37,7 +37,7 @@ export default {
         register() {
             axios({
             method:"POST",
-            url: "http://localhost:3000/user/signup",
+            url: "https://ancient-mesa-33338.herokuapp.com/user/signup",
             data:{
                 email: this.email,
                 password: this.password

@@ -50,7 +50,7 @@ export default {
         login () {
             axios({
                 method:"POST",
-                url: "http://localhost:3000/user/signin",
+                url: "https://ancient-mesa-33338.herokuapp.com/user/signin",
                 data:{
                     email: this.email,
                     password: this.password
@@ -70,7 +70,7 @@ export default {
             const token = googleUser.getAuthResponse().id_token;
             axios({
                 method:"POST",
-                url: "http://localhost:3000/user/googlesign",
+                url: "https://ancient-mesa-33338.herokuapp.com/user/googlesign",
                 headers:{
                     token
                 }
