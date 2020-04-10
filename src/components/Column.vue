@@ -58,6 +58,7 @@ export default {
         this.$emit('destroy', id)
     },
     modify: function (item) {
+        console.log('edit sampai column')
         this.$emit('modify', item)
     }
   },

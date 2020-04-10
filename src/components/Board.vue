@@ -17,7 +17,7 @@
           <div class="collapsible-body">
             <ul class="inline">
               <li>Welcome back, {{ email }}  {{ profPic }}</li>
-              <li><button>Logout</button></li>
+              <li><button v-on:click="logout">Logout</button></li>
             </ul>
           </div>
         </div>
@@ -64,6 +64,9 @@ export default {
     },
     modify: function (item) {
       this.$emit('modify-item', item)
+    },
+    logout: function () {
+      this.$emit('logout')
     }
   },
   computed: {

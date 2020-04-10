@@ -9349,6 +9349,7 @@ var _default = {
       this.$emit('destroy', id);
     },
     modify: function modify(item) {
+      console.log('edit sampai column');
       this.$emit('modify', item);
     }
   },
@@ -9607,6 +9608,9 @@ var _default = {
     },
     modify: function modify(item) {
       this.$emit('modify-item', item);
+    },
+    logout: function logout() {
+      this.$emit('logout');
     }
   },
   computed: {
@@ -9650,7 +9654,9 @@ exports.default = _default;
               )
             ]),
             _vm._v(" "),
-            _vm._m(2)
+            _c("li", [
+              _c("button", { on: { click: _vm.logout } }, [_vm._v("Logout")])
+            ])
           ])
         ])
       ])
@@ -9698,12 +9704,6 @@ var staticRenderFns = [
         _c("div", { staticClass: "bar3" })
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [_c("button", [_vm._v("Logout")])])
   }
 ]
 render._withStripped = true
@@ -12112,6 +12112,14 @@ var _default = {
 
       });
     },
+    logout: function logout() {
+      localStorage.clear();
+      this.logStatus = false;
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    },
     sendToLocal: function sendToLocal(data) {
       localStorage.setItem('token', data.token);
       localStorage.setItem('email', data.email);
@@ -12189,7 +12197,8 @@ exports.default = _default;
             on: {
               "create-task": _vm.createTask,
               "destroy-item": _vm.destroyTask,
-              "modify-task": _vm.updateTask
+              "modify-item": _vm.updateTask,
+              logout: _vm.logout
             }
           })
         : _c("LoginPage", {

@@ -9,7 +9,7 @@
     </div>
     <!-- <div v-if="showError" class="alert alert-danger error-msg">{{ error }}</div> -->
     <Board v-if="logStatus" v-bind:email="email" v-bind:avatar="avatar" :tasks="tasks"
-    @create-task="createTask" @destroy-item="destroyTask" @modify-task="updateTask"></Board>
+    @create-task="createTask" @destroy-item="destroyTask" @modify-item="updateTask" @logout="logout"></Board>
     <LoginPage v-else @post-register="register" @post-login="login"></LoginPage>
   </div>
 </template>
@@ -158,6 +158,14 @@ export default {
         this.displayError(err.response.data.messages)
         // setTimeout(this.emptyError(), 3000)
       })
+    },
+    logout: function() {
+      localStorage.clear()
+      this.logStatus = false
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
     },
     sendToLocal(data) {
       localStorage.setItem('token', data.token)
