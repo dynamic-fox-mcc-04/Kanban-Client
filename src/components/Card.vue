@@ -93,5 +93,7 @@ export default {
   margin: 1vh;
   justify-content: center;
   align-items: center;
+  display: flex;
+  flex-direction: row;
 }
 </style>

@@ -19594,6 +19594,11 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = {
   name: "LoginPage",
   data: function data() {
@@ -19745,6 +19750,8 @@ exports.default = _default;
         1
       ),
       _vm._v(" "),
+      _c("h1", { attrs: { id: "remark" } }, [_vm._v("看板へようこそ")]),
+      _vm._v(" "),
       _c(
         "form",
         {
@@ -19780,8 +19787,9 @@ exports.default = _default;
           }),
           _vm._v(" "),
           _c("br"),
+          _vm._v(" "),
           _c("br"),
-          _vm._v("\n    Password:\n    "),
+          _vm._v("Password:\n    "),
           _c("input", {
             directives: [
               {
@@ -19804,6 +19812,7 @@ exports.default = _default;
           }),
           _vm._v(" "),
           _c("br"),
+          _vm._v(" "),
           _c("br"),
           _vm._v(" "),
           _c("b-button", { attrs: { type: "submit", variant: "primary" } }, [
@@ -19820,7 +19829,7 @@ exports.default = _default;
       _c(
         "g-signin-button",
         {
-          attrs: { params: _vm.googleSignInParams },
+          attrs: { id: "btn-google", params: _vm.googleSignInParams },
           on: { success: _vm.onSignInSuccess, error: _vm.onSignInError }
         },
         [_vm._v("Sign in with Google")]
@@ -20823,6 +20832,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: "MainPage",
   components: {
@@ -20919,7 +20929,9 @@ exports.default = _default;
         }
       }),
       _vm._v(" "),
-      _c("h1", [_vm._v("WELCOME TO KANBAN HOMEPAGE")]),
+      _c("h1", { attrs: { id: "title" } }, [
+        _vm._v("WELCOME TO KANBAN HOMEPAGE")
+      ]),
       _vm._v(" "),
       _c("Dashboard", {
         attrs: { tasks2: _vm.tasks1, categories2: _vm.categories1 },
@@ -68772,7 +68784,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57424" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63017" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

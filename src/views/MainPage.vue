@@ -14,10 +14,11 @@
     ></Navbar>
     <!-- END NAVBAR -->
 
-    <h1>WELCOME TO KANBAN HOMEPAGE</h1>
+    <h1 id="title">WELCOME TO KANBAN HOMEPAGE</h1>
 
     <!-- START DASHBOARD -->
       <Dashboard
+
         :tasks2="tasks1"
         :categories2="categories1"
         @editTask2="editTask1"
@@ -94,8 +95,24 @@ export default {
 };
 </script>
 
-<style>
-  h1 {
-    color: black
+<style lang="scss">
+  $ctr-lft: 25%;
+  $fitter: fit-content;
+  $bg-dashboard: #3C7233;
+  $font-clr-def: bisque;
+  $def-marpad: 2vh;
+  $def-align: center;
+  
+  #pg-main {
+    justify-content: $def-align;
+    align-content: $def-align;
+    align-items: $def-align;
+    background-color: $bg-dashboard;
+    
+    #title {
+      color: $font-clr-def;
+      margin: $def-marpad;
+      padding: $def-marpad;
+    }
   }
 </style>

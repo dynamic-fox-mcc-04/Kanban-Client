@@ -518,5 +518,19 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+  
+  $def-pad: 2vh;
+  $def-margin: 2vh;
+  $def-font: 'Courier New', Courier, monospace;
+  
+  #app {
+    justify-content: space-evenly;
+    align-content: center;
+    font-family: $def-font;
+    margin: $def-margin;
+    padding: $def-pad;
+
+  }
+
 </style>
