@@ -48,7 +48,7 @@
                 <option value="Done">Done</option>
             </select>
         </b-form-group>
-        <b-button variant="danger" @click="$bvModal.hide(Task.id)">Cancel</b-button>
+        <b-button variant="danger" @click="$bvModal.hide(Task.id.toString())">Cancel</b-button>
         <b-button variant="success" type="submit">Update</b-button>
         </b-form>
     </div>

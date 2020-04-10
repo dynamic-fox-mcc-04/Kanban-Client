@@ -19610,7 +19610,11 @@ var _default = {
   },
   watch: {
     SelectProject: function SelectProject() {
-      this.ProjectSelect();
+      if (this.SelectProject == '') {
+        this.SelectProject;
+      } else {
+        this.ProjectSelect();
+      }
     },
     isProject: function isProject() {
       this.isProject;
@@ -20453,7 +20457,7 @@ exports.default = _default;
                       attrs: { variant: "danger" },
                       on: {
                         click: function($event) {
-                          return _vm.$bvModal.hide(_vm.Task.id)
+                          _vm.$bvModal.hide(_vm.Task.id.toString())
                         }
                       }
                     },
@@ -28434,7 +28438,7 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: 'Login',
+  name: 'Register',
   data: function data() {
     return {
       Email: '',
@@ -29236,6 +29240,8 @@ var _default = {
           Projectid: this.CurrentProject
         }
       }).then(function (result) {
+        _socket.default.emit('task');
+
         value.ProjectId = _this5.CurrentProject;
 
         _this5.$Progress.finish();
@@ -29277,6 +29283,7 @@ var _default = {
       if (value.Email == '') {
         this.$toasted.show('PLEASE FILL THE EMAIL');
       } else {
+        console.log(value);
         this.$Progress.start();
         (0, _axios.default)({
           url: 'http://localhost:3000/project/friend',
@@ -29294,6 +29301,8 @@ var _default = {
           _this7.$toasted.show('Add Friend Success!!');
 
           _this7.FetchFriend();
+
+          _socket.default.emit('friend');
         }).catch(function (err) {
           _this7.$Progress.finish();
 
@@ -29306,6 +29315,33 @@ var _default = {
 
       if (value.Email == '') {
         this.$toasted.show('PLEASE FILL THE EMAIL');
+      } else if (value.Email == localStorage.getItem('Email')) {
+        this.$Progress.start();
+        (0, _axios.default)({
+          url: 'http://localhost:3000/project/friend',
+          method: 'DELETE',
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          },
+          data: {
+            Email: value.Email,
+            ProjectId: this.CurrentProject
+          }
+        }).then(function (result) {
+          _socket.default.emit('friend');
+
+          _this8.$Progress.finish();
+
+          _this8.$toasted.show('Successfully Leave Project');
+
+          _this8.FetchProject();
+
+          _this8.isProject = false;
+        }).catch(function (err) {
+          _this8.$Progress.finish();
+
+          _this8.$toasted.show('Failed to Leave Project');
+        });
       } else {
         this.$Progress.start();
         (0, _axios.default)({
@@ -29324,6 +29360,8 @@ var _default = {
           _this8.$toasted.show('Delete Friend Success');
 
           _this8.FetchFriend();
+
+          _socket.default.emit('deletefriend');
         }).catch(function (err) {
           _this8.$Progress.finish();
 
@@ -29388,6 +29426,8 @@ var _default = {
         _this10.$bvModal.hide('CreateTask');
 
         _this10.SelectProject(value);
+
+        _socket.default.emit('task');
       }).catch(function (err) {
         _this10.$Progress.finish();
 
@@ -29407,6 +29447,8 @@ var _default = {
         _this11.$toasted.show('Delete Success!!');
 
         value.ProjectId = _this11.CurrentProject;
+
+        _socket.default.emit('task');
 
         _this11.SelectProject(value);
       }).catch(function (err) {
@@ -29434,12 +29476,8 @@ var _default = {
   created: function created() {
     var _this12 = this;
 
-    console.log(_socket.default);
-
     _socket.default.on('success', function (msg) {
       _this12.connected();
-
-      _this12.$toasted.show('MASUK EUYYYYY');
     });
 
     _socket.default.emit('join', {
@@ -29454,10 +29492,57 @@ var _default = {
       this.isLogin = true;
       this.FetchProject();
     }
+
+    _socket.default.on('fetchtask', function (message) {
+      var value = {
+        ProjectId: _this12.CurrentProject
+      };
+
+      _this12.SelectProject(value);
+    });
+
+    _socket.default.on('updatefriend', function (msg) {
+      _this12.FetchProject();
+
+      _this12.FetchFriend();
+
+      _socket.default.emit('checkfriend');
+    });
+
+    _socket.default.on('deletefriend', function (msg) {
+      _this12.FetchFriend();
+
+      _socket.default.emit('checkfriend');
+    });
+
+    _socket.default.on('checkfriend', function (msg) {
+      _this12.FetchProject();
+
+      setTimeout(function () {
+        var counter = 0;
+
+        for (var i = 0; i < _this12.Members.length; i++) {
+          if (_this12.Members[i].User.Email == localStorage.getItem('Email')) {
+            counter++;
+          }
+        }
+
+        console.log(counter);
+
+        if (counter == 0) {
+          _this12.FetchProject();
+
+          _this12.isProject = false;
+        } else {}
+      }, 1000);
+    });
   },
   watch: {
     CurrentProject: function CurrentProject() {
       this.CurrentProject;
+    },
+    Members: function Members() {
+      this.Members;
     }
   }
 };
@@ -76779,7 +76864,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49999" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56110" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

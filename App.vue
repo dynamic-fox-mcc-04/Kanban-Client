@@ -144,6 +144,7 @@ export default {
                 }
             })
                 .then(result => {
+                    io.emit('task')
                     value.ProjectId = this.CurrentProject
                     this.$Progress.finish()
                     this.$$toasted.show('Update Success!')
@@ -179,6 +180,7 @@ export default {
                 this.$toasted.show('PLEASE FILL THE EMAIL')
             }
             else{
+                console.log(value)
                 this.$Progress.start()
                 axios({
                     url: 'http://localhost:3000/project/friend',
@@ -195,6 +197,7 @@ export default {
                         this.$Progress.finish()
                         this.$toasted.show('Add Friend Success!!')
                         this.FetchFriend()
+                        io.emit('friend')
                     })
                     .catch(err => {
                         this.$Progress.finish()
@@ -206,7 +209,7 @@ export default {
             if(value.Email == '') {
                 this.$toasted.show('PLEASE FILL THE EMAIL')
             }
-            else{
+            else if (value.Email == localStorage.getItem('Email')) {
                 this.$Progress.start()
                 axios({
                     url: 'http://localhost:3000/project/friend',
@@ -220,15 +223,45 @@ export default {
                     }
                 })  
                     .then(result => {
+                        io.emit('friend')
                         this.$Progress.finish()
-                        this.$toasted.show('Delete Friend Success')
-                        this.FetchFriend()
+                        this.$toasted.show('Successfully Leave Project')
+                        this.FetchProject()
+                        this.isProject = false
+                        
+                    })
+                    .catch(err => {
+                        this.$Progress.finish()
+                        this.$toasted.show('Failed to Leave Project')
+                    })
+                
+            } else {
+                this.$Progress.start()
+                axios({
+                    url: 'http://localhost:3000/project/friend',
+                    method: 'DELETE',
+                    headers: {
+                        access_token: localStorage.getItem('access_token')
+                    },
+                    data: {
+                        Email: value.Email,
+                        ProjectId: this.CurrentProject
+                    }
+                })  
+                    .then(result => {
+                            this.$Progress.finish()
+                            this.$toasted.show('Delete Friend Success')
+                            this.FetchFriend()
+                            io.emit('deletefriend')
+
+                        
                     })
                     .catch(err => {
                         this.$Progress.finish()
                         this.$toasted.show('Failed to Delete Friend')
                     })
             }
+            
         },
         AddProject(value) {
             if(value.Title == '') {
@@ -279,6 +312,7 @@ export default {
                     this.$toasted.show('Create Task Success!!')
                     this.$bvModal.hide('CreateTask')
                     this.SelectProject(value)
+                    io.emit('task')
                 })
                 .catch(err => {
                     this.$Progress.finish()
@@ -297,6 +331,7 @@ export default {
             .then(result => {
                 this.$toasted.show('Delete Success!!')
                 value.ProjectId = this.CurrentProject
+                io.emit('task')
                 this.SelectProject(value)
             })
             .catch(err => {
@@ -325,10 +360,8 @@ export default {
         landing
     },
     created() {
-        console.log(io)
         io.on('success',(msg) => {
             this.connected()
-            this.$toasted.show('MASUK EUYYYYY')
         })
         io.emit('join', {
             ProjectId: 1
@@ -340,10 +373,47 @@ export default {
             this.isLogin = true
             this.FetchProject()
         }
+        io.on('fetchtask', message => {
+            let value = {
+                ProjectId: this.CurrentProject
+            }
+            this.SelectProject(value)
+        })
+        io.on('updatefriend', msg => {
+            this.FetchProject()
+            this.FetchFriend()
+            io.emit('checkfriend')
+        })
+        io.on('deletefriend', msg => {
+            this.FetchFriend()
+            io.emit('checkfriend')
+            
+        })
+        io.on('checkfriend', msg => {
+            this.FetchProject()
+            setTimeout(() => {
+                let counter = 0
+                for(let i = 0; i < this.Members.length; i++) {
+                    if(this.Members[i].User.Email == localStorage.getItem('Email')) {
+                        counter++
+                    }
+                }
+                console.log(counter)
+                if(counter == 0) {
+                    this.FetchProject()
+                    this.isProject = false
+                }
+                else {
+                }
+            }, 1000);  
+        })
     },
     watch: {
         CurrentProject() {
             this.CurrentProject
+        },
+        Members() {
+            this.Members
         }
     }
 

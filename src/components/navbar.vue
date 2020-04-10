@@ -88,7 +88,12 @@ export default {
     },
     watch: {
         SelectProject() {
-            this.ProjectSelect()
+            if(this.SelectProject == '') {
+                this.SelectProject
+            }
+            else {
+                this.ProjectSelect()
+            }
         },
         isProject() {
             this.isProject
