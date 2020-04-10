@@ -2,7 +2,7 @@
   <div v-show="!token1" id="pg-login">
     <!-- REGISTER FORM - BOOTSTRAP -->
     <div id="pg-form-register">
-      <b-form inline id="form-register" @submit.prevent="register()">
+      <b-form inline id="form-register" >
         <label class="sr-only" for="inline-form-input-email">Email</label>
         <b-input
           v-model="reg_email"
@@ -23,7 +23,8 @@
           placeholder="Your Password"
         ></b-input>
 
-        <b-button variant="primary">REGISTER</b-button>
+        <b-button variant="primary" form="form-register"
+        @click.prevent="register()">REGISTER</b-button>
       </b-form>
     </div>
 
@@ -72,7 +73,8 @@ export default {
         email: email,
         password: password
       };
-
+      console.log("REGISTER FROM LOGINPAGE");
+      console.log(params);
       this.$emit("register", params);
     },
 

@@ -17613,8 +17613,7 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const BASEURL = 'http://localhost:3001'
-var BASEURL = 'https://desolate-ocean-86590.herokuapp.com';
+var BASEURL = 'http://localhost:3001'; // const BASEURL = 'https://desolate-ocean-86590.herokuapp.com'
 
 var _default = (0, _socket.default)(BASEURL);
 
@@ -19592,6 +19591,7 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = {
   name: "LoginPage",
   data: function data() {
@@ -19614,6 +19614,8 @@ var _default = {
         email: email,
         password: password
       };
+      console.log("REGISTER FROM LOGINPAGE");
+      console.log(params);
       this.$emit("register", params);
     },
     login: function login() {
@@ -19667,15 +19669,7 @@ exports.default = _default;
         [
           _c(
             "b-form",
-            {
-              attrs: { inline: "", id: "form-register" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.register()
-                }
-              }
-            },
+            { attrs: { inline: "", id: "form-register" } },
             [
               _c(
                 "label",
@@ -19729,9 +19723,19 @@ exports.default = _default;
                 }
               }),
               _vm._v(" "),
-              _c("b-button", { attrs: { variant: "primary" } }, [
-                _vm._v("REGISTER")
-              ])
+              _c(
+                "b-button",
+                {
+                  attrs: { variant: "primary", form: "form-register" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.register()
+                    }
+                  }
+                },
+                [_vm._v("REGISTER")]
+              )
             ],
             1
           )
@@ -68766,7 +68770,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55995" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56266" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
