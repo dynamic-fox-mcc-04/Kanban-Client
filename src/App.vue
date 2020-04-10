@@ -1,46 +1,40 @@
 <template>
   <div id="app">
-
-
     <!-- LOGIN PAGE -->
-    <LoginPage 
+    <LoginPage
       :token1="token"
       v-show="!token"
       @onSignInSuccess="onSignInSuccess"
       @login="login"
       @register="register"
-      ></LoginPage>
+    ></LoginPage>
 
-      <MainPage
-        :token1="token"
-        :projects1="projects"
-        :categories1="categories"
-        :tasks1="tasks"
-        :taskDetails1="taskDetails"
-        v-show="token"
-        @logout1="logout"
-        @addProject1="addProject"
-        @dropProject1="dropProject"
-        @inviteMember1="inviteMember"
-        @addNewTask1="addNewTask"
-        @showTasks1="showTasks"
-        @editTask1="editTask"
-        @deleteTask1="deleteTask"
-        >
-      </MainPage>
-      
-      
-    
+    <MainPage
+      :token1="token"
+      :projects1="projects"
+      :categories1="categories"
+      :tasks1="tasks"
+      :taskDetails1="taskDetails"
+      v-show="token"
+      @logout1="logout"
+      @addProject1="addProject"
+      @dropProject1="dropProject"
+      @inviteMember1="inviteMember"
+      @addNewTask1="addNewTask"
+      @showTasks1="showTasks"
+      @editTask1="editTask"
+      @deleteTask1="deleteTask"
+    ></MainPage>
   </div>
 </template>
 <script>
 import socket from "./config/socket";
 import axios from "./config/api";
-import LoginPage from "./views/LoginPage"
-import MainPage from "./views/MainPage"
+import LoginPage from "./views/LoginPage";
+import MainPage from "./views/MainPage";
 export default {
   name: "App",
-  components :{
+  components: {
     LoginPage,
     MainPage
   },
@@ -99,10 +93,10 @@ export default {
         })
         .catch(err => {
           console.log(err);
-          let arr = err.responseJSON.errors
+          let arr = err.responseJSON.errors;
           arr.forEach(el => {
-            this.$toasted.error(el)
-          })
+            this.$toasted.error(el);
+          });
         });
     },
     login(payload) {
@@ -121,28 +115,26 @@ export default {
           console.log("WELCOME BACK, USER!");
           localStorage.setItem("access_token", response.data.access_token);
           this.token = response.data.access_token;
-          this.user =  response.data.email
+          this.user = response.data.email;
           // this.$toasted.success(`Welcome Back, ${response.data.email}`);
           socket.emit("loggedin", response);
-          
+
           socket.on("loggedin2", response => {
             let wlcm = "HELLO AGAIN, " + response;
             this.$toasted.success(wlcm);
             console.log(wlcm);
             this.fetchProjects();
           });
-          
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     logout(payload) {
@@ -150,16 +142,15 @@ export default {
       localStorage.clear();
       socket.emit("loggedout", this.user);
       this.token = "";
-      this.user = ""
-      socket.on('loggedout2', (payload) => {
-        console.log(`${payload} HAS LOGGED OUT`)
-        this.$toasted.show(`${payload} LOGGED OUT`)
-      })
-      
+      this.user = "";
+      socket.on("loggedout2", payload => {
+        console.log(`${payload} HAS LOGGED OUT`);
+        this.$toasted.show(`${payload} LOGGED OUT`);
+      });
+
       this.$toasted.show("UNTIL NEXT TIME!");
     },
     onSignInSuccess(id_token) {
-     
       axios({
         method: "POST",
         url: "/users/googleLogin",
@@ -182,14 +173,13 @@ export default {
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     fetchProjects() {
@@ -205,24 +195,24 @@ export default {
           console.log("WHAT'S PROJECTS?");
           console.log(response.data);
           console.log("any id?");
-          console.log(response.data[0].id);
-          socket.emit('getProjects', response.data)
-          socket.on('getProjects2', (payload) => {
-            this.$toasted.success('FETCHING ALL PROJECTS')
-            this.projects = payload
-          })
-          // this.projects = response.data;
+          // console.log(response.data[0].id);
+          // socket.emit("getProjects", response.data);
+          // socket.on("getProjects2", payload => {
+          //     this.$toasted.success("FETCHING ALL PROJECTS");
+          //     this.projects = payload;
+          //   });
+
+          this.projects = response.data;
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     addProject(payload) {
@@ -244,24 +234,27 @@ export default {
           socket.emit("new_project", response.data);
           // this.fetchProjects();
           this.projectTitle = "";
-          socket.on('added_project', (payload) => {
+          socket.on("added_project", payload => {
             console.log("HELLO NEW PROJECT");
             console.log(payload);
-            this.$toasted.success(`USER ${payload.UserId} ADDED NEW PROJECT WITH ID: ${payload.ProjectId}`)
-            console.log(`USER ${payload.UserId} ADDED NEW PROJECT WITH ID: ${payload.ProjectId}`);
+            this.$toasted.success(
+              `USER ${payload.UserId} ADDED NEW PROJECT WITH ID: ${payload.ProjectId}`
+            );
+            console.log(
+              `USER ${payload.UserId} ADDED NEW PROJECT WITH ID: ${payload.ProjectId}`
+            );
             this.fetchProjects();
-          })
+          });
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     // fillInvitation(projectid) {
@@ -288,23 +281,16 @@ export default {
           // this.$toasted.success("MEMBER INVITED");
           this.projectId = 0;
           this.invitee = "";
-          socket.on('new_member2', (payload) => {
-            let ms = `User ${payload.UserId} has been added to Project ${payload.ProjectId}`
-            console.log(ms);
-            this.$toasted.success(ms)
-            this.fetchProjects()
-          })
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     dropProject(payload) {
@@ -321,23 +307,16 @@ export default {
           console.log("PROJCT DROPPED");
           console.log(response.data);
           socket.emit("project_deleted", response.data);
-          socket.on('droppedProject', (msg) => {
-            this.$toasted.show(msg)
-            console.log(msg);
-            this.fetchProjects();
-          })
-          
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     showTasks(payload) {
@@ -352,24 +331,24 @@ export default {
       })
         .then(response => {
           console.log("WHAT'S DAT PROJECTS' TASKS?");
-          console.log(response.data)
-          this.projectId = response.data.ProjectId
-          socket.emit('getTasks', response.data)
-          socket.on('getTasks2', (payload) => {
-            this.$toasted.success('FETCHING TASKS OF A PROJECT')
-            this.tasks = payload
-          })
+          console.log(response.data);
+          this.projectId = response.data.ProjectId;
+          this.tasks = response.data;
+          // socket.emit("getTasks", response.data);
+          // socket.on("getTasks2", payload => {
+          //   this.$toasted.success("FETCHING TASKS OF A PROJECT");
+
+          // });
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     fillAddTaskForm(projectid) {
@@ -397,24 +376,18 @@ export default {
           // this.$toasted.success("TASK ADDED");
           // console.log("WHAT'S ID?");
           // console.log(response.data.id);
-          socket.on('added_task', (payload) => {
-            this.$toasted.success(`Task ${payload.title} has been added.`)
-            
-            this.showTasks(payload.ProjectId);
-          })
+
           // this.showTasks(response.data.ProjectId);
-          
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
     showEditTaskForm(payload) {
@@ -427,29 +400,28 @@ export default {
           access_token: localStorage.access_token
         }
       })
-      .then(response => {
-        console.log("FOUND'EM, NOW POPULATING");
-        console.log(response.data);
-        this.taskDetails = response.data
-      })
-      .catch(err => {
+        .then(response => {
+          console.log("FOUND'EM, NOW POPULATING");
+          console.log(response.data);
+          this.taskDetails = response.data;
+        })
+        .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     },
-    editTask(payload) {  
+    editTask(payload) {
       console.log("NOW EDITING TASK");
       console.log(payload);
       axios({
-        method: 'put',
-        url: '/projects/' + payload.projectId + '/tasks/' + payload.taskId,
+        method: "put",
+        url: "/projects/" + payload.projectId + "/tasks/" + payload.taskId,
         headers: {
           access_token: localStorage.access_token
         },
@@ -458,30 +430,24 @@ export default {
           category: payload.category
         }
       })
-      .then(response => {
-        console.log("UPDATE SUCCESS");
-        // console.log(response.data);
-        socket.emit('task_update', response.data)
-        // this.$toasted.success(`${response.data.title} has been updated`)
-        socket.on('updated_task', (payload) => {
-          this.$toasted.success(`${payload.title} has been updated`)
-          this.showTasks(payload.ProjectId)
-          console.log(`${payload.title} has been updated`);
-        })
-        // this.showTasks(response.data.ProjectId)
-      })
-      .catch(err => {
-          console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
-          arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
-        });
+        .then(response => {
+          console.log("UPDATE SUCCESS");
+          // console.log(response.data);
+          socket.emit("task_update", response.data);
+          // this.$toasted.success(`${response.data.title} has been updated`)
 
+          // this.showTasks(response.data.ProjectId)
+        })
+        .catch(err => {
+          console.log(err.response);
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
+          arr.forEach(el => {
+            this.$toasted.error(`${ct}: ${el}`);
+          });
+        });
     },
     deleteTask(payload) {
       console.log("DELETE ONE TASK");
@@ -499,45 +465,21 @@ export default {
           console.log("TASK DROPPED");
           console.log(response.data);
           socket.emit("task_deleted", response.data);
-          socket.on('deleted_task', (msg) => {
-            console.log("PROJECT HAS BEEN DROPPED");
-            this.$toasted.success(msg)
-            this.showTasks(payload.projectId);
-            // this.fetchProjects()
-          })
           // this.showTasks(projectid);
         })
         .catch(err => {
           console.log(err.response);
-          let arr = err.response.data.errors
-          let code = err.response.status
-          let type = err.response.statusText
-          let ct = code + ' ' + type
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
           arr.forEach(el => {
-            this.$toasted.error(`${ct}: ${el}`)
-          })
-          
+            this.$toasted.error(`${ct}: ${el}`);
+          });
         });
     }
   },
-  watch: {
-    // projectTitle() {
-    //   this.fetchProjects()
-    // },
-    // backlogs() {
-    //   this.showTasks(this.projectId)
-    // },
-    // pendings() {
-    //   this.showTasks(this.projectId)
-    // },
-    // reviews() {
-    //   this.showTasks(this.projectId)
-    // },
-    // dones() {
-    //   this.showTasks(this.projectId)
-    // }
-
-  },
+  watch: {},
   created() {
     // console.log(io);
     // io.on('success', (msg) => {
@@ -545,6 +487,33 @@ export default {
     // })
     this.test();
     // this.fetchProjects()
+    socket.on("new_member2", payload => {
+      let ms = `User ${payload.UserId} has been added to Project ${payload.ProjectId}`;
+      console.log(ms);
+      this.$toasted.success(ms);
+      this.fetchProjects();
+    });
+    socket.on("droppedProject", msg => {
+      this.$toasted.show(msg);
+      console.log(msg);
+      this.fetchProjects();
+    });
+    socket.on("added_task", payload => {
+      this.$toasted.success(`Task ${payload.title} has been added.`);
+
+      this.showTasks(payload.ProjectId);
+    });
+    socket.on("updated_task", payload => {
+      this.$toasted.success(`${payload.title} has been updated`);
+      this.showTasks(payload.ProjectId);
+      console.log(`${payload.title} has been updated`);
+    });
+    socket.on("deleted_task", msg => {
+      console.log("TASK HAS BEEN DROPPED");
+      this.$toasted.success(msg);
+      this.showTasks(payload.projectId);
+      // this.fetchProjects()
+    });
   }
 };
 </script>

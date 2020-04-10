@@ -21002,12 +21002,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
 var _default = {
   name: "App",
   components: {
@@ -21108,7 +21102,7 @@ var _default = {
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this2.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21125,7 +21119,7 @@ var _default = {
       this.token = "";
       this.user = "";
 
-      _socket.default.on('loggedout2', function (payload) {
+      _socket.default.on("loggedout2", function (payload) {
         console.log("".concat(payload, " HAS LOGGED OUT"));
 
         _this3.$toasted.show("".concat(payload, " LOGGED OUT"));
@@ -21162,7 +21156,7 @@ var _default = {
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this4.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21181,23 +21175,20 @@ var _default = {
       }).then(function (response) {
         console.log("WHAT'S PROJECTS?");
         console.log(response.data);
-        console.log("any id?");
-        console.log(response.data[0].id);
+        console.log("any id?"); // console.log(response.data[0].id);
+        // socket.emit("getProjects", response.data);
+        // socket.on("getProjects2", payload => {
+        //     this.$toasted.success("FETCHING ALL PROJECTS");
+        //     this.projects = payload;
+        //   });
 
-        _socket.default.emit('getProjects', response.data);
-
-        _socket.default.on('getProjects2', function (payload) {
-          _this5.$toasted.success('FETCHING ALL PROJECTS');
-
-          _this5.projects = payload;
-        }); // this.projects = response.data;
-
+        _this5.projects = response.data;
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this5.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21226,7 +21217,7 @@ var _default = {
 
         _this6.projectTitle = "";
 
-        _socket.default.on('added_project', function (payload) {
+        _socket.default.on("added_project", function (payload) {
           console.log("HELLO NEW PROJECT");
           console.log(payload);
 
@@ -21241,7 +21232,7 @@ var _default = {
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this6.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21274,21 +21265,12 @@ var _default = {
 
         _this7.projectId = 0;
         _this7.invitee = "";
-
-        _socket.default.on('new_member2', function (payload) {
-          var ms = "User ".concat(payload.UserId, " has been added to Project ").concat(payload.ProjectId);
-          console.log(ms);
-
-          _this7.$toasted.success(ms);
-
-          _this7.fetchProjects();
-        });
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this7.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21310,20 +21292,12 @@ var _default = {
         console.log(response.data);
 
         _socket.default.emit("project_deleted", response.data);
-
-        _socket.default.on('droppedProject', function (msg) {
-          _this8.$toasted.show(msg);
-
-          console.log(msg);
-
-          _this8.fetchProjects();
-        });
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this8.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21344,20 +21318,16 @@ var _default = {
         console.log("WHAT'S DAT PROJECTS' TASKS?");
         console.log(response.data);
         _this9.projectId = response.data.ProjectId;
-
-        _socket.default.emit('getTasks', response.data);
-
-        _socket.default.on('getTasks2', function (payload) {
-          _this9.$toasted.success('FETCHING TASKS OF A PROJECT');
-
-          _this9.tasks = payload;
-        });
+        _this9.tasks = response.data; // socket.emit("getTasks", response.data);
+        // socket.on("getTasks2", payload => {
+        //   this.$toasted.success("FETCHING TASKS OF A PROJECT");
+        // });
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this9.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21389,20 +21359,14 @@ var _default = {
         _socket.default.emit("new_task", response.data); // this.$toasted.success("TASK ADDED");
         // console.log("WHAT'S ID?");
         // console.log(response.data.id);
-
-
-        _socket.default.on('added_task', function (payload) {
-          _this10.$toasted.success("Task ".concat(payload.title, " has been added."));
-
-          _this10.showTasks(payload.ProjectId);
-        }); // this.showTasks(response.data.ProjectId);
+        // this.showTasks(response.data.ProjectId);
 
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this10.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21428,7 +21392,7 @@ var _default = {
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this11.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21440,8 +21404,8 @@ var _default = {
       console.log("NOW EDITING TASK");
       console.log(payload);
       (0, _api.default)({
-        method: 'put',
-        url: '/projects/' + payload.projectId + '/tasks/' + payload.taskId,
+        method: "put",
+        url: "/projects/" + payload.projectId + "/tasks/" + payload.taskId,
         headers: {
           access_token: localStorage.access_token
         },
@@ -21452,23 +21416,15 @@ var _default = {
       }).then(function (response) {
         console.log("UPDATE SUCCESS"); // console.log(response.data);
 
-        _socket.default.emit('task_update', response.data); // this.$toasted.success(`${response.data.title} has been updated`)
-
-
-        _socket.default.on('updated_task', function (payload) {
-          _this12.$toasted.success("".concat(payload.title, " has been updated"));
-
-          _this12.showTasks(payload.ProjectId);
-
-          console.log("".concat(payload.title, " has been updated"));
-        }); // this.showTasks(response.data.ProjectId)
+        _socket.default.emit("task_update", response.data); // this.$toasted.success(`${response.data.title} has been updated`)
+        // this.showTasks(response.data.ProjectId)
 
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this12.$toasted.error("".concat(ct, ": ").concat(el));
         });
@@ -21490,51 +21446,69 @@ var _default = {
         console.log("TASK DROPPED");
         console.log(response.data);
 
-        _socket.default.emit("task_deleted", response.data);
-
-        _socket.default.on('deleted_task', function (msg) {
-          console.log("PROJECT HAS BEEN DROPPED");
-
-          _this13.$toasted.success(msg);
-
-          _this13.showTasks(payload.projectId); // this.fetchProjects()
-
-        }); // this.showTasks(projectid);
+        _socket.default.emit("task_deleted", response.data); // this.showTasks(projectid);
 
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
         var code = err.response.status;
         var type = err.response.statusText;
-        var ct = code + ' ' + type;
+        var ct = code + " " + type;
         arr.forEach(function (el) {
           _this13.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     }
   },
-  watch: {// projectTitle() {
-    //   this.fetchProjects()
-    // },
-    // backlogs() {
-    //   this.showTasks(this.projectId)
-    // },
-    // pendings() {
-    //   this.showTasks(this.projectId)
-    // },
-    // reviews() {
-    //   this.showTasks(this.projectId)
-    // },
-    // dones() {
-    //   this.showTasks(this.projectId)
-    // }
-  },
+  watch: {},
   created: function created() {
+    var _this14 = this;
+
     // console.log(io);
     // io.on('success', (msg) => {
     //     this.$toasted.show(msg.message)
     // })
     this.test(); // this.fetchProjects()
+
+    _socket.default.on("new_member2", function (payload) {
+      var ms = "User ".concat(payload.UserId, " has been added to Project ").concat(payload.ProjectId);
+      console.log(ms);
+
+      _this14.$toasted.success(ms);
+
+      _this14.fetchProjects();
+    });
+
+    _socket.default.on("droppedProject", function (msg) {
+      _this14.$toasted.show(msg);
+
+      console.log(msg);
+
+      _this14.fetchProjects();
+    });
+
+    _socket.default.on("added_task", function (payload) {
+      _this14.$toasted.success("Task ".concat(payload.title, " has been added."));
+
+      _this14.showTasks(payload.ProjectId);
+    });
+
+    _socket.default.on("updated_task", function (payload) {
+      _this14.$toasted.success("".concat(payload.title, " has been updated"));
+
+      _this14.showTasks(payload.ProjectId);
+
+      console.log("".concat(payload.title, " has been updated"));
+    });
+
+    _socket.default.on("deleted_task", function (msg) {
+      console.log("TASK HAS BEEN DROPPED");
+
+      _this14.$toasted.success(msg);
+
+      _this14.showTasks(payload.projectId); // this.fetchProjects()
+
+    });
   }
 };
 exports.default = _default;
@@ -68791,7 +68765,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49977" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51293" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
