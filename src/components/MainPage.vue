@@ -44,7 +44,7 @@ export default {
     fetchTask: function() {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/task',
+        url: 'https://radiant-hollows-48189.herokuapp.com/task',
         headers: {
           token: localStorage.getItem('token')
         }

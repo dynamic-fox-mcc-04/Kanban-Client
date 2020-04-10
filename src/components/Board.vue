@@ -48,7 +48,7 @@ export default {
       }
       axios({
         method: "PATCH",
-        url: `http://localhost:3000/task/${data.id}`,
+        url: `https://radiant-hollows-48189.herokuapp.com/task/${data.id}`,
         data: {
           category: newCategory
         },
@@ -77,7 +77,7 @@ export default {
       }
       axios({
         method: "PATCH",
-        url: `http://localhost:3000/task/${data.id}`,
+        url: `https://radiant-hollows-48189.herokuapp.com/task/${data.id}`,
         data: {
           category: newCategory
         },

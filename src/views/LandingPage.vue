@@ -139,7 +139,7 @@ export default {
     signup: function() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/signup",
+        url: "https://radiant-hollows-48189.herokuapp.com/signup",
         data: {
           name: this.name,
           email: this.email,
@@ -166,7 +166,7 @@ export default {
     signin: function() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/signin",
+        url: "https://radiant-hollows-48189.herokuapp.com/signin",
         data: {
           email: this.email,
           password: this.password
@@ -196,7 +196,7 @@ export default {
       const token = googleUser.getAuthResponse().id_token;
       axios({
         method: "POST",
-        url: "http://localhost:3000/gsignin",
+        url: "https://radiant-hollows-48189.herokuapp.com/gsignin",
         headers: {
           token
         }

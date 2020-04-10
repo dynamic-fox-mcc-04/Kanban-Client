@@ -79,7 +79,7 @@ export default {
     create: function() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/task",
+        url: "https://radiant-hollows-48189.herokuapp.com/task",
         data: {
           title: this.NewTitle
         },

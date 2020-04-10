@@ -28,7 +28,7 @@ export default {
     deleteTask: function(id) {
       axios({
         method: "DELETE",
-        url: `http://localhost:3000/task/${id}`,
+        url: `https://radiant-hollows-48189.herokuapp.com/task/${id}`,
         headers: {
           token: localStorage.getItem('token')
         }
