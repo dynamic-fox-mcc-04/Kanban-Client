@@ -32,6 +32,7 @@ export default {
     },
     deleteTask(taskId) {
       axios({
+        // url: `http://localhost:3000/task/delete/${taskId}`,
         url: `https://kanbanhacktiv8.herokuapp.com/task/delete/${taskId}`,
         method: "delete",
         headers: {
@@ -56,6 +57,7 @@ export default {
         category = "COMPLETED";
       }
       axios({
+        // url: `http://localhost:3000/task/update/${taskId}`,
         url: `https://kanbanhacktiv8.herokuapp.com/task/update/${taskId}`,
         method: "put",
         data: {
@@ -83,6 +85,7 @@ export default {
       }
 
       axios({
+        // url: `https"//localhost:3000/task/update/${taskId}`,
         url: `https://kanbanhacktiv8.herokuapp.com/task/update/${taskId}`,
         method: "put",
         data: {

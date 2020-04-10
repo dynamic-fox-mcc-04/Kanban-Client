@@ -10816,7 +10816,7 @@ var _default = {
 
       var token = googleUser.getAuthResponse().id_token;
       var name = profile.getName();
-      this.isLoading = true;
+      this.isLoadingLogin = true;
       (0, _axios.default)({
         url: "https://kanbanhacktiv8.herokuapp.com/googleSignIn",
         data: {
@@ -10833,12 +10833,11 @@ var _default = {
 
         _this.$toasted.success("You have successfully login");
       }).catch(function (err) {}).finally(function () {
-        _this.isLoading = false;
+        _this.isLoadingLogin = false;
       });
     },
     onSignInError: function onSignInError(err) {
       this.$toasted.error(err.error);
-      console.log("OH NOES", err.error);
     }
   }
 };
@@ -10968,7 +10967,7 @@ exports.default = _default;
     _vm._v(" "),
     _vm._m(3),
     _vm._v(" "),
-    _vm.isLoading
+    _vm.isLoadingLogin
       ? _c("div", { staticClass: "loading-container" }, [
           _c(
             "div",
@@ -11298,18 +11297,6 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default = {
   name: "FormRegister",
   data: function data() {
@@ -11437,30 +11424,7 @@ exports.default = _default;
     _vm._v(" "),
     _vm._m(2),
     _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _vm.isLoading
-      ? _c("div", { staticClass: "loading-container" }, [
-          _c(
-            "div",
-            { staticClass: "loading-screen" },
-            [
-              _c("lottie-player", {
-                staticStyle: { width: "300px", height: "300px" },
-                attrs: {
-                  src:
-                    "https://assets10.lottiefiles.com/packages/lf20_bwNmtU.json",
-                  background: "transparent",
-                  speed: "1",
-                  loop: "",
-                  autoplay: ""
-                }
-              })
-            ],
-            1
-          )
-        ])
-      : _vm._e()
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -11987,6 +11951,7 @@ var _default = {
       var _this = this;
 
       (0, _axios.default)({
+        // url: `http://localhost:3000/task/delete/${taskId}`,
         url: "https://kanbanhacktiv8.herokuapp.com/task/delete/".concat(taskId),
         method: "delete",
         headers: {
@@ -12015,6 +11980,7 @@ var _default = {
       }
 
       (0, _axios.default)({
+        // url: `http://localhost:3000/task/update/${taskId}`,
         url: "https://kanbanhacktiv8.herokuapp.com/task/update/".concat(taskId),
         method: "put",
         data: {
@@ -12046,6 +12012,7 @@ var _default = {
       }
 
       (0, _axios.default)({
+        // url: `https"//localhost:3000/task/update/${taskId}`,
         url: "https://kanbanhacktiv8.herokuapp.com/task/update/".concat(taskId),
         method: "put",
         data: {
@@ -12343,7 +12310,8 @@ var _default = {
 
       console.log(this.newTask);
       (0, _axios.default)({
-        url: "https://kanbanhacktiv8.herokuapp.com/task/add",
+        url: "http://localhost:3000/task/add",
+        // url: "https://kanbanhacktiv8.herokuapp.com/task/add",
         method: "post",
         data: {
           title: this.newTask
@@ -12562,6 +12530,7 @@ var _default = {
       this.isLoadingLogin = true;
       (0, _axios.default)({
         method: "post",
+        // url: "http://localhost:3000/login",
         url: "https://kanbanhacktiv8.herokuapp.com/login",
         data: {
           email: email,
@@ -12599,6 +12568,7 @@ var _default = {
       this.isLoadingLogin = true;
       (0, _axios.default)({
         method: "post",
+        // url: "http://localhost:3000/register",
         url: "https://kanbanhacktiv8.herokuapp.com/register",
         data: {
           email: email,
@@ -12625,6 +12595,7 @@ var _default = {
       this.isLoading = true;
       (0, _axios.default)({
         method: "get",
+        // url: "http://localhost:3000/task",
         url: "https://kanbanhacktiv8.herokuapp.com/task",
         headers: {
           token: localStorage.getItem("token")
@@ -12833,7 +12804,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37181" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33185" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

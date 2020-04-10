@@ -65,6 +65,7 @@ export default {
       this.isLoadingLogin = true;
       axios({
         method: "post",
+        // url: "http://localhost:3000/login",
         url: "https://kanbanhacktiv8.herokuapp.com/login",
         data: {
           email,
@@ -99,6 +100,7 @@ export default {
       this.isLoadingLogin = true;
       axios({
         method: "post",
+        // url: "http://localhost:3000/register",
         url: "https://kanbanhacktiv8.herokuapp.com/register",
         data: {
           email,
@@ -124,6 +126,7 @@ export default {
       this.isLoading = true;
       axios({
         method: "get",
+        // url: "http://localhost:3000/task",
         url: "https://kanbanhacktiv8.herokuapp.com/task",
         headers: {
           token: localStorage.getItem("token")

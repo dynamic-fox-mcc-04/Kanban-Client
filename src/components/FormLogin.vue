@@ -103,7 +103,7 @@
               <li></li>
               <li></li>
             </ul>
-    <div class="loading-container" v-if="isLoading">
+    <div class="loading-container" v-if="isLoadingLogin">
       <div class="loading-screen">
         <lottie-player
           src="https://assets10.lottiefiles.com/packages/lf20_bwNmtU.json"
@@ -151,7 +151,7 @@ export default {
       const profile = googleUser.getBasicProfile(); // etc etc
       let token = googleUser.getAuthResponse().id_token;
       let name = profile.getName();
-      this.isLoading = true;
+      this.isLoadingLogin = true;
       axios({
         url: "https://kanbanhacktiv8.herokuapp.com/googleSignIn",
         data: {
@@ -169,12 +169,11 @@ export default {
         })
         .catch(err => {})
         .finally(() => {
-          this.isLoading = false;
+          this.isLoadingLogin = false;
         });
     },
     onSignInError(err) {
       this.$toasted.error(err.error);
-      console.log("OH NOES", err.error);
     }
   }
 };
