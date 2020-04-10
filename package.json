@@ -1,0 +1,30 @@
+{
+  "name": "kanbanvuetest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "my": "^0.3.3",
+    "socket.io-client": "^2.3.0",
+    "sweetalert": "^2.1.2",
+    "uws": "^10.148.1",
+    "v": "^0.3.0",
+    "vue": "^2.6.11",
+    "vue-google-signin-button": "^1.0.4",
+    "vue-hot-reload-api": "^2.3.4",
+    "vue-socket.io": "^3.0.7",
+    "vue-sweetalert2": "^3.0.3",
+    "vuedraggable": "^2.23.2"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.1.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
