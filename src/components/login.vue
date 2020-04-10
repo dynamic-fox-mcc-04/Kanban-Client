@@ -69,7 +69,7 @@ export default {
         },
         OnGoogleAuthSuccess (idToken) {
             axios({
-                url: 'http://localhost:3000/user/googlelogin',
+                url: 'https://calm-inlet-04497.herokuapp.com/user/googlelogin',
                 method: 'POST',
                 headers: {
                     access_token: idToken

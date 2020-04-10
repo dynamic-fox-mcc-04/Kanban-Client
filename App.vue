@@ -50,7 +50,7 @@ export default {
             console.log(value)
             this.$Progress.start()
             axios({
-                url: 'http://localhost:3000/user/register',
+                url: 'https://calm-inlet-04497.herokuapp.com/user/register',
                 method: 'POST',
                 data: {
                     Email: value.Email,
@@ -66,12 +66,14 @@ export default {
             catch(err => {
                 console.log(err)
                 this.$toasted.show('Register Failed')
+                this.$Progress.finish()
+
             })
         },
         Login(value) {
             this.$Progress.start()
             axios({
-                url: 'http://localhost:3000/user/login',
+                url: 'https://calm-inlet-04497.herokuapp.com/user/login',
                 method: 'POST',
                 data: {
                     Email: value.Email,
@@ -88,13 +90,14 @@ export default {
                     this.FetchProject()
                 })
                 .catch(err => {
-                    // this.$Progress.finish()
+                    this.$Progress.finish()
+                    this.$toasted.show('Wrong Email / Password')
                     console.log(err)
                 })
         },
         FetchProject(value) {
             axios({
-                url: 'http://localhost:3000/project',
+                url: 'https://calm-inlet-04497.herokuapp.com/project',
                 method: 'GET',
                 headers: {
                     access_token: localStorage.getItem('access_token')
@@ -110,7 +113,7 @@ export default {
         SelectProject(value) {
             this.CurrentProject = value.ProjectId
            axios({
-                url: 'http://localhost:3000/project/task',
+                url: 'https://calm-inlet-04497.herokuapp.com/project/task',
                 method: 'POST',
                 headers: {
                     access_token: localStorage.getItem('access_token')
@@ -131,7 +134,7 @@ export default {
         Update(value) {
             this.$Progress.start()
             axios({
-                url: `http://localhost:3000/project/task/${value.id}`,
+                url: `https://calm-inlet-04497.herokuapp.com/project/task/${value.id}`,
                 method: "PATCH",
                 headers: {
                     access_token: localStorage.getItem('access_token')
@@ -140,17 +143,18 @@ export default {
                     Title: value.Title,
                     Description: value.Description,
                     Category: value.Category,
-                    Projectid: this.CurrentProject
+                    ProjectId: this.CurrentProject
                 }
             })
                 .then(result => {
                     io.emit('task')
                     value.ProjectId = this.CurrentProject
                     this.$Progress.finish()
-                    this.$$toasted.show('Update Success!')
+                    this.$toasted.show('Update Success!')
                     this.SelectProject(value)
                 })
                 .catch(err => {
+                    console.log(err)
                     value.ProjectId = this.CurrentProject
                     this.$Progress.finish()
                     this.$toasted.show('Update Failed')
@@ -159,7 +163,7 @@ export default {
         },
         FetchFriend() {
             axios({
-                url: 'http://localhost:3000/project/getfriend',
+                url: 'https://calm-inlet-04497.herokuapp.com/project/getfriend',
                 method: 'POST',
                 headers: {
                     access_token: localStorage.getItem('access_token')
@@ -183,7 +187,7 @@ export default {
                 console.log(value)
                 this.$Progress.start()
                 axios({
-                    url: 'http://localhost:3000/project/friend',
+                    url: 'https://calm-inlet-04497.herokuapp.com/project/friend',
                     method: 'POST',
                     headers: {
                         access_token: localStorage.getItem('access_token')
@@ -212,7 +216,7 @@ export default {
             else if (value.Email == localStorage.getItem('Email')) {
                 this.$Progress.start()
                 axios({
-                    url: 'http://localhost:3000/project/friend',
+                    url: 'https://calm-inlet-04497.herokuapp.com/project/friend',
                     method: 'DELETE',
                     headers: {
                         access_token: localStorage.getItem('access_token')
@@ -238,7 +242,7 @@ export default {
             } else {
                 this.$Progress.start()
                 axios({
-                    url: 'http://localhost:3000/project/friend',
+                    url: 'https://calm-inlet-04497.herokuapp.com/project/friend',
                     method: 'DELETE',
                     headers: {
                         access_token: localStorage.getItem('access_token')
@@ -270,7 +274,7 @@ export default {
             else{
                 this.$Progress.start()
                 axios({
-                    url: "http://localhost:3000/project/",
+                    url: "https://calm-inlet-04497.herokuapp.com/project/",
                     method: 'POST',
                     headers: {
                         access_token: localStorage.getItem('access_token')
@@ -294,7 +298,7 @@ export default {
         CreateTask(value) {
             this.$Progress.start()
             axios({
-                url: 'http://localhost:3000/project/addtask',
+                url: 'https://calm-inlet-04497.herokuapp.com/project/addtask',
                 method: 'POST',
                 headers: {
                     access_token: localStorage.getItem('access_token')
@@ -322,10 +326,13 @@ export default {
         },
         Delete(value) {
             axios({
-                url: `http://localhost:3000/project/task/${value.id}`,
+                url: `https://calm-inlet-04497.herokuapp.com/project/task/${value.id}`,
                 method: "DELETE",
                 headers: {
                     access_token: localStorage.getItem('access_token')
+                },
+                data: {
+                    ProjectId: this.CurrentProject
                 }
             })
             .then(result => {

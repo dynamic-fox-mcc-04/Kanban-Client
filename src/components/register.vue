@@ -2,7 +2,7 @@
   <div>
   <b-modal id="RegisterModal" hide-footer>
     <template v-slot:modal-title>
-      Login
+      Register
     </template>
     <div class="d-block text-center">
         <b-form @submit.prevent="Register">

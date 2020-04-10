@@ -17617,7 +17617,7 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _default = (0, _socket.default)('http://localhost:3000');
+var _default = (0, _socket.default)('https://calm-inlet-04497.herokuapp.com/');
 
 exports.default = _default;
 },{"socket.io-client":"node_modules/socket.io-client/lib/index.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
@@ -19974,7 +19974,7 @@ var _default = {
       var _this = this;
 
       (0, _axios.default)({
-        url: 'http://localhost:3000/user/googlelogin',
+        url: 'https://calm-inlet-04497.herokuapp.com/user/googlelogin',
         method: 'POST',
         headers: {
           access_token: idToken
@@ -28480,7 +28480,7 @@ exports.default = _default;
             {
               key: "modal-title",
               fn: function() {
-                return [_vm._v("\n      Login\n    ")]
+                return [_vm._v("\n      Register\n    ")]
               },
               proxy: true
             }
@@ -29137,7 +29137,7 @@ var _default = {
       console.log(value);
       this.$Progress.start();
       (0, _axios.default)({
-        url: 'http://localhost:3000/user/register',
+        url: 'https://calm-inlet-04497.herokuapp.com/user/register',
         method: 'POST',
         data: {
           Email: value.Email,
@@ -29155,6 +29155,8 @@ var _default = {
         console.log(err);
 
         _this.$toasted.show('Register Failed');
+
+        _this.$Progress.finish();
       });
     },
     Login: function Login(value) {
@@ -29162,7 +29164,7 @@ var _default = {
 
       this.$Progress.start();
       (0, _axios.default)({
-        url: 'http://localhost:3000/user/login',
+        url: 'https://calm-inlet-04497.herokuapp.com/user/login',
         method: 'POST',
         data: {
           Email: value.Email,
@@ -29182,7 +29184,10 @@ var _default = {
 
         _this2.FetchProject();
       }).catch(function (err) {
-        // this.$Progress.finish()
+        _this2.$Progress.finish();
+
+        _this2.$toasted.show('Wrong Email / Password');
+
         console.log(err);
       });
     },
@@ -29190,7 +29195,7 @@ var _default = {
       var _this3 = this;
 
       (0, _axios.default)({
-        url: 'http://localhost:3000/project',
+        url: 'https://calm-inlet-04497.herokuapp.com/project',
         method: 'GET',
         headers: {
           access_token: localStorage.getItem('access_token')
@@ -29206,7 +29211,7 @@ var _default = {
 
       this.CurrentProject = value.ProjectId;
       (0, _axios.default)({
-        url: 'http://localhost:3000/project/task',
+        url: 'https://calm-inlet-04497.herokuapp.com/project/task',
         method: 'POST',
         headers: {
           access_token: localStorage.getItem('access_token')
@@ -29228,7 +29233,7 @@ var _default = {
 
       this.$Progress.start();
       (0, _axios.default)({
-        url: "http://localhost:3000/project/task/".concat(value.id),
+        url: "https://calm-inlet-04497.herokuapp.com/project/task/".concat(value.id),
         method: "PATCH",
         headers: {
           access_token: localStorage.getItem('access_token')
@@ -29237,7 +29242,7 @@ var _default = {
           Title: value.Title,
           Description: value.Description,
           Category: value.Category,
-          Projectid: this.CurrentProject
+          ProjectId: this.CurrentProject
         }
       }).then(function (result) {
         _socket.default.emit('task');
@@ -29246,10 +29251,11 @@ var _default = {
 
         _this5.$Progress.finish();
 
-        _this5.$$toasted.show('Update Success!');
+        _this5.$toasted.show('Update Success!');
 
         _this5.SelectProject(value);
       }).catch(function (err) {
+        console.log(err);
         value.ProjectId = _this5.CurrentProject;
 
         _this5.$Progress.finish();
@@ -29263,7 +29269,7 @@ var _default = {
       var _this6 = this;
 
       (0, _axios.default)({
-        url: 'http://localhost:3000/project/getfriend',
+        url: 'https://calm-inlet-04497.herokuapp.com/project/getfriend',
         method: 'POST',
         headers: {
           access_token: localStorage.getItem('access_token')
@@ -29286,7 +29292,7 @@ var _default = {
         console.log(value);
         this.$Progress.start();
         (0, _axios.default)({
-          url: 'http://localhost:3000/project/friend',
+          url: 'https://calm-inlet-04497.herokuapp.com/project/friend',
           method: 'POST',
           headers: {
             access_token: localStorage.getItem('access_token')
@@ -29318,7 +29324,7 @@ var _default = {
       } else if (value.Email == localStorage.getItem('Email')) {
         this.$Progress.start();
         (0, _axios.default)({
-          url: 'http://localhost:3000/project/friend',
+          url: 'https://calm-inlet-04497.herokuapp.com/project/friend',
           method: 'DELETE',
           headers: {
             access_token: localStorage.getItem('access_token')
@@ -29345,7 +29351,7 @@ var _default = {
       } else {
         this.$Progress.start();
         (0, _axios.default)({
-          url: 'http://localhost:3000/project/friend',
+          url: 'https://calm-inlet-04497.herokuapp.com/project/friend',
           method: 'DELETE',
           headers: {
             access_token: localStorage.getItem('access_token')
@@ -29377,7 +29383,7 @@ var _default = {
       } else {
         this.$Progress.start();
         (0, _axios.default)({
-          url: "http://localhost:3000/project/",
+          url: "https://calm-inlet-04497.herokuapp.com/project/",
           method: 'POST',
           headers: {
             access_token: localStorage.getItem('access_token')
@@ -29405,7 +29411,7 @@ var _default = {
 
       this.$Progress.start();
       (0, _axios.default)({
-        url: 'http://localhost:3000/project/addtask',
+        url: 'https://calm-inlet-04497.herokuapp.com/project/addtask',
         method: 'POST',
         headers: {
           access_token: localStorage.getItem('access_token')
@@ -29438,10 +29444,13 @@ var _default = {
       var _this11 = this;
 
       (0, _axios.default)({
-        url: "http://localhost:3000/project/task/".concat(value.id),
+        url: "https://calm-inlet-04497.herokuapp.com/project/task/".concat(value.id),
         method: "DELETE",
         headers: {
           access_token: localStorage.getItem('access_token')
+        },
+        data: {
+          ProjectId: this.CurrentProject
         }
       }).then(function (result) {
         _this11.$toasted.show('Delete Success!!');
