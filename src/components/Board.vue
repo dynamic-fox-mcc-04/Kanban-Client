@@ -1,0 +1,90 @@
+<template>
+  <div>
+    <!-- Navbar -->
+    <nav class="border fixed split-nav navbar">
+        <div class="nav-brand">
+          <h3><b>KanChalk!</b></h3>
+        </div>
+        <div class="collapsible">
+          <input id="collapsible1" type="checkbox" name="collapsible1">
+          <button>
+          <label for="collapsible1">
+              <div class="bar1"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </label>
+          </button>
+          <div class="collapsible-body">
+            <ul class="inline">
+              <li>Welcome back, {{ User }}  {{ Avatar }}</li>
+              <li><button>Logout</button></li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <!-- End of navbar -->
+    <div class="board">
+      <div class="row margin-large">
+        <div class="card col-3 col padding-none cat" style="width: 20rem;">
+          <div class="card-header">Backlog</div>
+            <div class="card-body">
+              <div class="card" style="width: 95%;">
+                <div class="card-body">
+                  <h4>Task Title</h4>
+                  <p class="card-text">Task Description.</p>
+                  <a class="card-link" href="#">First link</a>
+                  <a class="card-link" href="#">Second link</a>
+                </div>
+              </div>
+            </div>
+          <div class="card-footer">Add Task</div>
+        </div>
+        <div class="card col-3 col padding-none cat" style="width: 20rem;">
+          <div class="card-header">Ongoing</div>
+            <div class="card-body">
+              <h4 class="card-title">My awesome Paper card!</h4>
+              <h5 class="card-subtitle">Nice looking subtitle.</h5>
+              <p class="card-text">You can also place image on the bottom of the card.</p>
+              <button>Let me go here!</button>
+            </div>
+          <div class="card-footer">Add Task</div>
+        </div>
+        <div class="card col-3 col padding-none cat" style="width: 20rem;">
+          <div class="card-header">Development</div>
+            <div class="card-body">
+              <h4 class="card-title">My awesome Paper card!</h4>
+              <h5 class="card-subtitle">Nice looking subtitle.</h5>
+              <p class="card-text">You can also place image on the bottom of the card.</p>
+              <button>Let me go here!</button>
+            </div>
+          <div class="card-footer">Add Task</div>
+        </div>
+        <div class="card col-3 col padding-none cat" style="width: 20rem;">
+          <div class="card-header">Finished</div>
+            <div class="card-body">
+              <h4 class="card-title">My awesome Paper card!</h4>
+              <h5 class="card-subtitle">Nice looking subtitle.</h5>
+              <p class="card-text">You can also place image on the bottom of the card.</p>
+              <button>Let me go here!</button>
+            </div>
+          <div class="card-footer">Add Task</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Board',
+  data() {
+    return {
+      message: 'Hahah'
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

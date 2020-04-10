@@ -12,6 +12,10 @@ button {
     color: white;
     border-color: white;
 }
+input {
+    color: white;
+    border-color: white;
+}
 .board {
     display: flex;
     flex-direction: column;
@@ -26,9 +30,41 @@ button {
     border-radius: 3px;
     /* position: relative; */
 }
+.login-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* height: 95vw; */
+    z-index: 3;
+    margin: auto;
+    margin-top: 5vw;
+    margin-bottom: 5vw;
+    /* padding: 20px; */
+    border: none;
+    border-radius: 3px;
+    /* position: relative; */
+}
 .cat {
     height: 80vh;
 }
 h5 {
     color: white!important;
+}
+.g-signin-button {
+    /* This is where you control how the button looks. Be creative! */
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 3px;
+    background-color: #3c82f7;
+    color: #fff;
+    box-shadow: 0 3px 0 #0f69ff;
+}
+.g-signin-button:hover {
+    background-color: #7dabfa;
+    cursor: pointer;
+}
+.error-msg {
+    position: fixed;
+    top: 0;
 }
