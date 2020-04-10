@@ -10698,7 +10698,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-// import socket from '../config'
 var _default = {
   name: "LoginRegist",
   props: ['message', 'isLogin', 'isInLogin', 'logVal'],
@@ -10718,12 +10717,9 @@ var _default = {
     onSignInSuccess: function onSignInSuccess(googleUser) {
       var _this = this;
 
-      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
-      // See https://developers.google.com/identity/sign-in/web/reference#users
       var profile = googleUser.getBasicProfile(); // etc etc
 
       var token = googleUser.getAuthResponse().id_token;
-      console.log(token);
       (0, _axios.default)({
         method: 'POST',
         url: this.baseUrl + '/users/googleSign',
@@ -10731,8 +10727,12 @@ var _default = {
           token: token
         }
       }).then(function (result) {
-        console.log(result);
-        localStorage.setItem('access_token', result.access_token);
+        console.log(result.data);
+        localStorage.setItem('access_token', result.data.token);
+
+        _this.$swal("Successfully Loggen In!", "Welcome Back ".concat(result.data.email), "success");
+
+        _this.$emit('add');
 
         _this.clearInput();
 
@@ -10746,7 +10746,6 @@ var _default = {
       });
     },
     onSignInError: function onSignInError(error) {
-      // `error` contains any error occurred.
       console.log('OH NOES', error);
     },
     authLog: function authLog() {
@@ -28492,8 +28491,7 @@ var _default = {
   data: function data() {
     return {
       titleChg: '',
-      baseUrl: 'http://localhost:3000' // socket: {}
-
+      baseUrl: 'http://localhost:3000'
     };
   },
   components: {
@@ -28883,6 +28881,10 @@ var _default = {
   methods: {
     logout: function logout() {
       localStorage.clear();
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
       this.$emit('logout');
     }
   }
@@ -32747,7 +32749,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40057" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46081" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

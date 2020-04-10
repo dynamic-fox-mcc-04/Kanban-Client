@@ -30,7 +30,7 @@ import socket from '../config'
 export default {
     data() {
         return {
-            baseUrl: 'http://localhost:3000',
+            baseUrl: 'https://intense-basin-29706.herokuapp.com',
             editTitle: ''
         }
     },

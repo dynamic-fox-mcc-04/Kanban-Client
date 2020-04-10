@@ -39,14 +39,13 @@
 
 <script>
 import axios from 'axios'
-// import socket from '../config'
 
 export default {
     name: "LoginRegist",
     props: ['message', 'isLogin', 'isInLogin', 'logVal'],
     data() {
         return {
-          baseUrl: 'http://localhost:3000',
+          baseUrl: 'https://intense-basin-29706.herokuapp.com',
           form: {
             email: '',
             password: ''
@@ -58,21 +57,20 @@ export default {
     },
     methods: {
       onSignInSuccess (googleUser) {
-        // `googleUser` is the GoogleUser object that represents the just-signed-in user.
-        // See https://developers.google.com/identity/sign-in/web/reference#users
         const profile = googleUser.getBasicProfile() // etc etc
         const token = googleUser.getAuthResponse().id_token;
-        console.log(token)
         axios({
           method: 'POST',
           url: this.baseUrl + '/users/googleSign',
           data: {
-              token:token
+              token
           }
         })
         .then((result) => {
-          console.log(result)
-          localStorage.setItem('access_token', result.access_token)
+          console.log(result.data)
+          localStorage.setItem('access_token', result.data.token)
+          this.$swal("Successfully Loggen In!", `Welcome Back ${result.data.email}`, "success");
+          this.$emit('add')
           this.clearInput()
           this.authLog()
         }).catch((err) => {
@@ -82,7 +80,6 @@ export default {
         });
       },
       onSignInError (error) {
-        // `error` contains any error occurred.
         console.log('OH NOES', error)
       },
       authLog() {

@@ -38,7 +38,7 @@ export default {
             message: "Hello World",
             isLogin: false,
             isInLogin: true,
-            baseUrl: 'http://localhost:3000',
+            baseUrl: 'https://intense-basin-29706.herokuapp.com',
             status: {
                 'Pre-Log': [],
                 'To-Do': [],

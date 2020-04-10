@@ -37,8 +37,7 @@ export default {
     data() {
         return {
             titleChg: '',
-            baseUrl: 'http://localhost:3000'
-            // socket: {}
+            baseUrl: 'https://intense-basin-29706.herokuapp.com'
         }
     },
     components: {
