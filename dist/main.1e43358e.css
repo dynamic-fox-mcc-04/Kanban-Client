@@ -1,0 +1,75 @@
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
+}
+#outer-cont {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    
+}
+
+#cont-board {
+    width: 100vw;
+    margin: 2px 6px;
+    height: 89vh;
+    background-color: #263238;
+    border-radius: 0.5rem;
+    
+}
+#navbar {
+    top: 0.2%;
+    margin: 0 6px;
+    border-radius: 0.5rem;
+    background-color: #263238;
+}
+#cont {
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+}
+*[data-v-62f85a] {
+    margin: 0;
+    padding: 0;
+}
+
+/* body {
+    position: absolute;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */
+
+/* .navbar {
+    top: 0.2%;
+    margin: 0 6px;
+    border-radius: 0.5rem;
+    background-color: #263238;
+} */
+#outer-cont[data-v-62f85a] {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+#cont-board[data-v-62f85a] {
+    width: 100vw;
+    margin: 2px 6px;
+    height: 89vh;
+    background-color: #263238;
+    border-radius: 0.5rem;
+}
+.card-body[data-v-62f85a] {
+    overflow-y: scroll;
+}
