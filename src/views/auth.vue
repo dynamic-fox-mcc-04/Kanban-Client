@@ -6,7 +6,7 @@
         </div>
         <div class="divLanding">
             <h2>Fox-Kanban</h2>
-            <h5></h5>
+            <h5>Always step ahead!</h5>
         </div>
 
         <div id="login-form-container" class="auth-container" v-if="isLoginForm">
@@ -70,7 +70,6 @@ import axios from 'axios'
 
 export default {
     name: "Auth",
-    // props: ['isLoading'],
     data() {
         return {
             userLogin: {
@@ -99,7 +98,7 @@ export default {
             console.log(`profile`, profile)
             axios({
                 method: 'post',
-                url: `http://localhost:3000/users/googleLogin`,
+                url: `https://nameless-oasis-92283.herokuapp.com/users/googleLogin`,
                 data: {
                     token
                 }
@@ -114,10 +113,6 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-            .finally(()=>{
-                // this.$emit('isLoadingEmit', false)
-            })
-            
         },
         onSignInError (error) {
             console.log('OH NOES', error)
@@ -139,7 +134,7 @@ export default {
                 email: this.userRegister.email,
                 password: this.userRegister.password
             }
-            axios.post(`http://localhost:3000/users/register`, account)
+            axios.post(`https://nameless-oasis-92283.herokuapp.com/users/register`, account)
                 .then(result => {
                     localStorage.setItem('token', result.data.token)
                     // this.isLogin = true
@@ -163,7 +158,7 @@ export default {
                 email: this.userLogin.email,
                 password: this.userLogin.password
             }
-            axios.post(`http://localhost:3000/users/login`, account)
+            axios.post(`https://nameless-oasis-92283.herokuapp.com/users/login`, account)
                 .then(result => {
                     localStorage.setItem('token', result.data.token)
                     this.isLoginFalse = false

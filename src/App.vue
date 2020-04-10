@@ -55,7 +55,7 @@ export default {
             // this.isLoading = true
             axios({
                     method: 'get',
-                    url: 'http://localhost:3000/tasks',
+                    url: 'https://nameless-oasis-92283.herokuapp.com/tasks',
                     headers: {
                         token: localStorage.getItem('token')
                     }

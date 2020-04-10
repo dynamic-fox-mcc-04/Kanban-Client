@@ -35,13 +35,14 @@ export default {
         Board,
         AddForm
     },
-    props: ['listBacklog','listUpcoming','listProgress','listDone', 'isLoading'],
+    props: ['listBacklog','listUpcoming','listProgress','listDone'],
     data() {
         return {
             moreTask: {
                 title: '',
                 description: ''
             },
+            title: ['Backlog','Upcoming','Progress','Done'],
             edit: {
                 id: '',
                 title: '',
@@ -71,9 +72,6 @@ export default {
         }
     },
     computed: {
-        allList() {
-            return [listBacklog, listUpcoming, listProgress, listDone]
-        },
         backlog() {
             return this.listBacklog
         },
@@ -95,7 +93,7 @@ export default {
                     let id = task.id
                     axios({
                         method: 'patch',
-                        url: `http://localhost:3000/tasks/${id}`,
+                        url: `https://nameless-oasis-92283.herokuapp.com/tasks/${id}`,
                         data: {
                             id: task.id,
                             status: 'backlog'
@@ -121,7 +119,7 @@ export default {
                     let id = task.id
                     axios({
                         method: 'patch',
-                        url: `http://localhost:3000/tasks/${id}`,
+                        url: `https://nameless-oasis-92283.herokuapp.com/tasks/${id}`,
                         data: {
                             id: task.id,
                             status: 'upcoming'
@@ -147,7 +145,7 @@ export default {
                     let id = task.id
                     axios({
                         method: 'patch',
-                        url: `http://localhost:3000/tasks/${id}`,
+                        url: `https://nameless-oasis-92283.herokuapp.com/tasks/${id}`,
                         data: {
                             id: task.id,
                             status: 'progress'
@@ -169,11 +167,10 @@ export default {
         done() {
             this.listDone.forEach(task => {
                 if (task.status !== 'done') {
-                    console.log(`masuk done`)
                     let id = task.id
                     axios({
                         method: 'patch',
-                        url: `http://localhost:3000/tasks/${id}`,
+                        url: `https://nameless-oasis-92283.herokuapp.com/tasks/${id}`,
                         data: {
                             id: task.id,
                             status: 'done'

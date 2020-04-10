@@ -53,7 +53,7 @@ export default {
                     if (result.value) {
                         axios({
                             method: 'delete',
-                            url: `http://localhost:3000/tasks/${id}`,
+                            url: `https://nameless-oasis-92283.herokuapp.com/tasks/${id}`,
                             headers: {
                                 token: localStorage.getItem('token')
                             }

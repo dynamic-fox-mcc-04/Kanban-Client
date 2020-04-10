@@ -41,7 +41,7 @@ export default {
             }
             axios({
                     method: 'put',
-                    url: `http://localhost:3000/tasks/${this.detail.id}`,
+                    url: `https://nameless-oasis-92283.herokuapp.com/tasks/${this.detail.id}`,
                     data: {
                         title: this.edit.title,
                         description: this.edit.description,
