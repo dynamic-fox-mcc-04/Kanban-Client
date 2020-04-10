@@ -93,6 +93,34 @@ var app = new Vue ({
             this.isLogin = false
         },
 
+        readTask (){
+            axios({
+                method: 'GET',
+                url: baseUrl + '/tasks',
+                headers: {
+                    access_token: localStorage.token
+                }
+            })
+            .then()
+            .catch()
+        },
+
+        createTask(){
+            axios({  
+                method: 'POST',
+                url: baseUrl + '/tasks',
+                headers: {
+                    access_token: localStorage.token
+                },
+                data: {
+                    newTask
+                }
+            })
+            .then()
+            .catch()
+
+        }
+
     },
     // Vue Lifecycle
     beforeCreate(){
