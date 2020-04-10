@@ -1,8 +1,16 @@
 <template>
   <div>
+    <div v-if="showError">
+      <input class="alert-state" id="alert-4" type="checkbox">
+      <div class="alert alert-danger dismissible error-msg">
+        {{ error }}
+        <label class="btn-close" v-on:click="emptyError" for="alert-4">X</label>
+      </div>
+    </div>
     <!-- <div v-if="showError" class="alert alert-danger error-msg">{{ error }}</div> -->
-    <Board v-if="logStatus" v-bind:email="email" v-bind:avatar="avatar" :tasks="tasks"></Board>
-    <LoginPage @post-register="register" @post-login="login"></LoginPage>
+    <Board v-if="logStatus" v-bind:email="email" v-bind:avatar="avatar" :tasks="tasks"
+    @create-task="createTask" @destroy-item="destroyTask" @modify-task="updateTask"></Board>
+    <LoginPage v-else @post-register="register" @post-login="login"></LoginPage>
   </div>
 </template>
 
@@ -26,19 +34,22 @@ export default {
           id: 1,
           title: 'asdf',
           description: 'No description added.',
-          category: 'Backlog'
+          category: 'Backlog',
+          email: 'fadhil@mail.com'
         },
         {
           id: 2,
           title: 'kentang',
           description: 'No description added.',
-          category: 'Ongoing'
+          category: 'Ongoing',
+          email: 'fadhil@mail.com'
         },
         {
           id: 3,
           title: 'asdfasdsafa',
           description: 'No description added.',
-          category: 'Development'
+          category: 'Development',
+          email: 'sdasfas@mail.com'
         },
       ]
     };
@@ -49,6 +60,73 @@ export default {
     Register: Register
   },
   methods: {
+    fetchData: function() {
+      axios({
+        method: 'GET',
+        url: `https://salty-mesa-68078.herokuapp.com/tasks`
+      }).then(response => {
+        this.tasks = response.data
+      }).catch(err => {
+        console.log(err.response)
+        this.displayError(err.response.data.messages)
+        // setTimeout(this.emptyError(), 3000)
+      })
+    },
+    createTask: function(newItem) {
+      axios({
+        method: 'POST',
+        url: `https://salty-mesa-68078.herokuapp.com/tasks`,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          title: newItem.title,
+          description: newItem.description,
+          category: newItem.category
+        }
+      }).then(response => {
+        this.fetchData()
+      }).catch(err => {
+        console.log(err.response)
+        this.displayError(err.response.data.messages)
+        // setTimeout(this.emptyError(), 3000)
+      })
+    },
+    destroyTask: function(id) {
+      axios({
+        method: 'DELETE',
+        url: `https://salty-mesa-68078.herokuapp.com/tasks/${id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      }).then(response => {
+        this.fetchData()
+      }).catch(err => {
+        console.log(err.response)
+        this.displayError(err.response.data.messages)
+        // setTimeout(this.emptyError(), 3000)
+      })
+    },
+    updateTask: function(item) {
+      axios({
+        method: 'PUT',
+        url: `https://salty-mesa-68078.herokuapp.com/tasks/${item.id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          title: item.title,
+          description: item.description,
+          category: item.category
+        }
+      }).then(response => {
+        this.fetchData()
+      }).catch(err => {
+        console.log(err.response)
+        this.displayError(err.response.data.messages)
+        // setTimeout(this.emptyError(), 3000)
+      })
+    },
     login: function(userData) {
       axios({
         method: 'POST',
@@ -61,7 +139,7 @@ export default {
         this.sendToLocal(response.data)
       }).catch(err => {
         console.log(err.response)
-        this.displayError(err.response.data.messages, setTimeout(this.emptyError(), 3000))
+        this.displayError(err.response.data.messages)
         // setTimeout(this.emptyError(), 3000)
       })
     },
@@ -77,7 +155,7 @@ export default {
         this.sendToLocal(response.data)
       }).catch(err => {
         console.log(err.response)
-        this.displayError(err.response.data.messages, setTimeout(this.emptyError(), 3000))
+        this.displayError(err.response.data.messages)
         // setTimeout(this.emptyError(), 3000)
       })
     },
@@ -88,9 +166,11 @@ export default {
       this.email = data.email
       this.avatar = data.avatar
       this.logStatus = true
+      this.fetchData()
     },
-    displayError: function(messages, callback) {
+    displayError: function(messages) {
       this.error = messages.join(', ')
+      console.log('masuk display-error')
       this.showError = true
     },
     emptyError: function() {
@@ -104,6 +184,7 @@ export default {
       this.logStatus = true
       this.email = localStorage.getItem('email')
       this.avatar = localStorage.getItem('avatar')
+      this.fetchData()
       // this.getTasks()
     }
   }

@@ -25,7 +25,8 @@
     <!-- End of navbar -->
     <div class="board">
       <div class="row margin-large">
-        <Column v-for="cat in categories" :key="cat.cat" :category="cat" :tasks="tasks"></Column>
+        <Column v-for="cat in categories" :key="cat.cat" :category="cat" :tasks="tasks"
+        @add-task="addTask" @destroy="destroy" @modify="modify"></Column>
       </div>
     </div>
   </div>
@@ -52,6 +53,17 @@ export default {
         { cat: 'Development' },
         { cat: 'Finished' },
       ]
+    }
+  },
+  methods: {
+    addTask: function (newItem) {
+      this.$emit('create-task', newItem)
+    },
+    destroy: function (id) {
+      this.$emit('destroy-item', id)
+    },
+    modify: function (item) {
+      this.$emit('modify-item', item)
     }
   },
   computed: {

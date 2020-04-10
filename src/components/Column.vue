@@ -2,13 +2,14 @@
         <div class="card col-3 col padding-none cat" style="width: 20rem;">
           <div class="card-header">{{ category.cat }}</div>
             <div class="card-body column-bod">
-              <Card v-for="task in selector" :key="task.id" :task="task"></Card>
+              <Card v-for="task in selector" :key="task.id" :task="task"
+              @destroy="destroy" @modify="modify"></Card>
             </div>
           <div class="card-footer">
             <form v-if="summonFormAdd" class="form-group" id="add-task">
                 <p> <b>Add Task:</b> </p>
                 <input type="text" id="title" v-model="title" placeholder="Title"><br>
-                <input type="password" id="description" v-model="description" placeholder="Description"><br><br>
+                <input type="text" id="description" v-model="description" placeholder="Description"><br>
                 <button v-on:click.prevent="addTask">Add</button>
                 <button v-on:click.prevent="hideForm">close</button>
             </form>
@@ -39,9 +40,25 @@ export default {
   methods: {
     summonForm: function () {
       this.summonFormAdd = true
+      this.title = ''
+      this.description = ''
     },
     hideForm: function () {
       this.summonFormAdd = false
+    },
+    addTask: function () {
+      this.$emit('add-task', {
+          title: this.title,
+          description: this.description,
+          category: this.category.cat
+      })
+      this.hideForm()
+    },
+    destroy: function (id) {
+        this.$emit('destroy', id)
+    },
+    modify: function (item) {
+        this.$emit('modify', item)
     }
   },
   computed: {

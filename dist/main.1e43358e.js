@@ -8912,19 +8912,60 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'Card',
   props: {
     task: Object
   },
-  body: function body() {
+  data: function data() {
     return {
+      title: '',
+      description: '',
+      category: '',
       showEdit: false
     };
   },
   methods: {
     editCard: function editCard() {
+      this.title = this.task.title;
+      this.description = this.task.description;
+      this.category = this.task.category;
       this.showEdit = true;
+    },
+    editTask: function editTask() {
+      this.$emit('modify', {
+        id: this.task.id,
+        title: this.title,
+        description: this.description,
+        category: this.category
+      });
+    },
+    hideForm: function hideForm() {
+      this.showEdit = false;
+    },
+    destroy: function destroy() {
+      this.$emit('destroy', this.task.id);
+    }
+  },
+  computed: {
+    canEdit: function canEdit() {
+      if (this.task.User.email === localStorage.getItem('email')) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
@@ -8941,119 +8982,202 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card", staticStyle: { width: "95%" } }, [
-    _c("div", { staticClass: "card-body" }, [
-      _vm.showEdit
-        ? _c("form", { staticClass: "form-group", attrs: { id: "add-task" } }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.task.title,
-                  expression: "task.title"
-                }
-              ],
-              attrs: { type: "text", id: "title", placeholder: "Title" },
-              domProps: { value: _vm.task.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+  return _c(
+    "div",
+    {
+      staticClass: "card",
+      staticStyle: { width: "95%", "margin-bottom": "15%" }
+    },
+    [
+      _c("div", { staticClass: "card-body" }, [
+        _vm.showEdit
+          ? _c(
+              "form",
+              { staticClass: "form-group", attrs: { id: "add-task" } },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.title,
+                      expression: "title"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    id: "title-edit",
+                    placeholder: "Title"
+                  },
+                  domProps: { value: _vm.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.title = $event.target.value
+                    }
                   }
-                  _vm.$set(_vm.task, "title", $event.target.value)
-                }
-              }
-            }),
-            _c("br"),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.description,
-                  expression: "description"
-                }
-              ],
-              attrs: {
-                type: "password",
-                id: "description",
-                placeholder: "Description"
-              },
-              domProps: { value: _vm.description },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                }),
+                _c("br"),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.description,
+                      expression: "description"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    id: "description-edit",
+                    placeholder: "Description"
+                  },
+                  domProps: { value: _vm.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.description = $event.target.value
+                    }
                   }
-                  _vm.description = $event.target.value
-                }
-              }
-            }),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.addTask($event)
-                  }
-                }
-              },
-              [_vm._v("Add")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.hideForm($event)
-                  }
-                }
-              },
-              [_vm._v("close")]
+                }),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.category,
+                        expression: "category"
+                      }
+                    ],
+                    staticStyle: { "border-color": "white", color: "white" },
+                    attrs: { id: "category-edit" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.category = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "Backlog" } }, [
+                      _vm._v("Backlog")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Ongoing" } }, [
+                      _vm._v("Ongoing")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Development" } }, [
+                      _vm._v("Development")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Finished" } }, [
+                      _vm._v("Finished")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.editTask($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Edit")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.hideForm($event)
+                      }
+                    }
+                  },
+                  [_vm._v("close")]
+                )
+              ]
             )
-          ])
-        : _c("div", { staticClass: "item-display" }, [
-            _c("h4", [_vm._v(_vm._s(_vm.task.title))]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(_vm._s(_vm.task.description))
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(_vm._s(_vm.task.category))
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "card-link",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.editCard($event)
-                  }
-                }
-              },
-              [_vm._v("Edit")]
-            ),
-            _vm._v(" "),
-            _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
-              _vm._v("Delete")
+          : _c("div", { staticClass: "item-display" }, [
+              _c("h4", [_vm._v(_vm._s(_vm.task.title))]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(_vm._s(_vm.task.description))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(_vm._s(_vm.task.category))
+              ]),
+              _vm._v(" "),
+              _vm.canEdit
+                ? _c("div", { attrs: { id: "editable" } }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "card-link",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.editCard($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Edit")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "card-link",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.destroy($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  ])
+                : _c("div", { attrs: { id: "info-edit" } }, [
+                    _vm._v("\n            Owner: "),
+                    _c("br"),
+                    _vm._v(" " + _vm._s(_vm.task.User.email) + "\n        ")
+                  ])
             ])
-          ])
-    ])
-  ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -9187,6 +9311,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: 'Column',
   props: {
@@ -9206,9 +9331,25 @@ var _default = {
   methods: {
     summonForm: function summonForm() {
       this.summonFormAdd = true;
+      this.title = '';
+      this.description = '';
     },
     hideForm: function hideForm() {
       this.summonFormAdd = false;
+    },
+    addTask: function addTask() {
+      this.$emit('add-task', {
+        title: this.title,
+        description: this.description,
+        category: this.category.cat
+      });
+      this.hideForm();
+    },
+    destroy: function destroy(id) {
+      this.$emit('destroy', id);
+    },
+    modify: function modify(item) {
+      this.$emit('modify', item);
     }
   },
   computed: {
@@ -9249,7 +9390,11 @@ exports.default = _default;
         "div",
         { staticClass: "card-body column-bod" },
         _vm._l(_vm.selector, function(task) {
-          return _c("Card", { key: task.id, attrs: { task: task } })
+          return _c("Card", {
+            key: task.id,
+            attrs: { task: task },
+            on: { destroy: _vm.destroy, modify: _vm.modify }
+          })
         }),
         1
       ),
@@ -9294,7 +9439,7 @@ exports.default = _default;
                     }
                   ],
                   attrs: {
-                    type: "password",
+                    type: "text",
                     id: "description",
                     placeholder: "Description"
                   },
@@ -9308,7 +9453,6 @@ exports.default = _default;
                     }
                   }
                 }),
-                _c("br"),
                 _c("br"),
                 _vm._v(" "),
                 _c(
@@ -9430,6 +9574,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: 'Board',
   props: {
@@ -9452,6 +9597,17 @@ var _default = {
         cat: 'Finished'
       }]
     };
+  },
+  methods: {
+    addTask: function addTask(newItem) {
+      this.$emit('create-task', newItem);
+    },
+    destroy: function destroy(id) {
+      this.$emit('destroy-item', id);
+    },
+    modify: function modify(item) {
+      this.$emit('modify-item', item);
+    }
   },
   computed: {
     profPic: function profPic() {
@@ -9507,7 +9663,12 @@ exports.default = _default;
         _vm._l(_vm.categories, function(cat) {
           return _c("Column", {
             key: cat.cat,
-            attrs: { category: cat, tasks: _vm.tasks }
+            attrs: { category: cat, tasks: _vm.tasks },
+            on: {
+              "add-task": _vm.addTask,
+              destroy: _vm.destroy,
+              modify: _vm.modify
+            }
           })
         }),
         1
@@ -11790,6 +11951,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'App',
   data: function data() {
@@ -11803,17 +11972,20 @@ var _default = {
         id: 1,
         title: 'asdf',
         description: 'No description added.',
-        category: 'Backlog'
+        category: 'Backlog',
+        email: 'fadhil@mail.com'
       }, {
         id: 2,
         title: 'kentang',
         description: 'No description added.',
-        category: 'Ongoing'
+        category: 'Ongoing',
+        email: 'fadhil@mail.com'
       }, {
         id: 3,
         title: 'asdfasdsafa',
         description: 'No description added.',
-        category: 'Development'
+        category: 'Development',
+        email: 'sdasfas@mail.com'
       }]
     };
   },
@@ -11823,8 +11995,87 @@ var _default = {
     Register: _Register.default
   },
   methods: {
-    login: function login(userData) {
+    fetchData: function fetchData() {
       var _this = this;
+
+      (0, _axios.default)({
+        method: 'GET',
+        url: "https://salty-mesa-68078.herokuapp.com/tasks"
+      }).then(function (response) {
+        _this.tasks = response.data;
+      }).catch(function (err) {
+        console.log(err.response);
+
+        _this.displayError(err.response.data.messages); // setTimeout(this.emptyError(), 3000)
+
+      });
+    },
+    createTask: function createTask(newItem) {
+      var _this2 = this;
+
+      (0, _axios.default)({
+        method: 'POST',
+        url: "https://salty-mesa-68078.herokuapp.com/tasks",
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          title: newItem.title,
+          description: newItem.description,
+          category: newItem.category
+        }
+      }).then(function (response) {
+        _this2.fetchData();
+      }).catch(function (err) {
+        console.log(err.response);
+
+        _this2.displayError(err.response.data.messages); // setTimeout(this.emptyError(), 3000)
+
+      });
+    },
+    destroyTask: function destroyTask(id) {
+      var _this3 = this;
+
+      (0, _axios.default)({
+        method: 'DELETE',
+        url: "https://salty-mesa-68078.herokuapp.com/tasks/".concat(id),
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      }).then(function (response) {
+        _this3.fetchData();
+      }).catch(function (err) {
+        console.log(err.response);
+
+        _this3.displayError(err.response.data.messages); // setTimeout(this.emptyError(), 3000)
+
+      });
+    },
+    updateTask: function updateTask(item) {
+      var _this4 = this;
+
+      (0, _axios.default)({
+        method: 'PUT',
+        url: "https://salty-mesa-68078.herokuapp.com/tasks/".concat(item.id),
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          title: item.title,
+          description: item.description,
+          category: item.category
+        }
+      }).then(function (response) {
+        _this4.fetchData();
+      }).catch(function (err) {
+        console.log(err.response);
+
+        _this4.displayError(err.response.data.messages); // setTimeout(this.emptyError(), 3000)
+
+      });
+    },
+    login: function login(userData) {
+      var _this5 = this;
 
       (0, _axios.default)({
         method: 'POST',
@@ -11834,16 +12085,16 @@ var _default = {
           password: userData.password
         }
       }).then(function (response) {
-        _this.sendToLocal(response.data);
+        _this5.sendToLocal(response.data);
       }).catch(function (err) {
         console.log(err.response);
 
-        _this.displayError(err.response.data.messages, setTimeout(_this.emptyError(), 3000)); // setTimeout(this.emptyError(), 3000)
+        _this5.displayError(err.response.data.messages); // setTimeout(this.emptyError(), 3000)
 
       });
     },
     register: function register(userData) {
-      var _this2 = this;
+      var _this6 = this;
 
       (0, _axios.default)({
         method: 'POST',
@@ -11853,11 +12104,11 @@ var _default = {
           password: userData.password
         }
       }).then(function (response) {
-        _this2.sendToLocal(response.data);
+        _this6.sendToLocal(response.data);
       }).catch(function (err) {
         console.log(err.response);
 
-        _this2.displayError(err.response.data.messages, setTimeout(_this2.emptyError(), 3000)); // setTimeout(this.emptyError(), 3000)
+        _this6.displayError(err.response.data.messages); // setTimeout(this.emptyError(), 3000)
 
       });
     },
@@ -11868,9 +12119,11 @@ var _default = {
       this.email = data.email;
       this.avatar = data.avatar;
       this.logStatus = true;
+      this.fetchData();
     },
-    displayError: function displayError(messages, callback) {
+    displayError: function displayError(messages) {
       this.error = messages.join(', ');
+      console.log('masuk display-error');
       this.showError = true;
     },
     emptyError: function emptyError() {
@@ -11883,7 +12136,8 @@ var _default = {
     if (localStorage.getItem('token')) {
       this.logStatus = true;
       this.email = localStorage.getItem('email');
-      this.avatar = localStorage.getItem('avatar'); // this.getTasks()
+      this.avatar = localStorage.getItem('avatar');
+      this.fetchData(); // this.getTasks()
     }
   }
 };
@@ -11903,15 +12157,44 @@ exports.default = _default;
   return _c(
     "div",
     [
-      _vm.logStatus
-        ? _c("Board", {
-            attrs: { email: _vm.email, avatar: _vm.avatar, tasks: _vm.tasks }
-          })
+      _vm.showError
+        ? _c("div", [
+            _c("input", {
+              staticClass: "alert-state",
+              attrs: { id: "alert-4", type: "checkbox" }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "alert alert-danger dismissible error-msg" },
+              [
+                _vm._v("\n      " + _vm._s(_vm.error) + "\n      "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "btn-close",
+                    attrs: { for: "alert-4" },
+                    on: { click: _vm.emptyError }
+                  },
+                  [_vm._v("X")]
+                )
+              ]
+            )
+          ])
         : _vm._e(),
       _vm._v(" "),
-      _c("LoginPage", {
-        on: { "post-register": _vm.register, "post-login": _vm.login }
-      })
+      _vm.logStatus
+        ? _c("Board", {
+            attrs: { email: _vm.email, avatar: _vm.avatar, tasks: _vm.tasks },
+            on: {
+              "create-task": _vm.createTask,
+              "destroy-item": _vm.destroyTask,
+              "modify-task": _vm.updateTask
+            }
+          })
+        : _c("LoginPage", {
+            on: { "post-register": _vm.register, "post-login": _vm.login }
+          })
     ],
     1
   )
@@ -11999,7 +12282,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60176" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62051" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

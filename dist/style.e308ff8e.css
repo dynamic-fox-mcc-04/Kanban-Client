@@ -66,7 +66,8 @@ h5 {
 }
 .error-msg {
     position: fixed;
-    top: 0;
+    bottom: 0;
+    z-index: 30;
 }
 .column-bod {
     overflow-y: scroll;
