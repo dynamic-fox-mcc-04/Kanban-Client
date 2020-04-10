@@ -16,10 +16,10 @@
               aria-describedby="emailHelp"
               v-model="user.email"
             />
-            <small id="emailHelp" class="form-text text-muted"
-              >We'll never share your email with anyone else outside
-              organization.</small
-            >
+            <small id="emailHelp" class="form-text text-muted">
+              We'll never share your email with anyone else outside
+              organization.
+            </small>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
@@ -52,10 +52,10 @@
               aria-describedby="emailHelp"
               v-model="user.email"
             />
-            <small id="emailHelp" class="form-text text-muted"
-              >We'll never share your email with anyone else outside
-              organization.</small
-            >
+            <small id="emailHelp" class="form-text text-muted">
+              We'll never share your email with anyone else outside
+              organization.
+            </small>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
@@ -69,7 +69,20 @@
 
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+        <button v-google-signin-button="clientId" class="google-signin-button">
+          Continue with Google
+        </button><br>
+        <!-- <ul v-if="githubUser">
+          <li v-for="repository in repositories" :key="repository.id">
+            <a :href="repository.html_url" target="_blank">{{
+              repository.name
+            }}</a>
+          </li>
+        </ul>
+        <div v-else>
+          <button @click.prevent="connect">Connect to GitHub</button>
+        </div> -->
         <label>Don't Have an Account?</label>
         <button @click="registerForm">Register</button>
       </div>
@@ -92,9 +105,9 @@
                 class="form-control form-control-sm"
                 v-model="selectedUser"
               >
-                <option v-for="user in users" :key="user.id" :value="user.id">{{
-                  user.email
-                }}</option>
+                <option v-for="user in users" :key="user.id" :value="user.id">
+                  {{ user.email }}
+                </option>
               </select>
             </div>
             <button class="col col-4" type="submit">Select</button>
@@ -266,14 +279,18 @@ export default {
   name: "App",
   data() {
     return {
+      clientId:
+        "1043279586008-aibiiffrpqe0h9vm1d7gmo9grvte499k.apps.googleusercontent.com",
       isLogin: false,
       isRegister: true,
+      // githubUser: null,
+      // repositories: [],
       users: [],
       user: {
         email: "",
         password: "",
         currentProject: "",
-        task: "",
+        task: ""
       },
       selected: "",
       selectedUser: "",
@@ -283,17 +300,17 @@ export default {
       // auth2: gapi.auth2.getAuthInstance(),
       //   ga dipake///
       prelog: {
-        task: "",
+        task: ""
       },
       todo: {
-        task: "",
+        task: ""
       },
       process: {
-        task: "",
+        task: ""
       },
       completed: {
-        task: "",
-      },
+        task: ""
+      }
       //ga dipake
     };
   },
@@ -310,10 +327,10 @@ export default {
         url: "https://evening-stream-54386.herokuapp.com/register",
         data: {
           email: this.user.email,
-          password: this.user.password,
-        },
+          password: this.user.password
+        }
       })
-        .then((result) => {
+        .then(result => {
           const { data } = result;
           // const { access_token } = data;
           // localStorage.setItem("access_token", access_token);
@@ -322,7 +339,7 @@ export default {
           this.isRegister = true;
           // this.getProjects();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -353,18 +370,18 @@ export default {
         url: "https://evening-stream-54386.herokuapp.com/contributors",
         data: {
           ProjectId: localStorage.ProjectId,
-          UserId: this.selectedUser,
+          UserId: this.selectedUser
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log(result);
           this.getProjects();
           this.selectedUser = "";
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -373,9 +390,9 @@ export default {
       axios
         .post("https://evening-stream-54386.herokuapp.com/login", {
           email: this.user.email,
-          password: this.user.password,
+          password: this.user.password
         })
-        .then((result) => {
+        .then(result => {
           const { data } = result;
           const { access_token } = data;
           localStorage.setItem("access_token", access_token);
@@ -386,7 +403,7 @@ export default {
           // this.getTasks();
           this.getCurrentProjects();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -396,11 +413,11 @@ export default {
         method: "post",
         url: "https://evening-stream-54386.herokuapp.com/projects",
         data: {
-          title: this.user.currentProject,
+          title: this.user.currentProject
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
         .then(({ data }) => {
           // console.log(data.id);
@@ -409,19 +426,19 @@ export default {
           this.user.currentProject = "";
           this.getCurrentProjects();
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
-    getProjects() { 
+    getProjects() {
       //ok
       //bisa juga untuk manggil tasks
       // event.preventDefault();
       axios
         .get("https://evening-stream-54386.herokuapp.com/projects", {
           headers: {
-            access_token: localStorage.access_token,
-          },
+            access_token: localStorage.access_token
+          }
         })
-        .then((result) => {
+        .then(result => {
           // event.preventDefault();
           const { data } = result;
           const { projects } = data;
@@ -437,13 +454,13 @@ export default {
           //   });
           // });
           // }
-          projects.filter((project) => {
+          projects.filter(project => {
             if (project.ProjectId == localStorage.ProjectId) {
               this.tasks = project.Project.Tasks;
             }
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -451,10 +468,10 @@ export default {
       axios
         .get("https://evening-stream-54386.herokuapp.com/projects", {
           headers: {
-            access_token: localStorage.access_token,
-          },
+            access_token: localStorage.access_token
+          }
         })
-        .then((result) => {
+        .then(result => {
           // event.preventDefault();
           this.currentProjects = [];
           const { data } = result;
@@ -462,15 +479,15 @@ export default {
           this.projects = projects;
           // console.log("YA", projects);
           // if (this.currentProjects === 0) {
-          projects.map((project) => {
+          projects.map(project => {
             // event.preventDefault()
             this.currentProjects.push({
               title: project.Project.title,
-              ProjectId: project.ProjectId,
+              ProjectId: project.ProjectId
             });
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -497,34 +514,34 @@ export default {
         url: "https://evening-stream-54386.herokuapp.com/tasks",
         data: {
           title: this.user.task,
-          ProjectId: localStorage.ProjectId,
+          ProjectId: localStorage.ProjectId
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log(data);
           event.preventDefault();
           this.user.task = "";
           return this.getProjects();
         })
-        .catch((err) => console.log("ini", err));
+        .catch(err => console.log("ini", err));
     },
     cancelTask(id) {
       axios({
         method: "delete",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((_) => {
+        .then(_ => {
           // event.preventDefault();
           console.log("ok");
           return this.getProjects();
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
 
     addTodo(id) {
@@ -533,17 +550,17 @@ export default {
         method: "put",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
         data: {
-          category: "todo",
+          category: "todo"
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log(result);
           this.getProjects();
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
 
     cancelTodo(id) {
@@ -551,34 +568,34 @@ export default {
         method: "put",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
         data: {
-          category: "prelog",
+          category: "prelog"
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log(result);
           this.getProjects();
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
     },
     addProcess(id) {
       axios({
         method: "put",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
         data: {
-          category: "process",
+          category: "process"
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log("OK", result);
           this.getProjects();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -587,17 +604,17 @@ export default {
         method: "put",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
         data: {
-          category: "todo",
+          category: "todo"
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log("OK", result);
           this.getProjects();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -607,17 +624,17 @@ export default {
         method: "put",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
         data: {
-          category: "complete",
+          category: "complete"
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log("OK", result);
           this.getProjects();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -626,17 +643,17 @@ export default {
         method: "put",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
         data: {
-          category: "process",
+          category: "process"
         },
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
-        .then((result) => {
+        .then(result => {
           // console.log("OK", result);
           this.getProjects();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -645,14 +662,14 @@ export default {
         method: "get",
         url: "https://evening-stream-54386.herokuapp.com/users",
         headers: {
-          access_token: localStorage.access_token,
-        },
+          access_token: localStorage.access_token
+        }
       })
         .then(({ data }) => {
           this.users = data.users;
           // console.log(data);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -662,66 +679,127 @@ export default {
         .get(`https://evening-stream-54386.herokuapp.com/tasks/`, {
           headers: {
             access_token: localStorage.access_token,
-            ProjectId: localStorage.ProjectId,
-          },
+            ProjectId: localStorage.ProjectId
+          }
         })
-        .then((result) => {
+        .then(result => {
           const { data } = result;
           //   const { tasks } = data; /
           // console.log("INI", data);
           //   this.tasks = projects;
           //   console.log(projects);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     onSignIn(googleUser) {
-      let profile = googleUser.getBasicProfile();
-      console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log("Name: " + profile.getName());
-      console.log("Image URL: " + profile.getImageUrl());
-      console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
-      this.isLogin = true;
-      this.getCurrentProjects();
-      this.getProjects();
-
-      // let id_token = this.GoogleAuth;
-      // this.$gAuth
-      //   .getAuthCode()
-      //   .then((authCode) => {
-      //     //on success
-      //     return this.$http.post("https://evening-stream-54386.herokuapp.com/googleSign", {
-      //       // code: authCode,
-      //       id_token: id_token
-      //     });
-      //   })
-      //   .then((response) => {
-      //     //after ajax
-      //     console.log(response);
-      //   })
-      //   .catch((error) => {
-      //     //on fail do something
-      //     console.log(error);
-      //   });
-      // axios({
-      //   method: "POST",
-      //   url: "https://evening-stream-54386.herokuapp.com/googleSign",
-      //   data: {
-      //     id_token,
-      //   },
-      // })
-      //   .then((datum) => {
-      //     localStorage.setItem("access_token", datum.access_token);
-      //     // localStorage.setItem("email", datum.email);
-      //     console.log(datum);
-      //     this.isLogin = true;
-      //     this.getProjects();
-      //     this.getTasks();
-      //     // auth();
-      //   })
-      //   .fail((err) => console.log(err));
+      // let profile = googleUser.getBasicProfile();
+      // console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      // console.log("Name: " + profile.getName());
+      // console.log("Image URL: " + profile.getImageUrl());
+      // console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      // this.isLogin = true;
+      // this.getCurrentProjects();
+      // this.getProjects();
+      return this.$gAuth
+        .signIn()
+        .then(GoogleUser => {
+          // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
+          console.log("user", GoogleUser);
+          // GoogleUser.getId() : Get the user's unique ID string.
+          // GoogleUser.getBasicProfile() : Get the user's basic profile information.
+          // GoogleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
+          this.isSignIn = this.$gAuth.isAuthorized;
+        })
+        .catch(error => {
+          //on fail do something
+          console.log(error);
+        });
     },
+    OnGoogleAuthSuccess(idToken) {
+      // console.log(idToken);
+      // Receive the idToken and make your magic with the backend
+      axios({
+        method: "post",
+        url: "https://evening-stream-54386.herokuapp.com/googleSign",
+        data: {
+          id_token: idToken
+        }
+      })
+        .then(({ data }) => {
+          // console.log("ini", data);
+          localStorage.setItem("access_token", data.access_token);
+          this.getProjects();
+          // this.getTasks();
+          this.isLogin = true;
+          this.getCurrentProjects();
+          // localStorage.setItem("email", datum.email);
+          // this.getProjects();
+        })
+        .catch(err => console.log("error", err));
+    },
+    OnGoogleAuthFail(error) {
+      console.log(error);
+    },
+    // let id_token = this.GoogleAuth;
+    // this.$gAuth
+    //   .getAuthCode()
+    //   .then((authCode) => {
+    //     //on success
+    //     return this.$http.post("https://evening-stream-54386.herokuapp.com/googleSign", {
+    //       // code: authCode,
+    //       id_token: id_token
+    //     });
+    //   })
+    //   .then((response) => {
+    //     //after ajax
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     //on fail do something
+    //     console.log(error);
+    //   });
+    // axios({
+    //   method: "POST",
+    //   url: "https://evening-stream-54386.herokuapp.com/googleSign",
+    //   data: {
+    //     id_token,
+    //   },
+    // })
+    //   .then((datum) => {
+    //     localStorage.setItem("access_token", datum.access_token);
+    //     // localStorage.setItem("email", datum.email);
+    //     console.log(datum);
+    //     this.isLogin = true;
+    //     this.getProjects();
+    //     this.getTasks();
+    //     // auth();
+    //   })
+    //   .fail((err) => console.log(err));
+    // connect: function() {
+    //   // Here, we create a new method
+    //   // that "connect" a user to GitHub
+    //   this.$bearer
+    //     .connect("github")
+    //     .then(this.connectSuccess)
+    //     .catch(console.error);
+    // },
+    // connectSuccess: function(data) {
+    //   // On success, we update the user object
+    //   this.user = data.authId;
+    //   this.fetchStarringRepositories();
+    // },
+    // fetchStarringRepositories: function() {
+    //   this.$bearer
+    //     .integration("github")
+    //     .auth(this.user)
+    //     .get("/user/starred")
+    //     .then(({ data }) => {
+    //       this.repositories = data;
+    //     })
+    //     .catch(console.error);
+    // }
   },
 
   created() {
@@ -749,7 +827,20 @@ export default {
     //   this.getProjects();
     // }
   },
+  mounted: function() {
+    // Here we initialize Bearer.
+    this.$bearer = bearer("sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A");
+  }
 };
 </script>
 
-<style></style>
+<style>
+.google-signin-button {
+  color: white;
+  background-color: red;
+  height: 50px;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 10px 20px 25px 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}</style>

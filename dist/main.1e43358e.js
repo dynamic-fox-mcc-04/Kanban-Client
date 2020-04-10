@@ -10920,12 +10920,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "App",
   data: function data() {
     return {
+      clientId: "1043279586008-aibiiffrpqe0h9vm1d7gmo9grvte499k.apps.googleusercontent.com",
       isLogin: false,
       isRegister: true,
+      // githubUser: null,
+      // repositories: [],
       users: [],
       user: {
         email: "",
@@ -11337,51 +11353,117 @@ var _default = {
       });
     },
     onSignIn: function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile();
-      console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      var _this16 = this;
 
-      console.log("Name: " + profile.getName());
-      console.log("Image URL: " + profile.getImageUrl());
-      console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      // let profile = googleUser.getBasicProfile();
+      // console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      // console.log("Name: " + profile.getName());
+      // console.log("Image URL: " + profile.getImageUrl());
+      // console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      // this.isLogin = true;
+      // this.getCurrentProjects();
+      // this.getProjects();
+      return this.$gAuth.signIn().then(function (GoogleUser) {
+        // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
+        console.log("user", GoogleUser); // GoogleUser.getId() : Get the user's unique ID string.
+        // GoogleUser.getBasicProfile() : Get the user's basic profile information.
+        // GoogleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
 
-      this.isLogin = true;
-      this.getCurrentProjects();
-      this.getProjects(); // let id_token = this.GoogleAuth;
-      // this.$gAuth
-      //   .getAuthCode()
-      //   .then((authCode) => {
-      //     //on success
-      //     return this.$http.post("https://evening-stream-54386.herokuapp.com/googleSign", {
-      //       // code: authCode,
-      //       id_token: id_token
-      //     });
-      //   })
-      //   .then((response) => {
-      //     //after ajax
-      //     console.log(response);
-      //   })
-      //   .catch((error) => {
-      //     //on fail do something
-      //     console.log(error);
-      //   });
-      // axios({
-      //   method: "POST",
-      //   url: "https://evening-stream-54386.herokuapp.com/googleSign",
-      //   data: {
-      //     id_token,
-      //   },
-      // })
-      //   .then((datum) => {
-      //     localStorage.setItem("access_token", datum.access_token);
-      //     // localStorage.setItem("email", datum.email);
-      //     console.log(datum);
-      //     this.isLogin = true;
-      //     this.getProjects();
-      //     this.getTasks();
-      //     // auth();
-      //   })
-      //   .fail((err) => console.log(err));
-    }
+        _this16.isSignIn = _this16.$gAuth.isAuthorized;
+      }).catch(function (error) {
+        //on fail do something
+        console.log(error);
+      });
+    },
+    OnGoogleAuthSuccess: function OnGoogleAuthSuccess(idToken) {
+      var _this17 = this;
+
+      // console.log(idToken);
+      // Receive the idToken and make your magic with the backend
+      (0, _axios.default)({
+        method: "post",
+        url: "https://evening-stream-54386.herokuapp.com/googleSign",
+        data: {
+          id_token: idToken
+        }
+      }).then(function (_ref3) {
+        var data = _ref3.data;
+        // console.log("ini", data);
+        localStorage.setItem("access_token", data.access_token);
+
+        _this17.getProjects(); // this.getTasks();
+
+
+        _this17.isLogin = true;
+
+        _this17.getCurrentProjects(); // localStorage.setItem("email", datum.email);
+        // this.getProjects();
+
+      }).catch(function (err) {
+        return console.log("error", err);
+      });
+    },
+    OnGoogleAuthFail: function OnGoogleAuthFail(error) {
+      console.log(error);
+    } // let id_token = this.GoogleAuth;
+    // this.$gAuth
+    //   .getAuthCode()
+    //   .then((authCode) => {
+    //     //on success
+    //     return this.$http.post("https://evening-stream-54386.herokuapp.com/googleSign", {
+    //       // code: authCode,
+    //       id_token: id_token
+    //     });
+    //   })
+    //   .then((response) => {
+    //     //after ajax
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     //on fail do something
+    //     console.log(error);
+    //   });
+    // axios({
+    //   method: "POST",
+    //   url: "https://evening-stream-54386.herokuapp.com/googleSign",
+    //   data: {
+    //     id_token,
+    //   },
+    // })
+    //   .then((datum) => {
+    //     localStorage.setItem("access_token", datum.access_token);
+    //     // localStorage.setItem("email", datum.email);
+    //     console.log(datum);
+    //     this.isLogin = true;
+    //     this.getProjects();
+    //     this.getTasks();
+    //     // auth();
+    //   })
+    //   .fail((err) => console.log(err));
+    // connect: function() {
+    //   // Here, we create a new method
+    //   // that "connect" a user to GitHub
+    //   this.$bearer
+    //     .connect("github")
+    //     .then(this.connectSuccess)
+    //     .catch(console.error);
+    // },
+    // connectSuccess: function(data) {
+    //   // On success, we update the user object
+    //   this.user = data.authId;
+    //   this.fetchStarringRepositories();
+    // },
+    // fetchStarringRepositories: function() {
+    //   this.$bearer
+    //     .integration("github")
+    //     .auth(this.user)
+    //     .get("/user/starred")
+    //     .then(({ data }) => {
+    //       this.repositories = data;
+    //     })
+    //     .catch(console.error);
+    // }
+
   },
   created: function created() {
     if (localStorage.access_token) {
@@ -11405,6 +11487,10 @@ var _default = {
     //   this.getProjects();
     // }
 
+  },
+  mounted: function mounted() {
+    // Here we initialize Bearer.
+    this.$bearer = bearer("sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A");
   }
 };
 exports.default = _default;
@@ -11476,7 +11562,7 @@ exports.default = _default;
                     },
                     [
                       _vm._v(
-                        "We'll never share your email with anyone else outside\n            organization."
+                        "\n            We'll never share your email with anyone else outside\n            organization.\n          "
                       )
                     ]
                   )
@@ -11585,7 +11671,7 @@ exports.default = _default;
                     },
                     [
                       _vm._v(
-                        "We'll never share your email with anyone else outside\n            organization."
+                        "\n            We'll never share your email with anyone else outside\n            organization.\n          "
                       )
                     ]
                   )
@@ -11627,10 +11713,22 @@ exports.default = _default;
               ]
             ),
             _vm._v(" "),
-            _c("div", {
-              staticClass: "g-signin2",
-              attrs: { "data-onsuccess": "onSignIn" }
-            }),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "google-signin-button",
+                    rawName: "v-google-signin-button",
+                    value: _vm.clientId,
+                    expression: "clientId"
+                  }
+                ],
+                staticClass: "google-signin-button"
+              },
+              [_vm._v("\n        Continue with Google\n      ")]
+            ),
+            _c("br"),
             _vm._v(" "),
             _c("label", [_vm._v("Don't Have an Account?")]),
             _vm._v(" "),
@@ -11701,7 +11799,13 @@ exports.default = _default;
                         return _c(
                           "option",
                           { key: user.id, domProps: { value: user.id } },
-                          [_vm._v(_vm._s(user.email))]
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(user.email) +
+                                "\n              "
+                            )
+                          ]
                         )
                       }),
                       0
@@ -12162,17 +12266,236 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/main.js":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-google-oauth2/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var googleAuth = function () {
+  function installClient() {
+    var apiUrl = 'https://apis.google.com/js/api.js';
+    return new Promise(resolve => {
+      var script = document.createElement('script');
+      script.src = apiUrl;
+
+      script.onreadystatechange = script.onload = function () {
+        if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+          setTimeout(function () {
+            resolve();
+          }, 500);
+        }
+      };
+
+      document.getElementsByTagName('head')[0].appendChild(script);
+    });
+  }
+
+  function initClient(config) {
+    return new Promise(resolve => {
+      window.gapi.load('auth2', () => {
+        window.gapi.auth2.init(config).then(() => {
+          resolve(window.gapi);
+        });
+      });
+    });
+  }
+
+  function Auth() {
+    if (!(this instanceof Auth)) return new Auth();
+    this.GoogleAuth = null;
+    /* window.gapi.auth2.getAuthInstance() */
+
+    this.isAuthorized = false;
+    this.isInit = false;
+    this.prompt = null;
+
+    this.isLoaded = function () {
+      /* eslint-disable */
+      console.warn('isLoaded() will be deprecated. You can use "this.$gAuth.isInit"');
+      return !!this.GoogleAuth;
+    };
+
+    this.load = (config, prompt) => {
+      installClient().then(() => {
+        return initClient(config);
+      }).then(gapi => {
+        this.GoogleAuth = gapi.auth2.getAuthInstance();
+        this.isInit = true;
+        this.prompt = prompt;
+        this.isAuthorized = this.GoogleAuth.isSignedIn.get();
+      });
+    };
+
+    this.signIn = (successCallback, errorCallback) => {
+      return new Promise((resolve, reject) => {
+        if (!this.GoogleAuth) {
+          if (typeof errorCallback === 'function') errorCallback(false);
+          reject(false);
+          return;
+        }
+
+        this.GoogleAuth.signIn().then(googleUser => {
+          if (typeof successCallback === 'function') successCallback(googleUser);
+          this.isAuthorized = this.GoogleAuth.isSignedIn.get();
+          resolve(googleUser);
+        }).catch(error => {
+          if (typeof errorCallback === 'function') errorCallback(error);
+          reject(error);
+        });
+      });
+    };
+
+    this.getAuthCode = (successCallback, errorCallback) => {
+      return new Promise((resolve, reject) => {
+        if (!this.GoogleAuth) {
+          if (typeof errorCallback === 'function') errorCallback(false);
+          reject(false);
+          return;
+        }
+
+        this.GoogleAuth.grantOfflineAccess({
+          prompt: this.prompt
+        }).then(function (resp) {
+          if (typeof successCallback === 'function') successCallback(resp.code);
+          resolve(resp.code);
+        }).catch(function (error) {
+          if (typeof errorCallback === 'function') errorCallback(error);
+          reject(error);
+        });
+      });
+    };
+
+    this.signOut = (successCallback, errorCallback) => {
+      return new Promise((resolve, reject) => {
+        if (!this.GoogleAuth) {
+          if (typeof errorCallback === 'function') errorCallback(false);
+          reject(false);
+          return;
+        }
+
+        this.GoogleAuth.signOut().then(() => {
+          if (typeof successCallback === 'function') successCallback();
+          this.isAuthorized = false;
+          resolve(true);
+        }).catch(error => {
+          if (typeof errorCallback === 'function') errorCallback(error);
+          reject(error);
+        });
+      });
+    };
+  }
+
+  return new Auth();
+}();
+
+function installGoogleAuthPlugin(Vue, options) {
+  /* eslint-disable */
+  //set config
+  let GoogleAuthConfig = null;
+  let GoogleAuthDefaultConfig = {
+    scope: 'profile email',
+    discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+  };
+  let prompt = 'select_account';
+
+  if (typeof options === 'object') {
+    GoogleAuthConfig = Object.assign(GoogleAuthDefaultConfig, options);
+    if (options.scope) GoogleAuthConfig.scope = options.scope;
+    if (options.prompt) prompt = options.prompt;
+
+    if (!options.clientId) {
+      console.warn('clientId is required');
+    }
+  } else {
+    console.warn('invalid option type. Object type accepted only');
+  } //Install Vue plugin
+
+
+  Vue.gAuth = googleAuth;
+  Object.defineProperties(Vue.prototype, {
+    $gAuth: {
+      get: function () {
+        return Vue.gAuth;
+      }
+    }
+  });
+  Vue.gAuth.load(GoogleAuthConfig, prompt);
+}
+
+var _default = installGoogleAuthPlugin;
+exports.default = _default;
+},{}],"node_modules/vue-google-signin-button-directive/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _vue = _interopRequireDefault(require("vue"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = _vue.default.directive('google-signin-button', {
+  bind: function (el, binding, vnode) {
+    CheckComponentMethods();
+    let clientId = binding.value;
+    let googleSignInAPI = document.createElement('script');
+    googleSignInAPI.setAttribute('src', 'https://apis.google.com/js/api:client.js');
+    document.head.appendChild(googleSignInAPI);
+    googleSignInAPI.onload = InitGoogleButton;
+
+    function InitGoogleButton() {
+      gapi.load('auth2', () => {
+        const auth2 = gapi.auth2.init({
+          client_id: clientId,
+          cookiepolicy: 'single_host_origin'
+        });
+        auth2.attachClickHandler(el, {}, OnSuccess, Onfail);
+      });
+    }
+
+    function OnSuccess(googleUser) {
+      vnode.context.OnGoogleAuthSuccess(googleUser.getAuthResponse().id_token);
+      googleUser.disconnect();
+    }
+
+    function Onfail(error) {
+      vnode.context.OnGoogleAuthFail(error);
+    }
+
+    function CheckComponentMethods() {
+      if (!vnode.context.OnGoogleAuthSuccess) {
+        throw new Error('The method OnGoogleAuthSuccess must be defined on the component');
+      }
+
+      if (!vnode.context.OnGoogleAuthFail) {
+        throw new Error('The method OnGoogleAuthFail must be defined on the component');
+      }
+    }
+  }
+});
+
+exports.default = _default;
+},{"vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
 
 var _App = _interopRequireDefault(require("./App.vue"));
 
+var _vueGoogleOauth = _interopRequireDefault(require("vue-google-oauth2"));
+
+var _vueGoogleSigninButtonDirective = _interopRequireDefault(require("vue-google-signin-button-directive"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import GAuth from 'vue-google-oauth2'
+_vue.default.config.productionTip = false;
 new _vue.default({
+  GoogleSignInButton: _vueGoogleSigninButtonDirective.default,
   render: function render(h) {
     return h(_App.default);
   }
@@ -12182,7 +12505,14 @@ new _vue.default({
 //   prompt: 'select_account'
 // }
 // Vue.use(GAuth, gauthOption)
-},{"vue":"node_modules/vue/dist/vue.runtime.esm.js","./App.vue":"src/App.vue"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+// const Bearer = require('@bearer/node-agent')
+// await Bearer.init({
+//   secretKey: "sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A",
+//   ignored: ["api-domain-to-ignore.com"],
+//   stripSensitiveData: true,
+//   stripSensitiveKeys: /^authorization$|^client.?id$|^access.?token$|^client.?secret$/i
+// })
+},{"vue":"node_modules/vue/dist/vue.runtime.esm.js","./App.vue":"src/App.vue","vue-google-oauth2":"node_modules/vue-google-oauth2/index.js","vue-google-signin-button-directive":"node_modules/vue-google-signin-button-directive/index.js"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -12210,7 +12540,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58328" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50143" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
