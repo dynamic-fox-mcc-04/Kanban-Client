@@ -68,3 +68,6 @@ h5 {
     position: fixed;
     top: 0;
 }
+.column-bod {
+    overflow-y: scroll;
+}

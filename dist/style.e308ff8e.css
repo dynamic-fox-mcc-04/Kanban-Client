@@ -68,5 +68,8 @@ h5 {
     position: fixed;
     top: 0;
 }
+.column-bod {
+    overflow-y: scroll;
+}
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */
