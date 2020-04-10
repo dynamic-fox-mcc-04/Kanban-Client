@@ -10873,19 +10873,72 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "App",
   data: function data() {
     return {
       isLogin: false,
+      isRegister: true,
+      users: [],
       user: {
         email: "",
         password: "",
         currentProject: "",
         task: ""
       },
+      selected: "",
+      selectedUser: "",
       projects: [],
       tasks: [],
+      currentProjects: [],
+      // auth2: gapi.auth2.getAuthInstance(),
       //   ga dipake///
       prelog: {
         task: ""
@@ -10903,29 +10956,99 @@ var _default = {
     };
   },
   methods: {
-    login: function login() {
+    backToLogin: function backToLogin() {
+      this.isRegister = true;
+    },
+    register: function register() {
       var _this = this;
 
-      _axios.default.post("http://localhost:3000/login", {
+      //ok
+      (0, _axios.default)({
+        method: "post",
+        url: "https://evening-stream-54386.herokuapp.com/register",
+        data: {
+          email: this.user.email,
+          password: this.user.password
+        }
+      }).then(function (result) {
+        var data = result.data; // const { access_token } = data;
+        // localStorage.setItem("access_token", access_token);
+
+        _this.user.email = "";
+        _this.user.password = "";
+        _this.isRegister = true; // this.getProjects();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    registerForm: function registerForm() {
+      this.isRegister = false;
+    },
+    setProject: function setProject(event) {
+      //ok
+      event.preventDefault();
+
+      if (localStorage.ProjectId) {
+        // event.preventDefault();
+        localStorage.ProjectId = this.selected;
+        this.selected = "";
+        return this.getProjects(); // this.getProjects();
+      } else {
+        // event.preventDefault();
+        localStorage.setItem("ProjectId", this.selected);
+        this.selected = ""; // this.getProjects();
+      }
+    },
+    addContributor: function addContributor() {
+      var _this2 = this;
+
+      (0, _axios.default)({
+        method: "post",
+        url: "https://evening-stream-54386.herokuapp.com/contributors",
+        data: {
+          ProjectId: localStorage.ProjectId,
+          UserId: this.selectedUser
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // console.log(result);
+        _this2.getProjects();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    login: function login() {
+      var _this3 = this;
+
+      //ok
+      _axios.default.post("https://evening-stream-54386.herokuapp.com/login", {
         email: this.user.email,
         password: this.user.password
       }).then(function (result) {
         var data = result.data;
         var access_token = data.access_token;
         localStorage.setItem("access_token", access_token);
-        _this.user.email = "";
-        _this.user.password = "";
-        _this.isLogin = true; //   this.getTasks()
+        _this3.user.email = "";
+        _this3.user.password = "";
+        _this3.isLogin = true;
+
+        _this3.getProjects(); // this.getTasks();
+
+
+        _this3.getCurrentProjects();
       }).catch(function (err) {
         console.log(err);
       });
     },
-    addProject: function addProject() {
-      var _this2 = this;
+    addProject: function addProject(event) {
+      var _this4 = this;
 
+      //ok
       (0, _axios.default)({
         method: "post",
-        url: "http://localhost:3000/projects",
+        url: "https://evening-stream-54386.herokuapp.com/projects",
         data: {
           title: this.user.currentProject
         },
@@ -10934,46 +11057,97 @@ var _default = {
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data.id);
+        // console.log(data.id);
+        event.preventDefault();
         localStorage.setItem("ProjectId", data.id);
-        _this2.user.console = "";
+        _this4.user.currentProject = "";
+
+        _this4.getCurrentProjects();
       }).catch(function (err) {
         return console.log(err);
       });
     },
     getProjects: function getProjects() {
-      var _this3 = this;
+      var _this5 = this;
 
+      //ok
       //bisa juga untuk manggil tasks
-      _axios.default.get("http://localhost:3000/projects", {
+      // event.preventDefault();
+      _axios.default.get("https://evening-stream-54386.herokuapp.com/projects", {
         headers: {
           access_token: localStorage.access_token
         }
       }).then(function (result) {
+        // event.preventDefault();
         var data = result.data;
         var projects = data.projects;
-        _this3.projects = projects; //   console.log("YA", projects);
+        _this5.projects = projects; // console.log("YA", projects);
+        // if (this.currentProjects === 0) {
+        // projects.map(project => {
+        //   // event.preventDefault()
+        //   this.currentProjects.push({
+        //     title: project.Project.title,
+        //     ProjectId: project.ProjectId
+        //   });
+        // });
+        // }
 
         projects.filter(function (project) {
-          if (project.ProjectId === 12) {
-            _this3.tasks = project.Project.Tasks;
+          if (project.ProjectId == localStorage.ProjectId) {
+            _this5.tasks = project.Project.Tasks;
           }
         });
       }).catch(function (err) {
         console.log(err);
       });
     },
+    getCurrentProjects: function getCurrentProjects() {
+      var _this6 = this;
+
+      _axios.default.get("https://evening-stream-54386.herokuapp.com/projects", {
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // event.preventDefault();
+        _this6.currentProjects = [];
+        var data = result.data;
+        var projects = data.projects;
+        _this6.projects = projects; // console.log("YA", projects);
+        // if (this.currentProjects === 0) {
+
+        projects.map(function (project) {
+          // event.preventDefault()
+          _this6.currentProjects.push({
+            title: project.Project.title,
+            ProjectId: project.ProjectId
+          });
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     logout: function logout() {
+      //ok
+      // var auth2 = gapi.auth2.getAuthInstance();
+      // auth2.signOut().then(function() {
+      //   console.log("User signed out.");
+      // });
+      // this.auth2.signOut().then(function() {
+      //   console.log("User signed out.");
+      // });
       localStorage.clear();
       this.isLogin = false;
       this.projects = [];
+      this.tasks = [];
     },
-    addTask: function addTask() {
-      var _this4 = this;
+    addTask: function addTask(event) {
+      var _this7 = this;
 
+      //ok
       (0, _axios.default)({
         method: "post",
-        url: "http://localhost:3000/tasks",
+        url: "https://evening-stream-54386.herokuapp.com/tasks",
         data: {
           title: this.user.task,
           ProjectId: localStorage.ProjectId
@@ -10981,43 +11155,248 @@ var _default = {
         headers: {
           access_token: localStorage.access_token
         }
-      }).then(function (_ref2) {
-        var data = _ref2.data;
-        console.log(data);
-        _this4.prelog.task = _this4.user.task;
-        _this4.user.task = "";
+      }).then(function (result) {
+        // console.log(data);
+        event.preventDefault();
+        _this7.user.task = "";
+        return _this7.getProjects();
+      }).catch(function (err) {
+        return console.log("ini", err);
+      });
+    },
+    cancelTask: function cancelTask(id) {
+      var _this8 = this;
+
+      (0, _axios.default)({
+        method: "delete",
+        url: "https://evening-stream-54386.herokuapp.com/tasks/".concat(id),
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (_) {
+        // event.preventDefault();
+        console.log("ok");
+        return _this8.getProjects();
       }).catch(function (err) {
         return console.log(err);
       });
     },
-    addTodo: function addTodo() {},
-    cancelTask: function cancelTask() {},
+    addTodo: function addTodo(id) {
+      var _this9 = this;
+
+      // console.log(id);
+      (0, _axios.default)({
+        method: "put",
+        url: "https://evening-stream-54386.herokuapp.com/tasks/".concat(id),
+        data: {
+          category: "todo"
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // console.log(result);
+        _this9.getProjects();
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    cancelTodo: function cancelTodo(id) {
+      var _this10 = this;
+
+      (0, _axios.default)({
+        method: "put",
+        url: "https://evening-stream-54386.herokuapp.com/tasks/".concat(id),
+        data: {
+          category: "prelog"
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // console.log(result);
+        _this10.getProjects();
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    },
+    addProcess: function addProcess(id) {
+      var _this11 = this;
+
+      (0, _axios.default)({
+        method: "put",
+        url: "https://evening-stream-54386.herokuapp.com/tasks/".concat(id),
+        data: {
+          category: "process"
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // console.log("OK", result);
+        _this11.getProjects();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    cancelProcess: function cancelProcess(id) {
+      var _this12 = this;
+
+      (0, _axios.default)({
+        method: "put",
+        url: "https://evening-stream-54386.herokuapp.com/tasks/".concat(id),
+        data: {
+          category: "todo"
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // console.log("OK", result);
+        _this12.getProjects();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    addComplete: function addComplete(id) {
+      var _this13 = this;
+
+      (0, _axios.default)({
+        method: "put",
+        url: "https://evening-stream-54386.herokuapp.com/tasks/".concat(id),
+        data: {
+          category: "complete"
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // console.log("OK", result);
+        _this13.getProjects();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    cancelComplete: function cancelComplete(id) {
+      var _this14 = this;
+
+      (0, _axios.default)({
+        method: "put",
+        url: "https://evening-stream-54386.herokuapp.com/tasks/".concat(id),
+        data: {
+          category: "process"
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (result) {
+        // console.log("OK", result);
+        _this14.getProjects();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    getUsers: function getUsers() {
+      var _this15 = this;
+
+      (0, _axios.default)({
+        method: "get",
+        url: "https://evening-stream-54386.herokuapp.com/users",
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        _this15.users = data.users; // console.log(data);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    //kayaknya gausah dipake
     getTasks: function getTasks() {
-      _axios.default.get("http://localhost:3000/tasks", {
+      _axios.default.get("https://evening-stream-54386.herokuapp.com/tasks/", {
         headers: {
           access_token: localStorage.access_token,
           ProjectId: localStorage.ProjectId
         }
       }).then(function (result) {
         var data = result.data; //   const { tasks } = data; /
-
-        console.log("INI", data); //   this.tasks = projects;
+        // console.log("INI", data);
+        //   this.tasks = projects;
         //   console.log(projects);
       }).catch(function (err) {
         console.log(err);
       });
+    },
+    onSignIn: function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+
+      console.log("Name: " + profile.getName());
+      console.log("Image URL: " + profile.getImageUrl());
+      console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+      this.isLogin = true;
+      this.getCurrentProjects();
+      this.getProjects(); // let id_token = this.GoogleAuth;
+      // this.$gAuth
+      //   .getAuthCode()
+      //   .then((authCode) => {
+      //     //on success
+      //     return this.$http.post("https://evening-stream-54386.herokuapp.com/googleSign", {
+      //       // code: authCode,
+      //       id_token: id_token
+      //     });
+      //   })
+      //   .then((response) => {
+      //     //after ajax
+      //     console.log(response);
+      //   })
+      //   .catch((error) => {
+      //     //on fail do something
+      //     console.log(error);
+      //   });
+      // axios({
+      //   method: "POST",
+      //   url: "https://evening-stream-54386.herokuapp.com/googleSign",
+      //   data: {
+      //     id_token,
+      //   },
+      // })
+      //   .then((datum) => {
+      //     localStorage.setItem("access_token", datum.access_token);
+      //     // localStorage.setItem("email", datum.email);
+      //     console.log(datum);
+      //     this.isLogin = true;
+      //     this.getProjects();
+      //     this.getTasks();
+      //     // auth();
+      //   })
+      //   .fail((err) => console.log(err));
     }
   },
   created: function created() {
     if (localStorage.access_token) {
+      // event.preventDefault()
       this.isLogin = true;
+      this.getUsers();
+      this.getCurrentProjects();
       this.getProjects(); //   if (localStorage.ProjectId) {
       // this.getTasks();
       //   }
     } else {
-      this.isLogin = false;
+      this.isLogin = false; // if (!localStorage.ProjectId) {
+
       this.projects = [];
-    }
+      this.users = []; // }
+    } // if (localStorage.ProjectId) {
+    //   localStorage.ProjectId = this.selectedProjectId;
+    //   this.getProjects();
+    // } else {
+    //   localStorage.setItem("ProjectId", this.selectedProjectId);
+    //   this.getProjects();
+    // }
+
   }
 };
 exports.default = _default;
@@ -11034,7 +11413,7 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    !_vm.isLogin
+    !_vm.isRegister && !_vm.isLogin
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-4 offset-md-4" }, [
             _c(
@@ -11043,11 +11422,13 @@ exports.default = _default;
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    return _vm.login($event)
+                    return _vm.register($event)
                   }
                 }
               },
               [
+                _c("h3", [_vm._v("Please Register")]),
+                _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "exampleInputEmail1" } }, [
                     _vm._v("Email address")
@@ -11085,7 +11466,120 @@ exports.default = _default;
                       staticClass: "form-text text-muted",
                       attrs: { id: "emailHelp" }
                     },
-                    [_vm._v("We'll never share your email with anyone else.")]
+                    [
+                      _vm._v(
+                        "We'll never share your email with anyone else outside\n            organization."
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "exampleInputPassword1" } }, [
+                    _vm._v("Password")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "password", id: "exampleInputPassword1" },
+                    domProps: { value: _vm.user.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "password", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  [_vm._v("Submit")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    on: { click: _vm.backToLogin }
+                  },
+                  [_vm._v("Back")]
+                )
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.isLogin && _vm.isRegister
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4 offset-md-4" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.login($event)
+                  }
+                }
+              },
+              [
+                _c("h3", [_vm._v("Login first!")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                    _vm._v("Email address")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.email,
+                        expression: "user.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "email",
+                      id: "exampleInputEmail1",
+                      "aria-describedby": "emailHelp"
+                    },
+                    domProps: { value: _vm.user.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    {
+                      staticClass: "form-text text-muted",
+                      attrs: { id: "emailHelp" }
+                    },
+                    [
+                      _vm._v(
+                        "We'll never share your email with anyone else outside\n            organization."
+                      )
+                    ]
                   )
                 ]),
                 _vm._v(" "),
@@ -11123,10 +11617,22 @@ exports.default = _default;
                   [_vm._v("Submit")]
                 )
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c("div", {
+              staticClass: "g-signin2",
+              attrs: { "data-onsuccess": "onSignIn" }
+            }),
+            _vm._v(" "),
+            _c("label", [_vm._v("Don't Have an Account?")]),
+            _vm._v(" "),
+            _c("button", { on: { click: _vm.registerForm } }, [
+              _vm._v("Register")
+            ])
           ])
         ])
-      : _c("div", [
+      : _vm.isLogin
+      ? _c("div", [
           _c("div", { staticClass: "container" }, [
             _c("div", { staticClass: "row" }, [
               _c(
@@ -11137,6 +11643,69 @@ exports.default = _default;
                   on: { click: _vm.logout }
                 },
                 [_vm._v("\n          Logout\n        ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col col-4" }, [
+              _c("label", [_vm._v("Add Contributor")]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addContributor($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedUser,
+                            expression: "selectedUser"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedUser = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      _vm._l(_vm.users, function(user) {
+                        return _c(
+                          "option",
+                          { key: user.id, domProps: { value: user.id } },
+                          [_vm._v(_vm._s(user.email))]
+                        )
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "col col-4", attrs: { type: "submit" } },
+                    [_vm._v("Select")]
+                  )
+                ]
               )
             ]),
             _vm._v(" "),
@@ -11193,7 +11762,75 @@ exports.default = _default;
                   [_vm._v("Submit")]
                 )
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col col-4" }, [
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.setProject($event)
+                    }
+                  }
+                },
+                [
+                  _c("label", { attrs: { for: "project" } }, [
+                    _vm._v("Please select the project")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected,
+                            expression: "selected"
+                          }
+                        ],
+                        staticClass: "form-control form-control-sm",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selected = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      _vm._l(_vm.currentProjects, function(currentProject) {
+                        return _c(
+                          "option",
+                          {
+                            key: currentProject.ProjectId,
+                            domProps: { value: currentProject.ProjectId }
+                          },
+                          [_vm._v(_vm._s(currentProject.title))]
+                        )
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    { staticClass: "col col-4", attrs: { type: "submit" } },
+                    [_vm._v("Select")]
+                  )
+                ]
+              )
+            ])
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -11255,45 +11892,43 @@ exports.default = _default;
                     "div",
                     { key: task.id, staticClass: "card bg-primary" },
                     [
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("h4", { staticClass: "card-title" }, [
-                          _vm._v("Prelog")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "card-text" }, [
-                          _vm._v(_vm._s(task.title))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          { staticClass: "card-link", attrs: { href: "#" } },
-                          [
+                      task.category == "prelog"
+                        ? _c("div", { staticClass: "card-body" }, [
+                            _c("h4", { staticClass: "card-title" }, [
+                              _vm._v("Prelog")
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(_vm._s(task.title))
+                            ]),
+                            _vm._v(" "),
                             _c(
                               "button",
                               {
                                 staticClass: "btn btn-secondary",
-                                on: { click: _vm.cancelTask }
+                                on: {
+                                  click: function($event) {
+                                    return _vm.cancelTask(task.id)
+                                  }
+                                }
                               },
-                              [_vm._v("\n                Undo\n              ")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          { staticClass: "card-link", attrs: { href: "#" } },
-                          [
+                              [_vm._v("\n              Delete\n            ")]
+                            ),
+                            _vm._v(" "),
                             _c(
                               "button",
                               {
                                 staticClass: "btn btn-dark",
-                                on: { click: _vm.addTodo }
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addTodo(task.id)
+                                  }
+                                }
                               },
-                              [_vm._v("\n                Next\n              ")]
+                              [_vm._v("\n              Next\n            ")]
                             )
-                          ]
-                        )
-                      ])
+                          ])
+                        : _vm._e()
                     ]
                   )
                 })
@@ -11301,130 +11936,148 @@ exports.default = _default;
               2
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "col", attrs: { id: "second" } }, [
-              _vm.todo.task
-                ? _c("div", { staticClass: "card bg-warning" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("h4", { staticClass: "card-title" }, [_vm._v("Todo")]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "card-text" }, [
-                        _vm._v(_vm._s(_vm.todo.task))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "card-link", attrs: { href: "#" } },
-                        [
+            _c(
+              "div",
+              { staticClass: "col", attrs: { id: "second" } },
+              _vm._l(_vm.tasks, function(task) {
+                return _c(
+                  "div",
+                  { key: task.id, staticClass: "card bg-warning" },
+                  [
+                    task.category == "todo"
+                      ? _c("div", { staticClass: "card-body" }, [
+                          _c("h4", { staticClass: "card-title" }, [
+                            _vm._v("Todo")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "card-text" }, [
+                            _vm._v(_vm._s(task.title))
+                          ]),
+                          _vm._v(" "),
                           _c(
                             "button",
                             {
                               staticClass: "btn btn-secondary",
-                              on: { click: _vm.cancelTodo }
+                              on: {
+                                click: function($event) {
+                                  return _vm.cancelTodo(task.id)
+                                }
+                              }
                             },
-                            [_vm._v("\n                Undo\n              ")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "card-link", attrs: { href: "#" } },
-                        [
+                            [_vm._v("\n              Back\n            ")]
+                          ),
+                          _vm._v(" "),
                           _c(
                             "button",
                             {
                               staticClass: "btn btn-dark",
-                              on: { click: _vm.addProcess }
+                              on: {
+                                click: function($event) {
+                                  return _vm.addProcess(task.id)
+                                }
+                              }
                             },
-                            [_vm._v("\n                Next\n              ")]
+                            [_vm._v("\n              Next\n            ")]
                           )
-                        ]
-                      )
-                    ])
-                  ])
-                : _vm._e()
-            ]),
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              }),
+              0
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _vm.process.task
-                ? _c("div", { staticClass: "card bg-info" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("h4", { staticClass: "card-title" }, [
-                        _vm._v("Process")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "card-text" }, [
-                        _vm._v(_vm._s(_vm.process.task))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "card-link", attrs: { href: "#" } },
-                        [
+            _c(
+              "div",
+              { staticClass: "col" },
+              _vm._l(_vm.tasks, function(task) {
+                return _c(
+                  "div",
+                  { key: task.id, staticClass: "card bg-info" },
+                  [
+                    task.category == "process"
+                      ? _c("div", { staticClass: "card-body" }, [
+                          _c("h4", { staticClass: "card-title" }, [
+                            _vm._v("Process")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "card-text" }, [
+                            _vm._v(_vm._s(task.title))
+                          ]),
+                          _vm._v(" "),
                           _c(
                             "button",
                             {
                               staticClass: "btn btn-secondary",
-                              on: { click: _vm.cancelProcess }
+                              on: {
+                                click: function($event) {
+                                  return _vm.cancelProcess(task.id)
+                                }
+                              }
                             },
-                            [_vm._v("\n                Undo\n              ")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "card-link", attrs: { href: "#" } },
-                        [
+                            [_vm._v("\n              Back\n            ")]
+                          ),
+                          _vm._v(" "),
                           _c(
                             "button",
                             {
                               staticClass: "btn btn-dark",
-                              on: { click: _vm.addComplete }
+                              on: {
+                                click: function($event) {
+                                  return _vm.addComplete(task.id)
+                                }
+                              }
                             },
-                            [_vm._v("\n                Done\n              ")]
+                            [_vm._v("\n              Done\n            ")]
                           )
-                        ]
-                      )
-                    ])
-                  ])
-                : _vm._e()
-            ]),
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              }),
+              0
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col" }, [
-              _vm.completed.task
-                ? _c("div", { staticClass: "card bg-success" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("h4", { staticClass: "card-title" }, [
-                        _vm._v("Complete")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "card-text" }, [
-                        _vm._v(_vm._s(_vm.completed.task))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        { staticClass: "card-link", attrs: { href: "#" } },
-                        [
+            _c(
+              "div",
+              { staticClass: "col" },
+              _vm._l(_vm.tasks, function(task) {
+                return _c(
+                  "div",
+                  { key: task.id, staticClass: "card bg-success" },
+                  [
+                    task.category == "complete"
+                      ? _c("div", { staticClass: "card-body" }, [
+                          _c("h4", { staticClass: "card-title" }, [
+                            _vm._v("Complete")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "card-text" }, [
+                            _vm._v(_vm._s(task.title))
+                          ]),
+                          _vm._v(" "),
                           _c(
                             "button",
                             {
                               staticClass: "btn btn-secondary",
-                              on: { click: _vm.cancelComplete }
+                              on: {
+                                click: function($event) {
+                                  return _vm.cancelComplete(task.id)
+                                }
+                              }
                             },
-                            [_vm._v("\n                Undo\n              ")]
+                            [_vm._v("\n              Back\n            ")]
                           )
-                        ]
-                      )
-                    ])
-                  ])
-                : _vm._e()
-            ])
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              }),
+              0
+            )
           ])
         ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -11461,25 +12114,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "btn-container" }, [
-      _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
-        _c("button", { staticClass: "btn btn-secondary" }, [_vm._v("Cancel")])
-      ]),
+      _c("button", { staticClass: "btn btn-secondary" }, [_vm._v("Cancel")]),
       _vm._v(" "),
-      _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-dark", attrs: { type: "submit" } },
-          [_vm._v("\n                    Add\n                  ")]
-        )
+      _c("button", { staticClass: "btn btn-dark", attrs: { type: "submit" } }, [
+        _vm._v("Add")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" })
     ])
   }
 ]
@@ -11524,11 +12163,17 @@ var _App = _interopRequireDefault(require("./App.vue"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import GAuth from 'vue-google-oauth2'
 new _vue.default({
   render: function render(h) {
     return h(_App.default);
   }
-}).$mount('#app');
+}).$mount('#app'); // const gauthOption = {
+//   clientId: '1043279586008-aibiiffrpqe0h9vm1d7gmo9grvte499k.apps.googleusercontent.com',
+//   scope: 'profile email',
+//   prompt: 'select_account'
+// }
+// Vue.use(GAuth, gauthOption)
 },{"vue":"node_modules/vue/dist/vue.runtime.esm.js","./App.vue":"src/App.vue"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -11557,7 +12202,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56201" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58076" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
