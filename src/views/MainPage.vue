@@ -1,149 +1,101 @@
 <template>
-  <div id="pg-main" v-show="token">
-      <h1>HOLA, MUNDO!</h1>
+  <div id="pg-main" v-show="token1">
+    
 
-      <button @click="logout()">LOGOUT</button>
+    <!-- START NAVBAR -->
+    <Navbar
+      :projects2="projects1"
+      @logout2="logout1"
+      @addProject2="addProject1"
+      @inviteMember2="inviteMember1"
+      @addNewTask2="addNewTask1"
+      @dropProject2="dropProject1"
+      @showTasks2="showTasks1"
+    ></Navbar>
+    <!-- END NAVBAR -->
 
-      <div id="home">
-        <h1>WELCOME TO KANBAN HOMEPAGE</h1>
-      </div>
+    <h1>WELCOME TO KANBAN HOMEPAGE</h1>
 
-      <div class="dashboard">
-        <div class="board-projects">
-          <form id="form-add-project" @submit.prevent="addProject()">
-            Title:
-            <input type="text" required id="add-project-title" v-model="projectTitle" />
-            <input type="submit" value="ADD PROJECT" />
-          </form>
+    <!-- START DASHBOARD -->
+      <Dashboard
+        :tasks2="tasks1"
+        :categories2="categories1"
+        @editTask2="editTask1"
+        @deleteTask2="deleteTask1">
+      </Dashboard>
 
-          <form id="form-invitation" @submit.prevent="inviteMember()">
-            Email:
-            <input type="email" required id="invitee-email" v-model="invitee" />
-            ProjectID:
-            <input
-              type="text"
-              readonly
-              id="invitee-projectid"
-              v-model="projectId"
-            />
-            <input type="submit" value="INVITE" />
-          </form>
-
-          <form id="form-add-task" @submit.prevent="addNewTask()">
-            ProjectID:
-            <input type="text" readonly id="add-task-projectid" v-model="projectId" />
-            Title:
-            <input type="text" required id="add-task-title" v-model="title" />
-
-            <input type="submit" value="ADD NEW TASK" />
-          </form>
-
-          <div class="list-projects" v-for="project in projects" :key="project.id">
-            <h4>HELLO, IT;S ME</h4>
-            <p>MY ID: {{ project.UserId }}</p>
-            <p>PROJECT ID: {{ project.ProjectId }}</p>
-            <p>PROJECT NAME: {{ project.Project.title }}</p>
-            <button @click.prevent="showTasks(project.ProjectId)">SHOW TASKS</button>
-            <button @click.prevent="fillAddTaskForm(project.ProjectId)">ADD TASK</button>
-            <button @click.prevent="fillInvitation(project.ProjectId)">Invite</button>
-            <button @click.prevent="dropProject(project.ProjectId)">DROP</button>
-          </div>
-          <div class="board-tasks">
-            <div id="pg-editTaskForm">
-              <form id="form-editTask" @submit.prevent="editTask()">
-                ProjectID:
-                <input type="text" readonly id="edit-task-project-id" v-model="projectId" />
-                <br />
-                TaskID:
-                <input type="text" readonly id="edit-task-id" v-model="taskId" />
-                <br />
-                Title:
-                <input type="text" required id="edit-task-title" v-model="title" />
-                <br />Category:
-                <select class="task-category" v-model="category">
-                  <option value="backlog">BACKLOG</option>
-                  <option value="pending">PENDING</option>
-                  <option value="review">REVIEW</option>
-                  <option value="done">DONE</option>
-                </select>
-                <input type="submit" value="UPDATE">
-              </form>
-            </div>
-            <div class="subboard1">
-              BACKLOG
-              <div v-for="(task, idx) in backlogs" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-
-            <div class="subboard2">
-              PENDING
-              <div v-for="(task, idx) in pendings" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                </p>
-                <p>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-
-            <div class="subboard3">
-              REVIEW
-              <div v-for="(task, idx) in reviews" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                </p>
-                <p>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-
-            <div class="subboard4">
-              DONE
-              <div v-for="(task, idx) in dones" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                </p>
-                <p>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 </template>
 
 <script>
+import Navbar from "../components/Navbar";
+import Dashboard from '../components/Dashboard'
 export default {
-    name: 'MainPage',
-    props: ['token', 'projects'],
-    data() {
-        return {
-            taskId: 0,
-            projectId: 0,
-            projectTitle: "",
-            title: "",
-            invitee: ""
-        }
+  name: "MainPage",
+  components: {
+    Navbar, 
+    Dashboard
+  },
+  props: ["token1", 
+  "projects1", 
+  "tasks1", 
+  "categories1",
+  "taskDetails1"],
+  data() {
+    return {
+      taskId: 0,
+      projectId: 0,
+      projectTitle: "",
+      title: "",
+      invitee: ""
+    };
+  },
+  methods: {
+    logout1(msg) {
+      console.log(msg);
+      this.$emit("logout1", "LOGGING OUT -->");
     },
-    methods: {
-
+    addProject1(payload) {
+      // const title = this.projectTitle
+      console.log("ADD PROJECT @ MAINPAGE -->");
+      this.$emit("addProject1", payload);
+    },
+    inviteMember1(payload) {
+      console.log("INVITE MEMBER @ MAINPAGE -->");
+      this.$emit("inviteMember1", payload);
+    },
+    addNewTask1(payload) {
+      console.log("ADD NEW TASK @ MAINPAGE -->");
+      this.$emit('addNewTask1', payload)
+    },
+    dropProject1(payload) {
+      console.log("DROP PROJECT @ MAINPAGE -->");
+      this.$emit('dropProject1', payload)
+    },
+    showTasks1(payload) {
+      console.log("SHOW PROJECT'S TASKS @ MAINPAGE -->");
+      this.$emit('showTasks1', payload)
+    },
+    showTaskEditForm1(payload) {
+      console.log("SHOW PROJECT'S TASK EDIT FORM @ MAINPAGE -->");
+      console.log(payload);
+      this.$emit('showTaskEditForm1', payload)
+    },
+    editTask1(payload) {
+      console.log("EDIT PROJECT'S TASK @ MAINPAGE -->");
+      this.$emit('editTask1', payload)
+    },
+    deleteTask1(payload) {
+      console.log("DELETE PROJECT'S TASK @ MAINPAGE -->");
+      this.$emit('deleteTask1', payload)
     }
 
-}
+  }
+};
 </script>
 
 <style>
-
+  h1 {
+    color: black
+  }
 </style>

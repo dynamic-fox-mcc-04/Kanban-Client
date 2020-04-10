@@ -9,6 +9,49 @@
   margin: 1vh;
   padding: 1vh;
 }
+#navbar {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  background-color: darkkhaki;
+  font-weight: bold;
+  /* margin: 1vh; */
+  padding: 1vh;
+}
+.cards {
+  color: black;
+  padding: 1vh;
+  margin: 1vh;
+  justify-content: center;
+  align-items: center;
+}
+.cardbox {
+  padding: 1vh;
+  margin: 1vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+.bg-box {
+  color: white;
+}
+.bg-box:nth-child(1) {
+  background-color: red;
+}
+.bg-box:nth-child(2) {
+  background-color: green;
+}
+.bg-box:nth-child(3) {
+  background-color: orange;
+}
+.bg-box:nth-child(4) {
+  background-color: blue;
+}
+h1 {
+  color: black
+}
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

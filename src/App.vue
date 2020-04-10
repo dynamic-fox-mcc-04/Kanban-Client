@@ -4,150 +4,32 @@
 
     <!-- LOGIN PAGE -->
     <LoginPage 
+      :token1="token"
       v-show="!token"
       @onSignInSuccess="onSignInSuccess"
       @login="login"
       @register="register"
       ></LoginPage>
 
-      <!-- <MainPage
+      <MainPage
+        :token1="token"
+        :projects1="projects"
+        :categories1="categories"
+        :tasks1="tasks"
+        :taskDetails1="taskDetails"
         v-show="token"
-        @logout="logout"
-        @addProject="addProject"
-        @dropProject="dropProject"
-        @fillInvitation="fillInvitation"
-        @inviteMember="inviteMember"
-        @addNewTask="addNewTask"
-        @showTasks="showTasks"
-        @fillAddTaskForm="fillAddTaskForm"
-        @showEditTaskForm="showEditTaskForm"
-        @editTask="editTask"
+        @logout1="logout"
+        @addProject1="addProject"
+        @dropProject1="dropProject"
+        @inviteMember1="inviteMember"
+        @addNewTask1="addNewTask"
+        @showTasks1="showTasks"
+        @editTask1="editTask"
+        @deleteTask1="deleteTask"
         >
-      </MainPage> -->
+      </MainPage>
       
-      <div id="pg-main" v-show="token">
-      <h1>HOLA, MUNDO!</h1>
-
-      <button @click="logout()">LOGOUT</button>
-
-      <div id="home">
-        <h1>WELCOME TO KANBAN HOMEPAGE</h1>
-      </div>
-
-      <div class="dashboard">
-        <div class="board-projects">
-          <form id="form-add-project" @submit.prevent="addProject()">
-            Title:
-            <input type="text" required id="add-project-title" v-model="projectTitle" />
-            <input type="submit" value="ADD PROJECT" />
-          </form>
-
-          <form id="form-invitation" @submit.prevent="inviteMember()">
-            Email:
-            <input type="email" required id="invitee-email" v-model="invitee" />
-            ProjectID:
-            <input
-              type="text"
-              readonly
-              id="invitee-projectid"
-              v-model="projectId"
-            />
-            <input type="submit" value="INVITE" />
-          </form>
-
-          <form id="form-add-task" @submit.prevent="addNewTask()">
-            ProjectID:
-            <input type="text" readonly id="add-task-projectid" v-model="projectId" />
-            Title:
-            <input type="text" required id="add-task-title" v-model="title" />
-
-            <input type="submit" value="ADD NEW TASK" />
-          </form>
-
-          <div class="list-projects" v-for="project in projects" :key="project.id">
-            <h4>HELLO, IT;S ME</h4>
-            <p>MY ID: {{ project.UserId }}</p>
-            <p>PROJECT ID: {{ project.ProjectId }}</p>
-            <p>PROJECT NAME: {{ project.Project.title }}</p>
-            <button @click.prevent="showTasks(project.ProjectId)">SHOW TASKS</button>
-            <button @click.prevent="fillAddTaskForm(project.ProjectId)">ADD TASK</button>
-            <button @click.prevent="fillInvitation(project.ProjectId)">Invite</button>
-            <button @click.prevent="dropProject(project.ProjectId)">DROP</button>
-          </div>
-          <div class="board-tasks">
-            <div id="pg-editTaskForm">
-              <form id="form-editTask" @submit.prevent="editTask()">
-                ProjectID:
-                <input type="text" readonly id="edit-task-project-id" v-model="projectId" />
-                <br />
-                TaskID:
-                <input type="text" readonly id="edit-task-id" v-model="taskId" />
-                <br />
-                Title:
-                <input type="text" required id="edit-task-title" v-model="title" />
-                <br />Category:
-                <select class="task-category" v-model="category">
-                  <option value="backlog">BACKLOG</option>
-                  <option value="pending">PENDING</option>
-                  <option value="review">REVIEW</option>
-                  <option value="done">DONE</option>
-                </select>
-                <input type="submit" value="UPDATE">
-              </form>
-            </div>
-            <div class="subboard1">
-              BACKLOG
-              <div v-for="(task, idx) in backlogs" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-
-            <div class="subboard2">
-              PENDING
-              <div v-for="(task, idx) in pendings" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                </p>
-                <p>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-
-            <div class="subboard3">
-              REVIEW
-              <div v-for="(task, idx) in reviews" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                </p>
-                <p>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-
-            <div class="subboard4">
-              DONE
-              <div v-for="(task, idx) in dones" :key="idx">
-                <p>{{ task.title }}</p>
-                <p>
-                  <button @click.prevent="showEditTaskForm(task.id, task.ProjectId)">UPDATE</button>
-                </p>
-                <p>
-                  <button @click.prevent="deleteTask(task.id, task.ProjectId)">DELETE</button>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      
     
   </div>
 </template>
@@ -155,29 +37,27 @@
 import socket from "./config/socket";
 import axios from "./config/api";
 import LoginPage from "./views/LoginPage"
-// import MainPage from "./views/MainPage"
+import MainPage from "./views/MainPage"
 export default {
   name: "App",
   components :{
-    LoginPage
-    // MainPage
+    LoginPage,
+    MainPage
   },
   data() {
     return {
       isConnected: false,
       token: "",
+      tasks: {},
       projects: [],
-      backlogs: [],
-      pendings: [],
-      reviews: [],
-      dones: [],
+      taskDetails: {},
       projectTitle: "",
-      invitee: "",
       projectId: 0,
       taskId: 0,
       userId: 0,
       title: "",
       category: "",
+      categories: ["backlog", "pending", "review", "done"],
       tpid: 0,
       user: ""
     };
@@ -244,11 +124,12 @@ export default {
           this.user =  response.data.email
           // this.$toasted.success(`Welcome Back, ${response.data.email}`);
           socket.emit("loggedin", response);
-          this.fetchProjects();
+          
           socket.on("loggedin2", response => {
             let wlcm = "HELLO AGAIN, " + response;
             this.$toasted.success(wlcm);
             console.log(wlcm);
+            this.fetchProjects();
           });
           
         })
@@ -264,8 +145,8 @@ export default {
           
         });
     },
-    logout() {
-      console.log("LOGGINGOUT");
+    logout(payload) {
+      console.log(payload);
       localStorage.clear();
       socket.emit("loggedout", this.user);
       this.token = "";
@@ -344,9 +225,9 @@ export default {
           
         });
     },
-    addProject() {
+    addProject(payload) {
       console.log("ADDING NEW PROJECT");
-      console.log(this.projectTitle);
+      console.log(payload);
       axios({
         method: "post",
         url: "/projects",
@@ -354,21 +235,21 @@ export default {
           access_token: localStorage.getItem("access_token")
         },
         data: {
-          title: this.projectTitle
+          title: payload
         }
       })
         .then(response => {
           console.log("NEW PROJECT ADDED");
           console.log(response.data);
           socket.emit("new_project", response.data);
-          this.fetchProjects();
+          // this.fetchProjects();
           this.projectTitle = "";
           socket.on('added_project', (payload) => {
             console.log("HELLO NEW PROJECT");
             console.log(payload);
             this.$toasted.success(`USER ${payload.UserId} ADDED NEW PROJECT WITH ID: ${payload.ProjectId}`)
             console.log(`USER ${payload.UserId} ADDED NEW PROJECT WITH ID: ${payload.ProjectId}`);
-            
+            this.fetchProjects();
           })
         })
         .catch(err => {
@@ -383,21 +264,21 @@ export default {
           
         });
     },
-    fillInvitation(projectid) {
-      console.log("FILLING THE PROJECT ID PARAMETER");
-      this.projectId = projectid;
-    },
-    inviteMember() {
+    // fillInvitation(projectid) {
+    //   console.log("FILLING THE PROJECT ID PARAMETER");
+    //   this.projectId = projectid;
+    // },
+    inviteMember(payload) {
       console.log("SANITY CHECK BEFORE INVITE");
-      console.log(this.invitee, this.projectId);
+      console.log(payload.invitee, payload.projectId);
       axios({
         method: "post",
-        url: "/projects/" + Number(this.projectId) + "/invite",
+        url: "/projects/" + payload.projectId + "/invite",
         headers: {
           access_token: localStorage.access_token
         },
         data: {
-          email: this.invitee
+          email: payload.invitee
         }
       })
         .then(response => {
@@ -426,12 +307,12 @@ export default {
           
         });
     },
-    dropProject(projectid) {
+    dropProject(payload) {
       console.log("DELETE ONE");
-      console.log(projectid);
+      console.log(payload);
       axios({
         method: "delete",
-        url: "/projects/" + projectid,
+        url: "/projects/" + payload,
         headers: {
           access_token: localStorage.getItem("access_token")
         }
@@ -459,12 +340,12 @@ export default {
           
         });
     },
-    showTasks(projectid) {
+    showTasks(payload) {
       console.log("SHOWING ALL TASKS OF DAT PROJECT");
-      console.log(projectid);
+      console.log(payload);
       axios({
         method: "get",
-        url: "/projects/" + projectid + "/tasks",
+        url: "/projects/" + payload + "/tasks",
         headers: {
           access_token: localStorage.getItem("access_token")
         }
@@ -476,16 +357,8 @@ export default {
           socket.emit('getTasks', response.data)
           socket.on('getTasks2', (payload) => {
             this.$toasted.success('FETCHING TASKS OF A PROJECT')
-            this.backlogs = payload["backlog"]; 
-            this.pendings = payload["pending"];
-            this.reviews = payload["review"];
-            this.dones = payload["done"];
+            this.tasks = payload
           })
-           //for watcher
-          // this.backlogs = response.data["backlog"]; 
-          // this.pendings = response.data["pending"];
-          // this.reviews = response.data["review"];
-          // this.dones = response.data["done"];
         })
         .catch(err => {
           console.log(err.response);
@@ -503,17 +376,17 @@ export default {
       console.log("FILLING THE PROJECT ID PARAMETER 2 ADD TASK");
       this.projectId = Number(projectid);
     },
-    addNewTask() {
+    addNewTask(payload) {
       console.log("ADDING NEW TASK");
-      console.log(this.title, this.projectId);
+      console.log(payload.title, payload.projectId);
       axios({
         method: "post",
-        url: "/projects/" + Number(this.projectId) + "/tasks",
+        url: "/projects/" + payload.projectId + "/tasks",
         headers: {
           access_token: localStorage.access_token
         },
         data: {
-          title: this.title
+          title: payload.title
         }
       })
         .then(response => {
@@ -544,12 +417,12 @@ export default {
           
         });
     },
-    showEditTaskForm(taskid, projectid) {
+    showEditTaskForm(payload) {
       console.log("FILLING THE DETAILS OF TASK WE'RE ABT UPDATING");
-      console.log(taskid, projectid);
+      console.log(payload);
       axios({
         method: "get",
-        url: "/projects/" + projectid + "/tasks/" + taskid,
+        url: "/projects/" + payload.projectId + "/tasks/" + payload.taskId,
         headers: {
           access_token: localStorage.access_token
         }
@@ -557,10 +430,7 @@ export default {
       .then(response => {
         console.log("FOUND'EM, NOW POPULATING");
         console.log(response.data);
-        this.projectId = response.data.ProjectId
-        this.taskId = response.data.id
-        this.title = response.data.title,
-        this.category = response.data.category
+        this.taskDetails = response.data
       })
       .catch(err => {
           console.log(err.response);
@@ -574,18 +444,18 @@ export default {
           
         });
     },
-    editTask() {  
+    editTask(payload) {  
       console.log("NOW EDITING TASK");
-      console.log([this.title, this.category, this.taskId, this.projectId]);
+      console.log(payload);
       axios({
         method: 'put',
-        url: '/projects/' + this.projectId + '/tasks/' + this.taskId,
+        url: '/projects/' + payload.projectId + '/tasks/' + payload.taskId,
         headers: {
           access_token: localStorage.access_token
         },
         data: {
-          title: this.title,
-          category: this.category
+          title: payload.title,
+          category: payload.category
         }
       })
       .then(response => {
@@ -613,14 +483,14 @@ export default {
         });
 
     },
-    deleteTask(taskid, projectid) {
+    deleteTask(payload) {
       console.log("DELETE ONE TASK");
-      console.log(taskid);
-      console.log(projectid);
+      console.log(payload.taskId);
+      console.log(payload.projectId);
 
       axios({
         method: "delete",
-        url: "/projects/" + projectid + "/tasks/" + taskid,
+        url: "/projects/" + payload.projectId + "/tasks/" + payload.taskId,
         headers: {
           access_token: localStorage.getItem("access_token")
         }
@@ -632,8 +502,8 @@ export default {
           socket.on('deleted_task', (msg) => {
             console.log("PROJECT HAS BEEN DROPPED");
             this.$toasted.success(msg)
-            this.showTasks(projectid);
-            this.fetchProjects()
+            this.showTasks(payload.projectId);
+            // this.fetchProjects()
           })
           // this.showTasks(projectid);
         })

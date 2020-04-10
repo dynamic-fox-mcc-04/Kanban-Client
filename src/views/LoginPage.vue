@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!token" id="pg-login">
+  <div v-show="!token1" id="pg-login">
     <!-- REGISTER FORM - BOOTSTRAP -->
     <div id="pg-form-register">
       <b-form inline id="form-register" @submit.prevent="register()">
@@ -63,7 +63,7 @@ export default {
       }
     };
   },
-  props: ["token"],
+  props: ["token1"],
   methods: {
     register() {
       const email = this.reg_email;
