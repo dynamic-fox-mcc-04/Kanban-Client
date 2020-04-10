@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanbanBoard</title>
+     <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- PAGE 2 | REGISTER PAGE -->
+        <!-- <div class="register-page" v-if="!isLoggedIn">
+            <p>----------------------------------</p>
+            <p>FORM REGISTER HERE</p>
+        </div> -->
+        <!-- END OF PAGE 2 REGISTER PAGE-->
+
+        <!-- PAGE 1 | LOG IN PAGE -->
+        <div class="login-page" v-show="!isLoggedIn">
+            <p>----------------------------------</p>
+            <p>FORM LOGIN HERE</p>
+            <form @submit.prevent="login">
+                <input type="text" placeholder="email" v-model="user.email" required> 
+                <input type="password" placeholder="password"  v-model="user.password" required>
+                <button>Submit</button> 
+            </form>
+        </div>
+        <!-- END OF PAGE 1 LOG IN PAGE-->
+
+        <!-- PAGE 3 | MAIN-PAGE KANBAN TASKS -->
+        <div class="main-page" v-if="isLoggedIn">
+            <!-- <div id="navbar">
+                <H1>this is taskbar section</H1>
+            </div> -->
+            <div id="kanban-tasks-section">
+                <div id="backlog-section" >
+                    <h2>Backlog</h2>
+                    <div class="task-cards-backlog" v-for="task,index in backlogTasks">
+                        
+                        <div class="sample-card">
+                            <!-- <div class="card-image-box" >
+                                <img style="width:100%; padding:10px; background-color: yellow;">
+                            </div> -->
+                            <h1> {{ index }} </h1>
+                            <div class="card-description-box">
+                                <div class="card-title">
+                                   <h5>{{ task.title }}</h5> 
+                                </div>
+                                <div class="card-description">
+                                    {{ task.description }}
+                                </div>
+                                <div class="card-description-infoBar">
+                                    <div class="due-date">
+                                        {{ task.due_date }}
+                                    </div>
+                                    <div class="card-avatar">
+                                        small avatar boxes here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cards-action-box">
+                            <button v-on:click="moveCategory( task.id, 'todo' )">Move to Todo</button>
+                            <!-- v-on:click="counter += 1" -->
+                            <button>Delete Task</button>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+                <div id="todo-section">
+                    <h2>To-do</h2>
+    
+                    <div class="task-cards-todo" v-for="task in todoTasks">
+    
+                        
+                        <div class="sample-card">
+                            <!-- <div class="card-image-box" >
+                                <img style="width:100%; padding:10px; background-color: yellow;">
+                            </div> -->
+                            <div class="card-description-box">
+                                <div class="card-title">
+                                   <h5>{{ task.title }}</h5> 
+                                </div>
+                                <div class="card-description">
+                                    {{ task.description }}
+                                </div>
+                                <div class="card-description-infoBar">
+                                    <div class="due-date">
+                                        {{ task.due_date }}
+                                    </div>
+                                    <div class="card-avatar">
+                                        small avatar boxes here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cards-action-box">
+                            <button v-on:click="moveCategory( task.id, 'backlog' )">Move to Backlog</button>
+                            <button v-on:click="moveCategory( task.id, 'done' )">Move to Done</button>
+                            <button>Delete Task</button>
+                        </div>
+    
+                    </div>
+                </div>
+                <div id="done-section">
+                    <h2>Done</h2>
+    
+                    <div class="task-cards-done" v-for="task in doneTasks">
+    
+                        
+                        <div class="sample-card">
+                            <!-- <div class="card-image-box" >
+                                <img style="width:100%; padding:10px; background-color: yellow;">
+                            </div> -->
+                            <div class="card-description-box">
+                                <div class="card-title">
+                                   <h5>{{ task.title }}</h5> 
+                                </div>
+                                <div class="card-description">
+                                    {{ task.description }}
+                                </div>
+                                <div class="card-description-infoBar">
+                                    <div class="due-date">
+                                        {{ task.due_date }}
+                                    </div>
+                                    <div class="card-avatar">
+                                        small avatar boxes here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cards-action-box">
+                            <button v-on:click="moveCategory( task.id, 'todo' )">Move to Todo</button>
+                            <button v-on:click="moveCategory( task.id, 'completed' )">Move to Completed</button>
+                            <button>Delete Task</button>
+                        </div>
+    
+                    </div>
+                </div>
+                <div id="completed-section">
+                    <h2>Completed</h2>
+    
+                    <div class="task-cards-completed" v-for="task in completedTasks">
+    
+                        
+                        <div class="sample-card">
+                            <!-- <div class="card-image-box" >
+                                <img style="width:100%; padding:10px; background-color: yellow;">
+                            </div> -->
+                            <div class="card-description-box">
+                                <div class="card-title">
+                                   <h5>{{ task.title }}</h5> 
+                                </div>
+                                <div class="card-description">
+                                    {{ task.description }}
+                                </div>
+                                <div class="card-description-infoBar">
+                                    <div class="due-date">
+                                        {{ task.due_date }}
+                                    </div>
+                                    <div class="card-avatar">
+                                        small avatar boxes here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cards-action-box">
+                            <button v-on:click="moveCategory( task.id, 'done' )">Move to Done</button>
+                            <button>Delete Task</button>
+                        </div>
+
+    
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <!-- END OF PAGE 3 MAIN-PAGE KANBAN TASKS -->
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
