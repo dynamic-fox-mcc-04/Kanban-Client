@@ -150,6 +150,9 @@ export default {
           localStorage.setItem("name", data.name);
           localStorage.setItem("email", data.email);
           localStorage.setItem("token", data.token);
+          this.$toasted.show('KanBan-Te Kudasai!', {
+            duration: 3000
+          })
           this.$emit("changeCurrentPage", "dashboard");
           this.$emit("changeStatus", true);
           this.name = "";
@@ -173,21 +176,23 @@ export default {
           localStorage.setItem("name", data.name);
           localStorage.setItem("email", data.email);
           localStorage.setItem("token", data.token);
+          this.$toasted.show('Glad to see you!', {
+            duration: 3000
+          })
           this.$emit("changeCurrentPage", "dashboard");
           this.$emit("changeStatus", true);
           this.email = "";
           this.password = "";
         })
         .catch(err => {
+          this.$toasted.show(err.response.data.message, {
+            duration: 3000
+          })
           console.log(err);
         });
     },
     onSignInSuccess(googleUser) {
-      console.log('masuk ga sih?');
-      
-      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
-      // See https://developers.google.com/identity/sign-in/web/reference#users
-      const profile = googleUser.getBasicProfile(); // etc etc
+      const profile = googleUser.getBasicProfile();
       const token = googleUser.getAuthResponse().id_token;
       axios({
         method: "POST",
@@ -200,6 +205,9 @@ export default {
           localStorage.setItem("name", data.name);
           localStorage.setItem("email", data.email);
           localStorage.setItem("token", data.token);
+          this.$toasted.show('Glad to see you!', {
+            duration: 3000
+          })
           this.$emit("changeCurrentPage", "dashboard");
           this.$emit("changeStatus", true);
           this.email = "";
@@ -210,8 +218,6 @@ export default {
         });
     },
     onSignInError(error) {
-      console.log('kok kesini sih?');
-      // `error` contains any error occurred.
       console.log(error);
     }
   },
