@@ -9789,7 +9789,7 @@ var _default = {
       password: '',
       registration: false,
       googleSignInParams: {
-        client_id: "1016326809584-ma8nhm6oq5srehnlmmei2mf8bajg4vgc.apps.googleusercontent.com "
+        client_id: "1016326809584-ma8nhm6oq5srehnlmmei2mf8bajg4vgc.apps.googleusercontent.com"
       }
     };
   },
@@ -9821,6 +9821,7 @@ var _default = {
       // See https://developers.google.com/identity/sign-in/web/reference#users
       var profile = googleUser.getBasicProfile(); // etc etc
 
+      console.log(profile, 'ini profile');
       var gtoken = googleUser.getAuthResponse().id_token;
       this.$emit('google-sign', {
         token: gtoken
@@ -11959,6 +11960,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: 'App',
   data: function data() {
@@ -12112,6 +12114,24 @@ var _default = {
 
       });
     },
+    googleSignIn: function googleSignIn(gToken) {
+      var _this7 = this;
+
+      console.log(gToken);
+      (0, _axios.default)({
+        method: 'POST',
+        url: "https://salty-mesa-68078.herokuapp.com/googleSignIn",
+        headers: {
+          token: gToken.token
+        }
+      }).then(function (response) {
+        console.log('google signed-in');
+
+        _this7.sendToLocal(response.data);
+      }).catch(function (err) {
+        console.log(err.response);
+      });
+    },
     logout: function logout() {
       localStorage.clear();
       this.logStatus = false;
@@ -12202,7 +12222,11 @@ exports.default = _default;
             }
           })
         : _c("LoginPage", {
-            on: { "post-register": _vm.register, "post-login": _vm.login }
+            on: {
+              "post-register": _vm.register,
+              "post-login": _vm.login,
+              "google-sign": _vm.googleSignIn
+            }
           })
     ],
     1

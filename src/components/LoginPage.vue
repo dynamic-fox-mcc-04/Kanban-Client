@@ -43,7 +43,7 @@ export default {
         password: '',
         registration: false,
         googleSignInParams: {
-          client_id: "1016326809584-ma8nhm6oq5srehnlmmei2mf8bajg4vgc.apps.googleusercontent.com "
+          client_id: "1016326809584-ma8nhm6oq5srehnlmmei2mf8bajg4vgc.apps.googleusercontent.com"
         }
       }
     },
@@ -68,6 +68,7 @@ export default {
         // `googleUser` is the GoogleUser object that represents the just-signed-in user.
         // See https://developers.google.com/identity/sign-in/web/reference#users
         const profile = googleUser.getBasicProfile() // etc etc
+        console.log(profile, 'ini profile')
         let gtoken = googleUser.getAuthResponse().id_token;
         this.$emit('google-sign', {token: gtoken})
       },

@@ -9,8 +9,9 @@
     </div>
     <!-- <div v-if="showError" class="alert alert-danger error-msg">{{ error }}</div> -->
     <Board v-if="logStatus" v-bind:email="email" v-bind:avatar="avatar" :tasks="tasks"
-    @create-task="createTask" @destroy-item="destroyTask" @modify-item="updateTask" @logout="logout"></Board>
-    <LoginPage v-else @post-register="register" @post-login="login"></LoginPage>
+    @create-task="createTask" @destroy-item="destroyTask" @modify-item="updateTask" @logout="logout"
+    ></Board>
+    <LoginPage v-else @post-register="register" @post-login="login" @google-sign="googleSignIn"></LoginPage>
   </div>
 </template>
 
@@ -157,6 +158,21 @@ export default {
         console.log(err.response)
         this.displayError(err.response.data.messages)
         // setTimeout(this.emptyError(), 3000)
+      })
+    },
+    googleSignIn: function (gToken) {
+      console.log(gToken)
+      axios({
+        method: 'POST',
+        url: `https://salty-mesa-68078.herokuapp.com/googleSignIn`,
+        headers: {
+          token: gToken.token
+        }
+      }).then(response => {
+        console.log('google signed-in')
+        this.sendToLocal(response.data)
+      }).catch(err => {
+        console.log(err.response)
       })
     },
     logout: function() {
