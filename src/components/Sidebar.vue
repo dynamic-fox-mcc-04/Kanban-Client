@@ -12,7 +12,7 @@
       <div class="counter">
         <div class="open-task">
           <h3>{{ taskNumber }}</h3>
-          <p>Open</p>
+          <p>Total</p>
         </div>
         <div class="closed-task">
           <h3>{{ closedTask }}</h3>

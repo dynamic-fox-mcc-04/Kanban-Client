@@ -168,6 +168,7 @@ h6 {
 .main-footer a {
   color: #f96816;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 /* Button */
@@ -203,6 +204,10 @@ h6 {
   cursor: pointer;
   text-align: center;
   transition: all 0.5s;
+}
+
+.secondary-btn i{
+  margin-right: 10px;
 }
 
 .secondary-btn:hover {
@@ -320,6 +325,7 @@ h6 {
 .counter p{
   color: #919191;
   margin: 0;
+  font-size: medium;
 }
 
 .counter{
@@ -344,7 +350,7 @@ h6 {
   height: 50%;
   padding: 5%;
   color: #fff;
-  font-size: .75rem;
+  font-size: small;
 }
 
 #content{

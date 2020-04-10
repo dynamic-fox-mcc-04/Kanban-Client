@@ -11,15 +11,15 @@
             <form @submit.prevent="signup">
               <div>
                 <label>Name</label>
-                <input v-model="name" type="text" class="text-input" />
+                <input v-model="name" type="text" class="text-input" required />
               </div>
               <div>
                 <label>Email</label>
-                <input v-model="email" type="text" class="text-input" />
+                <input v-model="email" type="text" class="text-input" required />
               </div>
               <div>
                 <label>Password</label>
-                <input v-model="password" type="password" class="text-input" />
+                <input v-model="password" type="password" class="text-input" required />
               </div>
               <button type="submit" class="primary-btn">Sign Up</button>
             </form>
@@ -62,11 +62,11 @@
             <form @submit.prevent="signin">
               <div>
                 <label>Email</label>
-                <input v-model="email" type="text" class="text-input" />
+                <input v-model="email" type="text" class="text-input" required />
               </div>
               <div>
                 <label>Password</label>
-                <input v-model="password" type="password" class="text-input" />
+                <input v-model="password" type="password" class="text-input" required />
               </div>
               <button type="submit" class="primary-btn">Sign In</button>
             </form>
@@ -81,9 +81,12 @@
               <span>OR</span>
               <hr class="bar" />
             </div>
-            <a class="secondary-btn">
-              <i class="fab fa-google" style="margin-right: 10px;"></i>Sign-in
-            </a>
+            <g-signin-button
+              class="secondary-btn"
+              :params="googleSignInParams"
+              @success="onSignInSuccess"
+              @error="onSignInError"
+            ><i class="fab fa-google"></i>Sign in</g-signin-button>
           </div>
           <footer class="main-footer">
             <p>Copyright &copy; 2020, KanBan-Te All Rights Reserved</p>
@@ -119,7 +122,11 @@ export default {
       isSignup: true,
       name: "",
       email: "",
-      password: ""
+      password: "",
+      googleSignInParams: {
+        client_id:
+          "745681398322-els88qbv8pknp3akt474oc143rqn57pd.apps.googleusercontent.com"
+      }
     };
   },
   methods: {
@@ -131,8 +138,8 @@ export default {
     },
     signup: function() {
       axios({
-        method: 'POST',
-        url: 'http://localhost:3000/signup',
+        method: "POST",
+        url: "http://localhost:3000/signup",
         data: {
           name: this.name,
           email: this.email,
@@ -140,11 +147,14 @@ export default {
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('name', data.name)
-          localStorage.setItem('email', data.email)
-          localStorage.setItem('token', data.token)
-          this.$emit('changeCurrentPage', 'dashboard')
-          this.$emit('changeStatus', true)
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("token", data.token);
+          this.$emit("changeCurrentPage", "dashboard");
+          this.$emit("changeStatus", true);
+          this.name = "";
+          this.email = "";
+          this.password = "";
         })
         .catch(err => {
           console.log(err);
@@ -152,23 +162,57 @@ export default {
     },
     signin: function() {
       axios({
-        method: 'POST',
-        url: 'http://localhost:3000/signin',
+        method: "POST",
+        url: "http://localhost:3000/signin",
         data: {
           email: this.email,
           password: this.password
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('name', data.name)
-          localStorage.setItem('email', data.email)
-          localStorage.setItem('token', data.token)
-          this.$emit('changeCurrentPage', 'dashboard')
-          this.$emit('changeStatus', true)
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("token", data.token);
+          this.$emit("changeCurrentPage", "dashboard");
+          this.$emit("changeStatus", true);
+          this.email = "";
+          this.password = "";
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    onSignInSuccess(googleUser) {
+      console.log('masuk ga sih?');
+      
+      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
+      // See https://developers.google.com/identity/sign-in/web/reference#users
+      const profile = googleUser.getBasicProfile(); // etc etc
+      const token = googleUser.getAuthResponse().id_token;
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/gsignin",
+        headers: {
+          token
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("token", data.token);
+          this.$emit("changeCurrentPage", "dashboard");
+          this.$emit("changeStatus", true);
+          this.email = "";
+          this.password = "";
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    onSignInError(error) {
+      console.log('kok kesini sih?');
+      // `error` contains any error occurred.
+      console.log(error);
     }
   },
   watch: {
