@@ -17613,7 +17613,8 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BASEURL = 'http://localhost:3001';
+// const BASEURL = 'http://localhost:3001'
+var BASEURL = 'https://desolate-ocean-86590.herokuapp.com';
 
 var _default = (0, _socket.default)(BASEURL);
 
@@ -19184,7 +19185,7 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BASEURL = 'http://localhost:3001';
+var BASEURL = 'http://localhost:3001'; // const BASEURL = 'https://desolate-ocean-86590.herokuapp.com'
 
 var instance = _axios.default.create({
   baseURL: BASEURL
@@ -68765,7 +68766,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51293" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55566" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
