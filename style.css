@@ -8,12 +8,17 @@
     font-family: Poppins;
     font-weight: bolder;
     text-align: center;
-    margin-top: 40px;
-    font-size: 50px;
+    margin-top: 20px;
+    font-size: 20px;
 }
+
+h2 {
+    font-size: 25px;
+}
+
 .containerHome{
-    width: 95%;
-    margin: 30px auto;
+    width: 100%;
+    margin: 10px auto;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -22,8 +27,8 @@
     background-color: rgb(120, 111, 166);
     border: 2px solid rgb(52, 7, 59);
     border-radius: 10px;
-    width: 350px;
-    margin: 10px;
+    width: 23%;
+    margin: 5px;
     display: flex;
     flex-direction: column;
 }
@@ -31,8 +36,8 @@
 .category {
     font-family: Poppins;
     color: white;
-    font-size: 45px;
-    height: 80px;
+    font-size: 30px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,8 +48,8 @@
     border: 2px solid grey;
     border-radius: 15px;
     box-shadow: 2px 2px rgb(56, 55, 55);
-    margin: 20px auto;
-    min-height: 250px;
+    margin: 10px auto;
+    min-height: 120px;
     width: 85%;
     display: flex;
     flex-direction: column;
@@ -52,18 +57,47 @@
 
 .taskTitle {
     color:rgb(42, 41, 41);
-    font-size: 27px;
+    font-size: 20px;
     font-family: sans-serif;
-    min-height: 120px;
-    margin: 15px auto;
+    min-height: 100px;
+    margin: 10px auto;
     margin-top: 30px;
     text-align: center;
 }
 
-.btn-danger {
-    background-color: rgb(89, 98, 117);
+.deleteBtn {
+    background-color: rgb(50, 52, 56);
+    font-size: 100%;
+    width: 65px;
     border: none;
-    margin: 10px 90px;
+    margin: 10px auto;
+}
+
+.createBtn{
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.moveBtn {
+    background-color: rgb(75, 124, 223);
+    font-size: 100%;
+    width: 30px;
+    border: none;
+    margin: 0 auto
+}
+
+.leftBtn {
+    margin-right: 0;
+}
+
+.rightBtn {
+    margin-left: 0;
+}
+
+.divMove {
+    display: flex;
+    justify-content: center;
 }
 
 .containerForm {
@@ -74,9 +108,9 @@
 }
 
 .containerAdd {
-    width: 25%;
+    width: 250px;
     margin-top: 10px;
-    padding: 30px;
+    padding: 10px;
 }
 
 .newKanban {

@@ -11,6 +11,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
         <link rel="stylesheet" type="text/css" href="/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> 
+        <meta name="google-signin-client_id" content="478264750363-9u5b7bd483nggk54ig3uk9us34tfc810.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+
         <title>Hello Kanban</title>
     </head>
     <body>
@@ -18,17 +21,29 @@
         
             <!-- MAIN PAGE -->
             <div class="mainPage" v-if="isLogin">
-                <button class="btn btn-danger" v-on:click="logout">Logout</button>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                            <a class="navbar-brand nav-link"> Kanban </a>
+                            <div class="navbar-nav right">
+                                <a class="nav-link" href="#" v-on:click="logout"> Logout </a>
+                            </div>
+                        </div>
+                    </nav>
                 <h1 id="title">Kanban</h1>
                 <div class="newKanban">
                     <!-- New Task Form -->
                     <div class="containerAdd">
-                        <h2 class="text-center">New Task</h2><hr><br>
+                        <h2 class="text-center">New Task</h2><hr>
                         <form v-on:submit.prevent="createTask">
                             <div class="form-group">
-                                <input type="text" name="newTask" class="form-control" placeholder="New Task">
+                                <input type="text" name="newTask" class="form-control" placeholder="New Task"
+                                    v-model="title" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Create Task</button>
+                            <button type="submit" class="btn btn-primary btn-sm createBtn">Create Task</button>
                         </form>
                     </div>
                     <!-- End Task Form -->
@@ -42,32 +57,42 @@
                         <div class="category">Backlog</div>
                         <!-- Kanban -->
                         <div class="kanbanbox" v-for="kanban in tasks" v-if="kanban.category=='backlog'" :key="kanban.id">
-                            <div class="taskTitle"> {{kanban.task}} </div>
-                            <div class="btn btn-danger a-btn-slide-text">Delete</div>
+                            <div class="taskTitle"> {{kanban.title}} </div>
+                            <button type="button" class="btn btn-primary btn-sm moveBtn" v-on:click="moveForward(kanban.id)">>></button>
+                            <button type="button" class="btn btn-secondary btn-sm deleteBtn" v-on:click="deleteTask(kanban.id)">Delete</button>
                         </div>
                     </div>
                     <!-- Container Category -->
                     <div class="contCategory">
                         <div class="category">Todo</div>
-                        <div class="kanbanbox" v-for="task in tasks" v-if="task.category=='todo'" :key="task.id">
-                            <div class="taskTitle"> {{task.task}} </div>
-                            <div class="btn btn-danger a-btn-slide-text">Delete</div>
+                        <div class="kanbanbox" v-for="kanban in tasks" v-if="kanban.category=='todo'" :key="kanban.id">
+                            <div class="taskTitle"> {{kanban.title}} </div>
+                            <div class="divMove">
+                                <button type="button" class="btn btn-primary btn-sm moveBtn leftBtn" v-on:click="moveBackward(kanban.id)"><<</button>
+                                <button type="button" class="btn btn-primary btn-sm moveBtn rightBtn" v-on:click="moveForward(kanban.id)">>></button>
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-sm deleteBtn" v-on:click="deleteTask(kanban.id)">Delete</button>
                         </div>
                     </div>
                     
                     <div class="contCategory">
                         <div class="category">Done</div>
-                        <div class="kanbanbox" v-for="task in tasks" v-if="task.category=='done'" :key="task.id">
-                            <div class="taskTitle"> {{task.task}} </div>
-                            <div class="btn btn-danger a-btn-slide-text">Delete</div>
+                        <div class="kanbanbox" v-for="kanban in tasks" v-if="kanban.category=='done'" :key="kanban.id">
+                            <div class="taskTitle"> {{kanban.title}} </div>
+                            <div class="divMove">
+                                <button type="button" class="btn btn-primary btn-sm moveBtn leftBtn" v-on:click="moveBackward(kanban.id)"><<</button>
+                                <button type="button" class="btn btn-primary btn-sm moveBtn rightBtn" v-on:click="moveForward(kanban.id)">>></button>
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-sm deleteBtn" v-on:click="deleteTask(kanban.id)">Delete</button>
                         </div>
                     </div>
                     
                     <div class="contCategory">
                         <div class="category">Completed</div>
-                        <div class="kanbanbox" v-for="task in tasks" v-if="task.category=='completed'" :key="task.id">
-                            <div class="taskTitle"> {{task.task}} </div>
-                            <div class="btn btn-danger a-btn-slide-text">Delete</div>
+                        <div class="kanbanbox" v-for="kanban in tasks" v-if="kanban.category=='completed'" :key="kanban.id">
+                            <div class="taskTitle"> {{kanban.title}} </div>
+                            <button type="button" class="btn btn-primary btn-sm moveBtn" v-on:click="moveBackward(kanban.id)"><<</button>
+                            <button type="button" class="btn btn-secondary btn-sm deleteBtn" v-on:click="deleteTask(kanban.id)">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -87,9 +112,9 @@
                             <div class="navbar-nav right">
                                 <a class="nav-link" href="#" v-on:click="getLoginForm"> Login </a>
                                 <a class="nav-link" href="#" v-on:click="getRegistForm"> Register </a>
+                                                             
                             </div>
                         </div>
-        
                     </nav>
         
                     <div class="jumbotron">
@@ -119,6 +144,7 @@
         
                                 <div class="login-wrap-button">
                                     <button class="button-login" type="submit"> Login </button>
+                                    
                                 </div>
                             </form>
                         </div>
@@ -157,6 +183,7 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <!-- <script src="./src/main.js"></script> -->
         <script src="main.js"></script>
     </body>
 </html>
