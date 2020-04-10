@@ -362,7 +362,7 @@ export default {
         .then((result) => {
           // console.log(result);
           this.getProjects();
-          this.selectedUser = ""
+          this.selectedUser = "";
         })
         .catch((err) => {
           console.log(err);
@@ -411,7 +411,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    getProjects() {
+    getProjects() { 
       //ok
       //bisa juga untuk manggil tasks
       // event.preventDefault();
@@ -426,7 +426,7 @@ export default {
           const { data } = result;
           const { projects } = data;
           this.projects = projects;
-          this.getUsers()
+          this.getUsers();
           // console.log("YA", projects);
           // if (this.currentProjects === 0) {
           // projects.map(project => {
