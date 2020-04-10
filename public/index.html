@@ -20,114 +20,117 @@
 </head>
 
 <body>
-    <div class="navpanel">
-        <div id="navmenu">
-            <button id="add">ADD</button>
-            <button id="logout">Log out</button>
-        </div>
-    </div>
-    <div class="content">
-        <div id="pre-log">
-            <h1>Prelog</h1>
-            <div id="pre-log-content">
-                <div id="pre-log-content-box">
-                    <h3 id="title">Title</h3>
-                    <p id="description">Description</p>
-                    <a href="" id="to-todo">To do</a>
-                    <a href="" id="delete">Delete</a>
-                </div><br>
+    <div id="app">
+        <div class="navpanel" v-if="isLogin">
+            <div id="navmenu">
+                <button id="add">ADD</button>
+                <button id="logout">Log out</button>
             </div>
         </div>
-        <div id="todo">
-            <h1>todo</h1>
-            <div id="todo-content">
-                <div id="todo-content-box">
-                    <h3 id="title">Title</h3>
-                    <p id="description">Description</p>
-                    <a href="" id="to-pre-log">Prelog</a>
-                    <a href="" id="to-on-progress">On Progress</a>
-                    <a href="" id="delete">Delete</a>
-                </div><br>
-                <div id="todo-content-box">
-                    <h3 id="title">Title</h3>
-                    <p id="description">Description</p>
-                    <a href="" id="to-pre-log">Prelog</a>
-                    <a href="" id="to-on-progress">On Progress</a>
-                    <a href="" id="delete">Delete</a>
-                </div><br>
+        <div class="content" v-if="isLogin">
+            <div id="pre-log">
+                <h1>Prelog</h1>
+                <div id="pre-log-content">
+                    <div id="pre-log-content-box">
+                        <h3 id="title">Title</h3>
+                        <p id="description">Description</p>
+                        <a href="" id="to-todo">To do</a>
+                        <a href="" id="delete">Delete</a>
+                    </div><br>
+                </div>
+            </div>
+            <div id="todo">
+                <h1>todo</h1>
+                <div id="todo-content">
+                    <div id="todo-content-box">
+                        <h3 id="title">Title</h3>
+                        <p id="description">Description</p>
+                        <a href="" id="to-pre-log">Prelog</a>
+                        <a href="" id="to-on-progress">On Progress</a>
+                        <a href="" id="delete">Delete</a>
+                    </div><br>
+                    <div id="todo-content-box">
+                        <h3 id="title">Title</h3>
+                        <p id="description">Description</p>
+                        <a href="" id="to-pre-log">Prelog</a>
+                        <a href="" id="to-on-progress">On Progress</a>
+                        <a href="" id="delete">Delete</a>
+                    </div><br>
+                </div>
+            </div>
+            <div id="on-progress">
+                <h1>On Progress</h1>
+                <div id="on-progress-content">
+                    <div id="on-progress-content-box">
+                        <h3 id="title">Title</h3>
+                        <p id="description">Description</p>
+                        <a href="" id="to-todo">To do</a>
+                        <a href="" id="to-finished">finished</a>
+                        <a href="" id="delete">Delete</a>
+                    </div><br>
+                    <div id="on-progress-content-box">
+                        <h3 id="title">Title</h3>
+                        <p id="description">Description</p>
+                        <a href="" id="to-todo">To do</a>
+                        <a href="" id="to-finished">finished</a>
+                        <a href="" id="delete">Delete</a>
+                    </div><br>
+                    <div id="on-progress-content-box">
+                        <h3 id="title">Title</h3>
+                        <p id="description">Description</p>
+                        <a href="" id="to-todo">To do</a>
+                        <a href="" id="to-finished">finished</a>
+                        <a href="" id="delete">Delete</a>
+                    </div><br>
+                </div>
+            </div>
+            <div id="finished">
+                <h1>Finished</h1>
+                <div id="finished-content">
+                    <div id="finished-content-box">
+                        <h3 id="title">Title</h3>
+                        <p id="description">Description</p>
+                        <a href="" id="to-on-progress">On Progress</a>
+                        <a href="" id="delete">Delete</a>
+                    </div><br>
+                </div>
             </div>
         </div>
-        <div id="on-progress">
-            <h1>On Progress</h1>
-            <div id="on-progress-content">
-                <div id="on-progress-content-box">
-                    <h3 id="title">Title</h3>
-                    <p id="description">Description</p>
-                    <a href="" id="to-todo">To do</a>
-                    <a href="" id="to-finished">finished</a>
-                    <a href="" id="delete">Delete</a>
-                </div><br>
-                <div id="on-progress-content-box">
-                    <h3 id="title">Title</h3>
-                    <p id="description">Description</p>
-                    <a href="" id="to-todo">To do</a>
-                    <a href="" id="to-finished">finished</a>
-                    <a href="" id="delete">Delete</a>
-                </div><br>
-                <div id="on-progress-content-box">
-                    <h3 id="title">Title</h3>
-                    <p id="description">Description</p>
-                    <a href="" id="to-todo">To do</a>
-                    <a href="" id="to-finished">finished</a>
-                    <a href="" id="delete">Delete</a>
-                </div><br>
-            </div>
-        </div>
-        <div id="finished">
-            <h1>Finished</h1>
-            <div id="finished-content">
-                <div id="finished-content-box">
-                    <h3 id="title">Title</h3>
-                    <p id="description">Description</p>
-                    <a href="" id="to-on-progress">On Progress</a>
-                    <a href="" id="delete">Delete</a>
-                </div><br>
-            </div>
-        </div>
-    </div>
 
-    <div id="login-box">
-        <h2>Welcome</h2>
-        <h1>You need to login first</h1>
-        <div id="login-form">
-            <form>
-                <label for="login-email">Email</label><br>
-                <input type="email" id="login-email" placeholder="example@mail.com"><br><br>
-                <label for="login-password">Password</label><br>
-                <input type="password" id="login-password" placeholder="********"><br><br>
-                <button type="submit">Login</button>
-            </form>
+        <div id="login-box" v-if="!isLogin && haveAccount">
+            <h2>Welcome</h2>
+            <h1>You need to login first</h1>
+            <div id="login-form">
+                <form>
+                    <label for="login-email">Email</label><br>
+                    <input type="email" id="login-email" placeholder="example@mail.com" required><br><br>
+                    <label for="login-password">Password</label><br>
+                    <input type="password" id="login-password" placeholder="********" required><br><br>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            <h4><a href="#" @click="donthaveacc()">I don't have an account</a></h4>
         </div>
-        <h4><a href="">I don't have an account</a></h4>
-    </div>
-    <div id="register-box">
-        <h2>Welcome</h2>
-        <h1>Plese fill in this form</h1>
-        <div id="register-form">
-            <form>
-                <label for="reg-email">Email</label><br>
-                <input type="email" id="reg-email" placeholder="example@mail.com"><br><br>
-                <label for="reg-password">Password</label><br>
-                <input type="password" id="reg-password" placeholder="********"><br><br>
-                <label for="verifypassword">Verify Password</label><br>
-                <input type="verifypassword" id="verifypassword" placeholder="********"><br><br>
-                <button type="submit">Register</button>
-            </form>
+        <div id="register-box" v-if="!isLogin && !haveAccount">
+            <h2>Welcome</h2>
+            <h1>Plese fill in this form</h1>
+            <div id="register-form">
+                <form>
+                    <label for="reg-email">Email</label><br>
+                    <input type="email" id="reg-email" placeholder="example@mail.com" required><br><br>
+                    <label for="reg-password">Password</label><br>
+                    <input type="password" id="reg-password" placeholder="********" required><br><br>
+                    <label for="verifypassword">Verify Password</label><br>
+                    <input type="verifypassword" id="verifypassword" placeholder="********" required><br><br>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+            <h4><a href="#" @click="haveacc()">I have an account</a></h4>
         </div>
-        <h4><a href="">I have an account</a></h4>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="./main.js"></script>
 </body>
 
 </html>
