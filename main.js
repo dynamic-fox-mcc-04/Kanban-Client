@@ -14,7 +14,8 @@ var app = new Vue({
     completedTasks:[],
     user:{
       email:"",
-      password:""
+      password:"",
+      access_token:""
     }
   },
   methods:{
@@ -26,41 +27,45 @@ var app = new Vue({
       }
       axios.post(`http://localhost:3000/login`,payload)
       .then(result => {
-        console.log(result, "this is token result")
-        // console.log(result.data.access_token)
+        // console.log(result.data.access_token, "this is token result")
         localStorage.access_token = result.data.access_token
+        this.user.access_token = result.data.access_token
         this.user.email = ""
         this.user.password = ""
         this.isLoggedIn = true
+        let token = result.data.access_token
 
+        this.getTasks( token )
       })
       .catch(error => {
         console.log(error)
       })
     },
-    getTasks(){
-      axios.get(`http://localhost:3000/tasks`)
-      .then(result => {
-        this.tasks = result.data
-        for (let i = 0; i < (this.tasks).length; i++) {
-          if(this.tasks[i]["category"] === "backlog"){
-            this.backlogTasks.push(this.tasks[i])
-          } else if(this.tasks[i]["category"] === "todo"){
-            this.todoTasks.push(this.tasks[i])
-          } else if(this.tasks[i]["category"] === "done"){
-            this.doneTasks.push(this.tasks[i])
-          } else if(this.tasks[i]["category"] === "completed"){
-            this.completedTasks.push(this.tasks[i])
-          }
+    getTasks( token ){
+      // console.log(result.data.access_token, "satu")
+      /* 
+        headers: {
+          Authorization: 'Bearer ' + token //the token is a variable which holds the token
         }
-  
+      */
+      console.log(localStorage.access_token, "dua")
+      console.log(token, "tiga")
+      
+
+      axios.get(`http://localhost:3000/tasks`, {headers: {
+        access_token: token
+      }})
+      .then(result => {
+        console.log(result.data.tasks)
+        this.tasks = result.data.tasks
+        this.reassignTasks()
       })
       .catch(error => {
         console.log(error)
       })
     }, 
     reassignTasks(){
-      // console.log("this is classify tasks")
+      console.log("this is classify tasks")
       // console.log(this.tasks)
       this.backlogTasks = []
       this.todoTasks = []
@@ -99,7 +104,6 @@ var app = new Vue({
       this.isLoggedIn = true
     }
     this.getTasks()
-    // this.reassignTasks()
   },
   beforeMounted(){
     
