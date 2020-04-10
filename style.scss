@@ -26,6 +26,36 @@ body {
     font-family: $roboto-slab;
 }
 
+
+
+lottie-player {
+
+    position: fixed;
+    z-index: 9999999;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+    
+
+}
+
+.msg {
+    margin: 5px;
+    width:95%;
+    border: 1px solid;
+    padding:10px;
+    opacity: 80%;
+    color: grey;
+  }
+
+  
+  .msg-error {
+    border-color: #d32f2f;
+    background-color: #ef5350;
+    color: white;
+  }
+
 .login-container, .register-container {
     //  top: 50%;
     // left: 50%;
@@ -82,7 +112,10 @@ h2 {
     box-shadow: 0 1px 0 0 #000;
   }
 
-
+p {
+    font-size: 12px;
+   color: grey;
+}
 
 
 //dashboard
@@ -129,7 +162,7 @@ h2 {
 
 .navbar #logout-btn:hover {
     cursor: pointer; 
-    opacity: 50%;
+    // opacity: 50%;
 }
 
 
@@ -142,13 +175,21 @@ h2 {
    
 }
 
-.card-list {
+.card-list, .card-list-add {
     display: flex;
     flex-direction: column; 
     background-color: $cardColor;
     margin: 5px;
     width: 240px;
     border-radius: 3px;
+}
+
+.card-list-add {
+    width: 200px;
+}
+
+.card-list-add div input {
+    margin: auto;
 }
 
 .card-title h3 {
@@ -161,12 +202,14 @@ h2 {
 .card-title {
     height: 40px;
 }
+
 .card-content-box {
     display: flex;
     flex-direction: column;
     min-height: auto;
     max-height: 450px;
-    overflow-y: auto;   
+    overflow-y: auto;  
+    cursor: move; 
 }
 
 .card-content {
@@ -176,6 +219,10 @@ h2 {
     padding: 5px;
     box-shadow: 1px 0px 2px 0px grey;
     font-size: 14px;
+    height:auto;
+    width: auto;
+    
+   
  
 }
 
@@ -189,6 +236,8 @@ h2 {
     border-radius: 3px;
    
 }
+
+
 
 .card-btn button:hover {
    background-color: $cardColorHover;

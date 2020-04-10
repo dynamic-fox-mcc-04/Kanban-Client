@@ -7,6 +7,30 @@ body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+lottie-player {
+  position: fixed;
+  z-index: 9999999;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.msg {
+  margin: 5px;
+  width: 95%;
+  border: 1px solid;
+  padding: 10px;
+  opacity: 80%;
+  color: grey;
+}
+
+.msg-error {
+  border-color: #d32f2f;
+  background-color: #ef5350;
+  color: white;
+}
+
 .login-container, .register-container {
   margin-top: 5%;
   margin-bottom: 5%;
@@ -54,6 +78,11 @@ h2 {
   box-shadow: 0 1px 0 0 #000;
 }
 
+p {
+  font-size: 12px;
+  color: grey;
+}
+
 .container {
   margin: 0;
   padding: 0;
@@ -94,7 +123,6 @@ h2 {
 
 .navbar #logout-btn:hover {
   cursor: pointer;
-  opacity: 50%;
 }
 
 .content {
@@ -105,13 +133,21 @@ h2 {
   overflow-x: auto;
 }
 
-.card-list {
+.card-list, .card-list-add {
   display: flex;
   flex-direction: column;
   background-color: #e7ebeb;
   margin: 5px;
   width: 240px;
   border-radius: 3px;
+}
+
+.card-list-add {
+  width: 200px;
+}
+
+.card-list-add div input {
+  margin: auto;
 }
 
 .card-title h3 {
@@ -130,6 +166,7 @@ h2 {
   min-height: auto;
   max-height: 450px;
   overflow-y: auto;
+  cursor: move;
 }
 
 .card-content {
@@ -139,6 +176,8 @@ h2 {
   padding: 5px;
   box-shadow: 1px 0px 2px 0px grey;
   font-size: 14px;
+  height: auto;
+  width: auto;
 }
 
 .card-btn button {
