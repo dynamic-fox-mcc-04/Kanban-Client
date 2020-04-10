@@ -2,7 +2,7 @@
   <div class="limiter">
 	<div class="container-login100" style="background-image: url('/images/bg-01.jpg');">
 		<register-form @cancelSignIn="loginform" v-if="isregister"></register-form>
-		<login-form @registerclick="registerform" v-else></login-form>
+		<login-form @succeslogin="homepage" @registerclick="registerform" v-else></login-form>
 	</div>
   </div>
 </template>
@@ -29,6 +29,9 @@ export default {
 		},
 		loginform(){					
 			this.isregister =false
+		},
+		homepage(){
+			this.$emit('showhome')
 		}
 	}
 }

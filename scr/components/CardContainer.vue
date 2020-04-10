@@ -1,53 +1,74 @@
 <template>
-  <div id="container-item">
-        <div id="container-backlog" class="overflow-auto scrollbar scrollbar-primary">back log
-           <div class="item">
-            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-                <div class="card-header">Header</div>
-                <div class="card-body">
-                  <h5 class="card-title">Primary card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-            
-            <div class="card border-primary mb-3" style="max-width: 18rem;">
-                <div class="card-header">Header</div>
-                <div class="card-body text-primary">
-                  <h5 class="card-title">Primary card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-            </div>
+  <div id="container-item" >
+        <div id="container-backlog" class="overflow-auto scrollbar scrollbar-primary">
+          <button type="button" class="btn btn-primary fa fa-plus m-1">  </button>
+           <!-- <div class="item"> -->
+             <task-card             
+             v-for="task in  StatusCheck('Backlog')"
+             :key="task.id"
+             :content="task"             
+              @refreshData='refreshData'></task-card>            
+            <!-- </div> -->
            
         </div>
-        <div id="container-product" class="overflow-auto">Product
-            <div>item 1</div>
-            <div>item 2</div>
-            <div>item 3</div>
-            <div>item 4</div>
+        <div id="container-product" class="overflow-auto scrollbar scrollbar-primary" >
+             <task-card             
+             v-for="task in  StatusCheck('Todo')"
+             :key="task.id"
+             :content="task"             
+              @refreshData='refreshData'></task-card>  
+           
         </div>
-        <div id="container-development" class="overflow-auto">Development
-            <div>item 1</div>
-            <div>item 2</div>
-            <div>item 3</div>
-            <div>item 4</div>
+        <div id="container-development" class="overflow-auto scrollbar scrollbar-primary">
+             <task-card             
+             v-for="task in  StatusCheck('Done')"
+             :key="task.id"
+             :content="task"             
+              @refreshData='refreshData'></task-card>  
         </div>
-        <div id="container-done" class="overflow-auto">Done
-            <div>item 1</div>
-            <div>item 2</div>
-            <div>item 3</div>
-            <div>item 4</div>
+        <div id="container-done" class="overflow-auto scrollbar scrollbar-primary">
+             <task-card             
+             v-for="task in  StatusCheck('Completed')"
+             :key="task.id"
+             :content="task"             
+              @refreshData='refreshData'></task-card>  
         </div>
     </div>
 </template>
 
 <script>
+import TaskCard from "./TaskCard"
 export default {
-name:"CardContainer"
+  name:"CardContainer",
+  components:{
+    TaskCard
+  },
+  props:['dataAllTaskFromHome'],
+  data(){
+    return {
+      backlog:[],
+      title:[],
+      description:[],
+      status:[],
+      createdAt:[],
+      UpdateAt:[],
+      
+    }
+  },
+  methods:{
+    StatusCheck(status){      
+     let datafilter=[]
+      datafilter= this.dataAllTaskFromHome.data.filter(function (item) { return item.status == status });
+      console.log(datafilter);
+      return datafilter
+    },
+    refreshData(){
+      console.log('refresh');
+      
+      this.$emit('refreshData')
+    }
+  }
+  
 }
 </script>
 

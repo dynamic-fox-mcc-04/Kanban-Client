@@ -10719,6 +10719,8 @@ var _default = {
       this.$emit('registerclick');
     },
     login: function login() {
+      var _this = this;
+
       (0, _axios.default)({
         method: "POST",
         url: "http://localhost:3000/user/login",
@@ -10728,6 +10730,8 @@ var _default = {
         }
       }).then(function (result) {
         localStorage.setItem('token', result.data.token);
+
+        _this.$emit('succeslogin');
       }).catch(function (err) {
         console.log(err);
       });
@@ -12101,6 +12105,9 @@ var _default = {
     },
     loginform: function loginform() {
       this.isregister = false;
+    },
+    homepage: function homepage() {
+      this.$emit('showhome');
     }
   }
 };
@@ -12129,7 +12136,9 @@ exports.default = _default;
       [
         _vm.isregister
           ? _c("register-form", { on: { cancelSignIn: _vm.loginform } })
-          : _c("login-form", { on: { registerclick: _vm.registerform } })
+          : _c("login-form", {
+              on: { succeslogin: _vm.homepage, registerclick: _vm.registerform }
+            })
       ],
       1
     )
@@ -12168,13 +12177,18 @@ render._withStripped = true
       
       }
     })();
-},{"../components/Login":"scr/components/Login.vue","../components/Register":"scr/components/Register.vue","C:\\Users\\TOP1\\Desktop\\ACKTIV8\\Phase 2\\W6D1\\kanban client\\Kanban-Client\\images\\bg-01.jpg":[["bg-01.49446d9e.jpg","images/bg-01.jpg"],"images/bg-01.jpg"],"_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/cardContainer.vue":[function(require,module,exports) {
+},{"../components/Login":"scr/components/Login.vue","../components/Register":"scr/components/Register.vue","C:\\Users\\TOP1\\Desktop\\ACKTIV8\\Phase 2\\W6D1\\kanban client\\Kanban-Client\\images\\bg-01.jpg":[["bg-01.49446d9e.jpg","images/bg-01.jpg"],"images/bg-01.jpg"],"_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/TaskCard.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -12184,6 +12198,221 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "TaskCard",
+  props: ['content'],
+  data: function data() {
+    return {
+      id: '',
+      status: ''
+    };
+  },
+  methods: {
+    updateNext: function updateNext(id, status) {
+      var _this = this;
+
+      (0, _axios.default)({
+        method: "PUT",
+        url: "http://localhost:3000/task/forward/" + status + "/" + id,
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (result) {
+        _this.$emit('refreshData');
+
+        console.log(result);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    updatePrev: function updatePrev(id, status) {
+      var _this2 = this;
+
+      (0, _axios.default)({
+        method: "PUT",
+        url: "http://localhost:3000/task/backward/" + status + "/" + id,
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (result) {
+        _this2.$emit('refreshData');
+
+        console.log(result);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    dele: function dele(id) {
+      var _this3 = this;
+
+      (0, _axios.default)({
+        method: "DELETE",
+        url: "http://localhost:3000/task/" + id,
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (result) {
+        _this3.$emit('refreshData');
+
+        console.log(result);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  }
+};
+exports.default = _default;
+        var $d2f06c = exports.default || module.exports;
+      
+      if (typeof $d2f06c === 'function') {
+        $d2f06c = $d2f06c.options;
+      }
+    
+        /* template */
+        Object.assign($d2f06c, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "item" }, [
+    _c(
+      "div",
+      {
+        staticClass: "card text-white bg-primary mb-1",
+        staticStyle: { "max-width": "18rem" }
+      },
+      [
+        _c("div", { staticClass: "card-header" }, [
+          _vm._v(_vm._s(_vm.content.title))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("h5", { staticClass: "card-title" }, [
+            _vm._v(_vm._s(_vm.content.createAt))
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "card-text" }, [
+            _vm._v(_vm._s(_vm.content.description))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex justify-content-around" }, [
+          _vm.content.status != "Backlog"
+            ? _c(
+                "button",
+                {
+                  staticClass: "card-link text-white",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.updatePrev(_vm.content.id, _vm.content.status)
+                    }
+                  }
+                },
+                [_vm._v("Previous")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "card-link text-white",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.dele(_vm.content.id)
+                }
+              }
+            },
+            [_vm._v("Delete")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "card-link text-white",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.updateNext(_vm.content.id, _vm.content.status)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "text-center font-weight-light mb-1 mt-1",
+        attrs: { id: _vm.id }
+      },
+      [_vm._v(_vm._s(_vm.content.id))]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "d-none" }, [_vm._v(_vm._s(_vm.content.status))])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$d2f06c', $d2f06c);
+          } else {
+            api.reload('$d2f06c', $d2f06c);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/cardContainer.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _TaskCard = _interopRequireDefault(require("./TaskCard"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -12223,7 +12452,35 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: "CardContainer"
+  name: "CardContainer",
+  components: {
+    TaskCard: _TaskCard.default
+  },
+  props: ['dataAllTaskFromHome'],
+  data: function data() {
+    return {
+      backlog: [],
+      title: [],
+      description: [],
+      status: [],
+      createdAt: [],
+      UpdateAt: []
+    };
+  },
+  methods: {
+    StatusCheck: function StatusCheck(status) {
+      var datafilter = [];
+      datafilter = this.dataAllTaskFromHome.data.filter(function (item) {
+        return item.status == status;
+      });
+      console.log(datafilter);
+      return datafilter;
+    },
+    refreshData: function refreshData() {
+      console.log('refresh');
+      this.$emit('refreshData');
+    }
+  }
 };
 exports.default = _default;
         var $c58043 = exports.default || module.exports;
@@ -12238,128 +12495,80 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { attrs: { id: "container-item" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "overflow-auto scrollbar scrollbar-primary",
+        attrs: { id: "container-backlog" }
+      },
+      [
+        _c("button", {
+          staticClass: "btn btn-primary fa fa-plus m-1",
+          attrs: { type: "button" }
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.StatusCheck("Backlog"), function(task) {
+          return _c("task-card", {
+            key: task.id,
+            attrs: { content: task },
+            on: { refreshData: _vm.refreshData }
+          })
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "overflow-auto scrollbar scrollbar-primary",
+        attrs: { id: "container-product" }
+      },
+      _vm._l(_vm.StatusCheck("Todo"), function(task) {
+        return _c("task-card", {
+          key: task.id,
+          attrs: { content: task },
+          on: { refreshData: _vm.refreshData }
+        })
+      }),
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "overflow-auto scrollbar scrollbar-primary",
+        attrs: { id: "container-development" }
+      },
+      _vm._l(_vm.StatusCheck("Done"), function(task) {
+        return _c("task-card", {
+          key: task.id,
+          attrs: { content: task },
+          on: { refreshData: _vm.refreshData }
+        })
+      }),
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "overflow-auto scrollbar scrollbar-primary",
+        attrs: { id: "container-done" }
+      },
+      _vm._l(_vm.StatusCheck("Completed"), function(task) {
+        return _c("task-card", {
+          key: task.id,
+          attrs: { content: task },
+          on: { refreshData: _vm.refreshData }
+        })
+      }),
+      1
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "container-item" } }, [
-      _c(
-        "div",
-        {
-          staticClass: "overflow-auto scrollbar scrollbar-primary",
-          attrs: { id: "container-backlog" }
-        },
-        [
-          _vm._v("back log\n         "),
-          _c("div", { staticClass: "item" }, [
-            _c(
-              "div",
-              {
-                staticClass: "card text-white bg-primary mb-3",
-                staticStyle: { "max-width": "18rem" }
-              },
-              [
-                _c("div", { staticClass: "card-header" }, [_vm._v("Header")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("h5", { staticClass: "card-title" }, [
-                    _vm._v("Primary card title")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "card-text" }, [
-                    _vm._v(
-                      "Some quick example text to build on the card title and make up the bulk of the card's content."
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "card border-primary mb-3",
-                staticStyle: { "max-width": "18rem" }
-              },
-              [
-                _c("div", { staticClass: "card-header" }, [_vm._v("Header")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body text-primary" }, [
-                  _c("h5", { staticClass: "card-title" }, [
-                    _vm._v("Primary card title")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "card-text" }, [
-                    _vm._v(
-                      "Some quick example text to build on the card title and make up the bulk of the card's content."
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", [_vm._v("2")]),
-            _vm._v(" "),
-            _c("div", [_vm._v("3")]),
-            _vm._v(" "),
-            _c("div", [_vm._v("4")])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "overflow-auto", attrs: { id: "container-product" } },
-        [
-          _vm._v("Product\n          "),
-          _c("div", [_vm._v("item 1")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 2")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 3")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 4")])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "overflow-auto",
-          attrs: { id: "container-development" }
-        },
-        [
-          _vm._v("Development\n          "),
-          _c("div", [_vm._v("item 1")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 2")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 3")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 4")])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "overflow-auto", attrs: { id: "container-done" } },
-        [
-          _vm._v("Done\n          "),
-          _c("div", [_vm._v("item 1")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 2")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 3")]),
-          _vm._v(" "),
-          _c("div", [_vm._v("item 4")])
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
           return {
@@ -12392,7 +12601,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/views/Home.vue":[function(require,module,exports) {
+},{"./TaskCard":"scr/components/TaskCard.vue","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/views/Home.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12402,8 +12611,12 @@ exports.default = void 0;
 
 var _cardContainer = _interopRequireDefault(require("../components/cardContainer"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
 //
 //
 //
@@ -12421,6 +12634,12 @@ var _default = {
   name: "HomePage",
   components: {
     CardContainer: _cardContainer.default
+  },
+  props: ['dataAllTaskFromApp'],
+  methods: {
+    refreshData: function refreshData() {
+      this.$emit('refreshData');
+    }
   }
 };
 exports.default = _default;
@@ -12436,12 +12655,26 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "container" } },
-    [_vm._m(0), _vm._v(" "), _c("card-container")],
-    1
-  )
+  return _c("div", { attrs: { id: "container" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "container-login100",
+        staticStyle: {
+          "background-image": "url('/bg-01.49446d9e.jpg')"
+        }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("card-container", {
+          attrs: { dataAllTaskFromHome: _vm.dataAllTaskFromApp },
+          on: { refreshData: _vm.refreshData }
+        })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -12449,13 +12682,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { attrs: { id: "container-header" } }, [
-      _c("div", [_vm._v("Back Log")]),
+      _c("div", [_c("h5", [_vm._v("Back Log")])]),
       _vm._v(" "),
-      _c("div", [_vm._v("Product")]),
+      _c("div", [_c("h5", [_vm._v("Todo")])]),
       _vm._v(" "),
-      _c("div", [_vm._v("Development")]),
+      _c("div", [_c("h5", [_vm._v("Done")])]),
       _vm._v(" "),
-      _c("div", [_vm._v("Done")])
+      _c("div", [_c("h5", [_vm._v("Completed")])])
     ])
   }
 ]
@@ -12491,7 +12724,7 @@ render._withStripped = true
       
       }
     })();
-},{"../components/cardContainer":"scr/components/cardContainer.vue","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/App.vue":[function(require,module,exports) {
+},{"../components/cardContainer":"scr/components/cardContainer.vue","axios":"node_modules/axios/index.js","C:\\Users\\TOP1\\Desktop\\ACKTIV8\\Phase 2\\W6D1\\kanban client\\Kanban-Client\\images\\bg-01.jpg":[["bg-01.49446d9e.jpg","images/bg-01.jpg"],"images/bg-01.jpg"],"_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12523,8 +12756,42 @@ var _default = {
   },
   data: function data() {
     return {
-      message: 'Haloooo'
+      islogin: false,
+      alltask: []
     };
+  },
+  methods: {
+    loginsucces: function loginsucces() {
+      console.log('login suces');
+      this.islogin = true;
+      this.fetchAllTask();
+    },
+    fetchAllTask: function fetchAllTask() {
+      var _this = this;
+
+      console.log("pagillllll");
+      (0, _axios.default)({
+        method: "GET",
+        url: "http://localhost:3000/task",
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (result) {
+        _this.alltask = result.data;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  },
+  created: function created() {
+    if (localStorage.token) {
+      this.islogin = true;
+      this.fetchAllTask();
+    } else {
+      this.islogin = false;
+    }
+  },
+  updated: function updated() {// this.fetchAllTask();
   }
 };
 exports.default = _default;
@@ -12540,7 +12807,19 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "IndexPage" } }, [_c("front-page")], 1)
+  return _c(
+    "div",
+    { attrs: { id: "IndexPage" } },
+    [
+      !_vm.islogin
+        ? _c("front-page", { on: { showhome: _vm.loginsucces } })
+        : _c("home-page", {
+            attrs: { dataAllTaskFromApp: _vm.alltask },
+            on: { refreshData: _vm.fetchAllTask }
+          })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -12617,7 +12896,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59543" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55056" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

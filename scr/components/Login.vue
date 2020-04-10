@@ -70,7 +70,7 @@ export default {
 			})
 			.then(result=>{
 				localStorage.setItem('token',result.data.token)
-				
+				this.$emit('succeslogin')
 			})
 			.catch(err=>{
 				console.log(err);
