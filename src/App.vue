@@ -337,11 +337,13 @@ export default {
         localStorage.ProjectId = this.selected;
         this.selected = "";
         return this.getProjects();
+        // this.getCurrentProjects;
         // this.getProjects();
       } else {
         // event.preventDefault();
         localStorage.setItem("ProjectId", this.selected);
         this.selected = "";
+        return this.getProjects();
         // this.getProjects();
       }
     },
@@ -484,6 +486,7 @@ export default {
       this.isLogin = false;
       this.projects = [];
       this.tasks = [];
+      this.currentProjects = [];
     },
     addTask(event) {
       //ok
