@@ -10,21 +10,21 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" v-model="form.username" required>
-						<span class="focus-input100" data-placeholder="Username"></span>
+						<input class="input100" type="text" name="username" placeholder="Username" v-model="form.username" required>
+						
 					</div>
                     <div class="wrap-input100 validate-input" data-validate = "Enter email">
-						<input class="input100" type="email" name="email" v-model="form.email" required>
-						<span class="focus-input100" data-placeholder="Email"></span>
+						<input class="input100" type="email" name="email" placeholder="email" v-model="form.email" required>
+						
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" v-model="form.password" required>
-						<span class="focus-input100" data-placeholder="Password"></span>
+						<input class="input100" type="password" name="pass" placeholder="Password" v-model="form.password" required>
+						
 					</div>
                     <div class="wrap-input100 validate-input" data-validate="Re-enter password">
-						<input class="input100" type="password" name="pass" v-model="form.retypePassword" required>
-						<span class="focus-input100" data-placeholder="Password"></span>
+						<input class="input100" type="password" name="pass" placeholder="Password" v-model="form.retypePassword" required>
+						
 					</div>
 
 					<div class="contact100-form-checkbox">
@@ -74,8 +74,8 @@ methods:{
         this.$emit('cancelSignIn')
     },
     createUser(){
-       
-        axios({
+       if(this.form.password == this.form.retypePassword){
+		   axios({
             method:"POST",
             url:"http://localhost:3000/user/register",
             data:{
@@ -85,12 +85,17 @@ methods:{
             }
         })
         .then(result=>{
-            localStorage.setItem('token',result.data.token)        
+			localStorage.setItem('token',result.data.token)  
+			       
             
         })
         .catch(err=>{
             console.log(err)
         })
+	   }else{
+		   toastr["warning"]("success", "Message") 
+	   }
+        
     }
 }
 }

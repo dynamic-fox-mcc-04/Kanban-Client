@@ -11,12 +11,12 @@
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<input class="input100" type="text" name="username" placeholder="Username" v-model="username">
-						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+						
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" v-model="password">
-						<span class="focus-input100" data-placeholder="Password"></span>
+						<input class="input100" type="password" name="pass" placeholder="Password" v-model="password">
+						
 					</div>
 
 					<div class="contact100-form-checkbox">

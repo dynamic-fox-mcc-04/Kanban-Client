@@ -1,7 +1,7 @@
 <template>
   <div id="container-item" >
         <div id="container-backlog" class="overflow-auto scrollbar scrollbar-primary">
-          <button type="button" class="btn btn-primary fa fa-plus m-1">  </button>
+        <button type="button" class="btn btn-primary fa fa-plus m-1" @click.prevent="addbutton">  </button>
            <!-- <div class="item"> -->
              <task-card             
              v-for="task in  StatusCheck('Backlog')"
@@ -66,6 +66,10 @@ export default {
       console.log('refresh');
       
       this.$emit('refreshData')
+    },
+    addbutton(){
+      
+      this.$emit('addbutton')
     }
   }
   

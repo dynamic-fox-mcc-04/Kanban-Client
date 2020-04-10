@@ -1,7 +1,7 @@
 <template>  
 <div id="IndexPage">
 <front-page @showhome="loginsucces" v-if="!islogin"></front-page>
-<home-page :dataAllTaskFromApp="alltask" @refreshData="fetchAllTask" v-else></home-page>
+<home-page :dataAllTaskFromApp="alltask" @refreshData="fetchAllTask" v-else @logout="logout"></home-page>
 </div>
 
 </template>
@@ -47,6 +47,10 @@ export default {
             .catch(err=>{
                 console.log(err);                
             })
+        },
+        logout(){
+            this.islogin = false
+            localStorage.clear()
         }
     },
     created(){
