@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <title>My Kanban Board</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.13.2/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.13.2/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.13.2/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.13.2/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.13.2/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="add-kanban" v-if="addnew">
+            <div id="add-kanban-list">
+                <h2>Add new Kanban List</h2>
+                <form v-on:submit.prevent="addKanban">
+                    <label for="add-title">Title</label><br>
+                    <input type="text" placeholder="example :jogging" id="title-add-input" v-model="newkanbandata.title"><br><br>
+                    <label for="add-title">Description</label><br>
+                    <input type="text" placeholder="example :jogging with my partner" id="desc-add-input" v-model="newkanbandata.description"><br><br>
+                    <input type="submit" value="Add" id="add-new-btn">
+                    <button id="cancel-btn" v-on:click="cancelbutton">Cancel</button>
+                </form>
+            </div>
+        </div>
+        <div class="navpanel" v-if="isLogin">
+            <div id="navmenu">
+                <button id="add" v-on:click="addnewpage">ADD</button>
+                <button id="logout" v-on:click="logout">Log out</button>
+            </div>
+        </div>
+        <div class="content" v-if="isLogin">
+            <div id="pre-log">
+                <div id="pre-log-content">
+                    <h1>Prelog</h1>
+                    <div id="pre-log-content-box" v-for="kanban in kanbandata" v-if="kanban.tag=='new entry'" :key="kanban.id">
+                        <h3 id="title">{{kanban.title}}</h3>
+                        <p id="description">{{kanban.description}}</p>
+                        <a href="#" id="to-todo" @click="updateTagForward(kanban.id,kanban.tag)">To do</a>
+                        <a href="#" id="delete" v-on:click="deleteKanban(kanban.id)">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div id="todo">
+                <h1>todo</h1>
+                <div id="todo-content">
+                    <div id="todo-content-box" v-for="kanban in kanbandata" v-if="kanban.tag=='todo'" :key="kanban.id">
+                        <h3 id=" title">{{kanban.title}}</h3>
+                        <p id="description">{{kanban.description}}</p>
+                        <a href="#" id="to-pre-log" @click="updateTagBackward(kanban.id,kanban.tag)">Prelog</a>
+                        <a href="#" id="to-on-progress" @click="updateTagForward(kanban.id,kanban.tag)">On Progress</a>
+                        <a href="#" id="delete" v-on:click="deleteKanban(kanban.id)">Delete</a>
+                    </div><br>
+                </div>
+            </div>
+            <div id="on-progress">
+                <h1>On Progress</h1>
+                <div id="on-progress-content">
+                    <div id="on-progress-content-box" v-for="kanban in kanbandata" v-if="kanban.tag=='on progress'" :key="kanban.id">
+                        <h3 id="title">{{kanban.title}}</h3>
+                        <p id="description">{{kanban.description}}</p>
+                        <a href="#" id="to-todo" @click="updateTagBackward(kanban.id,kanban.tag)">To do</a>
+                        <a href="#" id="to-finished" @click="updateTagForward(kanban.id,kanban.tag)">finished</a>
+                        <a href="#" id="delete" v-on:click="deleteKanban(kanban.id)">Delete</a>
+                    </div><br>
+                </div>
+            </div>
+            <div id="finished">
+                <h1>Finished</h1>
+                <div id="finished-content">
+                    <div id="finished-content-box" v-for="kanban in kanbandata" v-if="kanban.tag=='finished'" :key="kanban.id">
+                        <h3 id="title">{{kanban.title}}</h3>
+                        <p id="description">{{kanban.description}}</p>
+                        <a href="#" id="to-on-progress" @click="updateTagBackward(kanban.id,kanban.tag)">On Progress</a>
+                        <a href="#" id="delete" v-on:click="deleteKanban(kanban.id)">Delete</a>
+                    </div><br>
+                </div>
+            </div>
+        </div>
+
+        <div id="login-box" v-if="!isLogin && haveAccount">
+            <h2>Welcome</h2>
+            <h1>You need to login first</h1>
+            <h3 style="color: red;">{{msg}}</h3><br>
+            <div id="login-form">
+                <form v-on:submit.prevent="login">
+                    <label for="login-email">Email</label><br>
+                    <input v-model="userlogin.email" type="email" id="login-email" placeholder="example@mail.com" required><br><br>
+                    <label for="login-password">Password</label><br>
+                    <input v-model="userlogin.password" type="password" id="login-password" placeholder="********" required><br><br>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            <h4><a href="#" @click="donthaveacc()">I don't have an account</a></h4>
+        </div>
+        <div id="register-box" v-if="!isLogin && !haveAccount">
+            <h2>Welcome</h2>
+            <h1>Please fill in this form</h1>
+            <h3 style="color: red;">{{msg}}</h3><br>
+            <div id="register-form">
+                <form v-on:submit.prevent="register">
+                    <label for="reg-email">Email</label><br>
+                    <input type="email" id="reg-email" placeholder="example@mail.com" v-model="userReg.email" required><br><br>
+                    <label for="reg-password">Password</label><br>
+                    <input type="password" id="reg-password" placeholder="********" v-model="userReg.password" required><br><br>
+                    <label for="verifypassword">Verify Password</label><br>
+                    <input type="password" id="verifypassword" placeholder="********" v-model="userReg.verifypassword" required><br><br>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+            <h4><a href="#" @click="haveacc()">I have an account</a></h4>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha384-mlceH9HlqLp7GMKHrj5Ara1+LvdTZVMx4S1U43/NxCvAkzIo8WJ0FE7duLel3wVo" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
