@@ -1,7 +1,8 @@
 <template>  
-<div id="IndexPage">
-<front-page @showhome="loginsucces" v-if="!islogin"></front-page>
-<home-page :dataAllTaskFromApp="alltask" @refreshData="fetchAllTask" v-else @logout="logout"></home-page>
+<div id="IndexPage">    
+    <front-page @showhome="loginsucces" v-if="!islogin"></front-page>
+    <home-page :dataAllTaskFromApp="alltask" @refreshData="fetchAllTask" v-else @logout="logout"></home-page>
+  
 </div>
 
 </template>
@@ -14,6 +15,7 @@ import HomePage from './views/Home'
 import { Socket } from 'net';
 import { log } from 'util';
 
+
 export default {
     name:"G-kanban",
     components:{
@@ -23,7 +25,8 @@ export default {
     data(){
         return{          
           islogin:false,
-          alltask:[]
+          alltask:[],
+          type:''
         }
     },
     methods:{
@@ -35,7 +38,7 @@ export default {
         },
         fetchAllTask(){         
             console.log('pakai urlbase');
-            
+            this.notification()
             axios({
                 method:"GET",
                 url:"/task",
@@ -54,7 +57,28 @@ export default {
         logout(){
             this.islogin = false
             localStorage.clear()
+        },
+        notification(){          
+
+           Vue.toasted.register('my_app_error',
+                (payload) => {
+                    return payload.message;
+                },{duration:1500,theme:'bubble' ,type:'error'}
+            )
+
+            Vue.toasted.register('my_app_success',
+                (payload) => {
+                    return payload.message;
+                },{duration:1500,theme:'bubble' ,type:'success'}
+            )
+
+            Vue.toasted.register('my_app_info',
+                (payload) => {
+                    return payload.message;
+                },{duration:1500,theme:'bubble' ,type:'info'}
+            )
         }
+        
         
     },
     created(){

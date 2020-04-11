@@ -90,10 +90,14 @@ methods:{
             this.$emit('succeslogin')
         })
         .catch(err=>{
-            console.log(err)
+            Vue.toasted.global.my_app_error({
+                    message : 'Oppps Something Wrong',
+                });
         })
 	   }else{
-		   toastr["warning"]("success", "Message") 
+		   Vue.toasted.global.my_app_error({
+                    message : 'Password not Match',
+                });
 	   }
         
     }

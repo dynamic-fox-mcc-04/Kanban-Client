@@ -8550,6 +8550,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
+  // serverUrl:'https://g-kanban.herokuapp.com'
   serverUrl: 'http://localhost:3000'
 };
 exports.default = _default;
@@ -10329,6 +10330,7 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = _axios.default.create({
+  // baseURL: 'https://g-kanban.herokuapp.com'
   baseURL: 'http://localhost:3000'
 });
 
@@ -10761,7 +10763,9 @@ var _default = {
 
         _this.$emit('succeslogin');
       }).catch(function (err) {
-        console.log(err);
+        Vue.toasted.global.my_app_error({
+          message: 'Username/Password not Found'
+        });
       });
     }
   }
@@ -11811,10 +11815,14 @@ var _default = {
 
           _this.$emit('succeslogin');
         }).catch(function (err) {
-          console.log(err);
+          Vue.toasted.global.my_app_error({
+            message: 'Oppps Something Wrong'
+          });
         });
       } else {
-        toastr["warning"]("success", "Message");
+        Vue.toasted.global.my_app_error({
+          message: 'Password not Match'
+        });
       }
     }
   }
@@ -12156,7 +12164,7 @@ exports.default = _default;
       {
         staticClass: "container-login100",
         staticStyle: {
-          "background-image": "url('/bg-01.49446d9e.jpg')"
+          "background-image": "url('/076d52176fb373f3ecb0869949446d9e.jpg')"
         }
       },
       [
@@ -12258,11 +12266,14 @@ var _default = {
           token: localStorage.token
         }
       }).then(function (result) {
-        io.connect(_config.default.serverUrl).emit('msg'); // this.$emit('refreshData')
-
-        console.log(result);
+        io.connect(_config.default.serverUrl).emit('msg');
+        Vue.toasted.global.my_app_success({
+          message: 'Succes Update Forward'
+        });
       }).catch(function (err) {
-        console.log(err);
+        Vue.toasted.global.my_app_error({
+          message: 'Not Authorized to Access'
+        });
       });
     },
     updatePrev: function updatePrev(id, status) {
@@ -12273,11 +12284,14 @@ var _default = {
           token: localStorage.token
         }
       }).then(function (result) {
-        io.connect(_config.default.serverUrl).emit('msg'); //  this.$emit('refreshData')
-
-        console.log(result);
+        io.connect(_config.default.serverUrl).emit('msg');
+        Vue.toasted.global.my_app_success({
+          message: 'Succes Update Backward'
+        });
       }).catch(function (err) {
-        console.log(err);
+        Vue.toasted.global.my_app_error({
+          message: 'Not Authorized to Access'
+        });
       });
     },
     dele: function dele(id) {
@@ -12288,11 +12302,14 @@ var _default = {
           token: localStorage.token
         }
       }).then(function (result) {
-        io.connect(_config.default.serverUrl).emit('msg'); // this.$emit('refreshData')
-
-        console.log(result);
+        io.connect(_config.default.serverUrl).emit('msg');
+        Vue.toasted.global.my_app_success({
+          message: 'Succes Delete'
+        });
       }).catch(function (err) {
-        console.log(err);
+        Vue.toasted.global.my_app_error({
+          message: 'Not Authorized to Access'
+        });
       });
     }
   }
@@ -12712,6 +12729,10 @@ var _default = {
         }
       }).then(function (result) {
         _this.$emit('refreshData');
+
+        Vue.toasted.global.my_app_success({
+          message: 'Add Task Succes'
+        });
       }).catch(function (err) {
         console.log(err);
       });
@@ -12983,7 +13004,7 @@ exports.default = _default;
       {
         staticClass: "container-login100",
         staticStyle: {
-          "background-image": "url('/bg-01.49446d9e.jpg')"
+          "background-image": "url('/076d52176fb373f3ecb0869949446d9e.jpg')"
         }
       },
       [
@@ -13085,6 +13106,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: "G-kanban",
   components: {
@@ -13094,7 +13116,8 @@ var _default = {
   data: function data() {
     return {
       islogin: false,
-      alltask: []
+      alltask: [],
+      type: ''
     };
   },
   methods: {
@@ -13106,6 +13129,7 @@ var _default = {
       var _this = this;
 
       console.log('pakai urlbase');
+      this.notification();
       (0, _axios.default)({
         method: "GET",
         url: "/task",
@@ -13121,6 +13145,29 @@ var _default = {
     logout: function logout() {
       this.islogin = false;
       localStorage.clear();
+    },
+    notification: function notification() {
+      Vue.toasted.register('my_app_error', function (payload) {
+        return payload.message;
+      }, {
+        duration: 1500,
+        theme: 'bubble',
+        type: 'error'
+      });
+      Vue.toasted.register('my_app_success', function (payload) {
+        return payload.message;
+      }, {
+        duration: 1500,
+        theme: 'bubble',
+        type: 'success'
+      });
+      Vue.toasted.register('my_app_info', function (payload) {
+        return payload.message;
+      }, {
+        duration: 1500,
+        theme: 'bubble',
+        type: 'info'
+      });
     }
   },
   created: function created() {
@@ -13249,7 +13296,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54364" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50396" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

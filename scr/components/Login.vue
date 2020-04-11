@@ -73,7 +73,9 @@ export default {
 				this.$emit('succeslogin')
 			})
 			.catch(err=>{
-				console.log(err);
+				Vue.toasted.global.my_app_error({
+                    message : 'Username/Password not Found'                   
+                });
 				
 			})
 		}

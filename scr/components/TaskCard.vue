@@ -43,12 +43,16 @@ export default {
            })
             .then(result=>{
                 io.connect(config.serverUrl).emit('msg');
-                // this.$emit('refreshData')
-                console.log(result);
-                
+                 Vue.toasted.global.my_app_success({
+                    message : 'Succes Update Forward'
+                });
+                                
             })
             .catch(err=>{
-                console.log(err);
+                 Vue.toasted.global.my_app_error({
+                    message : 'Not Authorized to Access'
+                });
+                
                 
             })
         },
@@ -62,12 +66,15 @@ export default {
            })
             .then(result=>{
                 io.connect(config.serverUrl).emit('msg');
-                //  this.$emit('refreshData')
-                console.log(result);
+                Vue.toasted.global.my_app_success({
+                    message : 'Succes Update Backward'
+                });
                 
             })
             .catch(err=>{
-                console.log(err);
+               Vue.toasted.global.my_app_error({
+                    message : 'Not Authorized to Access'
+                });               
                 
             })
         },
@@ -81,12 +88,16 @@ export default {
            })
             .then(result=>{
                 io.connect(config.serverUrl).emit('msg');
-                // this.$emit('refreshData')
-                console.log(result);
+                Vue.toasted.global.my_app_success({
+                    message : 'Succes Delete'
+                });
                 
             })
             .catch(err=>{
-                console.log(err);
+               Vue.toasted.global.my_app_error({
+                    message : 'Not Authorized to Access'
+                });
+                
                 
             })
         }
