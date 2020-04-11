@@ -50,8 +50,7 @@ export default {
     addTask() {
       console.log(this.newTask);
       axios({
-        url: "http://localhost:3000/task/add",
-        // url: "https://kanbanhacktiv8.herokuapp.com/task/add",
+        url: "https://kanbanhacktiv8.herokuapp.com/task/add",
         method: "post",
         data: {
           title: this.newTask

@@ -11951,7 +11951,6 @@ var _default = {
       var _this = this;
 
       (0, _axios.default)({
-        // url: `http://localhost:3000/task/delete/${taskId}`,
         url: "https://kanbanhacktiv8.herokuapp.com/task/delete/".concat(taskId),
         method: "delete",
         headers: {
@@ -11980,7 +11979,6 @@ var _default = {
       }
 
       (0, _axios.default)({
-        // url: `http://localhost:3000/task/update/${taskId}`,
         url: "https://kanbanhacktiv8.herokuapp.com/task/update/".concat(taskId),
         method: "put",
         data: {
@@ -12012,7 +12010,6 @@ var _default = {
       }
 
       (0, _axios.default)({
-        // url: `https"//localhost:3000/task/update/${taskId}`,
         url: "https://kanbanhacktiv8.herokuapp.com/task/update/".concat(taskId),
         method: "put",
         data: {
@@ -12310,8 +12307,7 @@ var _default = {
 
       console.log(this.newTask);
       (0, _axios.default)({
-        url: "http://localhost:3000/task/add",
-        // url: "https://kanbanhacktiv8.herokuapp.com/task/add",
+        url: "https://kanbanhacktiv8.herokuapp.com/task/add",
         method: "post",
         data: {
           title: this.newTask
@@ -12530,7 +12526,6 @@ var _default = {
       this.isLoadingLogin = true;
       (0, _axios.default)({
         method: "post",
-        // url: "http://localhost:3000/login",
         url: "https://kanbanhacktiv8.herokuapp.com/login",
         data: {
           email: email,
@@ -12568,7 +12563,6 @@ var _default = {
       this.isLoadingLogin = true;
       (0, _axios.default)({
         method: "post",
-        // url: "http://localhost:3000/register",
         url: "https://kanbanhacktiv8.herokuapp.com/register",
         data: {
           email: email,
@@ -12595,7 +12589,6 @@ var _default = {
       this.isLoading = true;
       (0, _axios.default)({
         method: "get",
-        // url: "http://localhost:3000/task",
         url: "https://kanbanhacktiv8.herokuapp.com/task",
         headers: {
           token: localStorage.getItem("token")
@@ -12804,7 +12797,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33185" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "32919" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
