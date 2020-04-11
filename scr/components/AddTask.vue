@@ -78,7 +78,7 @@ export default {
         AddingTask(){
             axios({
                 method:"POST",
-                 url:"http://localhost:3000/task",
+                 url:"https://g-kanban.herokuapp.com/task",
                  data:{
                    title: this.payload.title,
                    description : this.payload.description

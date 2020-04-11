@@ -10723,7 +10723,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "POST",
-        url: "http://localhost:3000/user/login",
+        url: "https://g-kanban.herokuapp.com/user/login",
         data: {
           username: this.username,
           password: this.password
@@ -11770,7 +11770,7 @@ var _default = {
       if (this.form.password == this.form.retypePassword) {
         (0, _axios.default)({
           method: "POST",
-          url: "http://localhost:3000/user/register",
+          url: "https://g-kanban.herokuapp.com/user/register",
           data: {
             username: this.form.username,
             email: this.form.email,
@@ -12020,7 +12020,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-center p-t-20" }, [
-      _c("a", { staticClass: "txt1", attrs: { href: "#" } }, [
+      _c("button", { staticClass: "txt1", attrs: { href: "#" } }, [
         _vm._v("\n\t\t\t\t\t\t\tForgot Password?\n\t\t\t\t\t\t")
       ])
     ])
@@ -12219,7 +12219,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "PUT",
-        url: "http://localhost:3000/task/forward/" + status + "/" + id,
+        url: "https://g-kanban.herokuapp.com/task/forward/" + status + "/" + id,
         headers: {
           token: localStorage.token
         }
@@ -12236,7 +12236,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "PUT",
-        url: "http://localhost:3000/task/backward/" + status + "/" + id,
+        url: "https://g-kanban.herokuapp.com/task/backward/" + status + "/" + id,
         headers: {
           token: localStorage.token
         }
@@ -12253,7 +12253,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "DELETE",
-        url: "http://localhost:3000/task/" + id,
+        url: "https://g-kanban.herokuapp.com/task/" + id,
         headers: {
           token: localStorage.token
         }
@@ -12697,7 +12697,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "POST",
-        url: "http://localhost:3000/task",
+        url: "https://g-kanban.herokuapp.com/task",
         data: {
           title: this.payload.title,
           description: this.payload.description
@@ -13093,10 +13093,9 @@ var _default = {
     fetchAllTask: function fetchAllTask() {
       var _this = this;
 
-      console.log("pagillllll");
       (0, _axios.default)({
         method: "GET",
-        url: "http://localhost:3000/task",
+        url: "https://g-kanban.herokuapp.com/task",
         headers: {
           token: localStorage.token
         }
@@ -13224,7 +13223,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54724" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63232" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

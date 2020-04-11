@@ -45,10 +45,10 @@
 						</button>
 					</div>
 
-					<div class="text-center p-t-20">
-						<a class="txt1" href="#">
+					<div class="text-center p-t-20" >
+						<button class="txt1" href="#">
 							Forgot Password?
-						</a>
+						</button>
 					</div>
 				</form>
 	</div>
@@ -69,7 +69,7 @@ return{
     }
 }
 },
-methods:{
+methods:{	
     cancel(){
         this.$emit('cancelSignIn')
     },
@@ -77,7 +77,7 @@ methods:{
        if(this.form.password == this.form.retypePassword){
 		   axios({
             method:"POST",
-            url:"http://localhost:3000/user/register",
+            url:"https://g-kanban.herokuapp.com/user/register",
             data:{
                 username:this.form.username,
                 email:this.form.email,

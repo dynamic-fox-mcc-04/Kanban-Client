@@ -35,7 +35,7 @@ export default {
         updateNext(id,status){
            axios({
                 method:"PUT",
-                url:"http://localhost:3000/task/forward/"+status+"/"+id,
+                url:"https://g-kanban.herokuapp.com/task/forward/"+status+"/"+id,
                 headers:{
                     token:localStorage.token
                 }
@@ -53,7 +53,7 @@ export default {
          updatePrev(id,status){
            axios({
                 method:"PUT",
-                url:"http://localhost:3000/task/backward/"+status+"/"+id,
+                url:"https://g-kanban.herokuapp.com/task/backward/"+status+"/"+id,
                 headers:{
                     token:localStorage.token
                 }
@@ -71,7 +71,7 @@ export default {
         dele(id){
             axios({
                 method:"DELETE",
-                url:"http://localhost:3000/task/"+id,
+                url:"https://g-kanban.herokuapp.com/task/"+id,
                 headers:{
                     token:localStorage.token
                 }

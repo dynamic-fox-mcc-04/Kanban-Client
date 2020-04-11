@@ -11,6 +11,7 @@ import axios from 'axios'
 import FrontPage from './views/Front'
 import HomePage from './views/Home'
 
+
 export default {
     name:"G-kanban",
     components:{
@@ -31,11 +32,11 @@ export default {
             this.fetchAllTask();
         },
         fetchAllTask(){
-            console.log("pagillllll");
+           
             
             axios({
                 method:"GET",
-                url:"http://localhost:3000/task",
+                url:"https://g-kanban.herokuapp.com/task",
                  headers:{
                     token:localStorage.token
                  }
@@ -52,6 +53,7 @@ export default {
             this.islogin = false
             localStorage.clear()
         }
+        
     },
     created(){
         if(localStorage.token){
@@ -60,10 +62,13 @@ export default {
         }else {
             this.islogin = false
         }
+
+       
     },
     updated(){
         // this.fetchAllTask();
     }
+    
 };
 
 </script>

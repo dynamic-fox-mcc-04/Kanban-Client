@@ -62,7 +62,7 @@ export default {
 		login(){
 			axios({
 				method:"POST",
-				url:"http://localhost:3000/user/login",
+				url:"https://g-kanban.herokuapp.com/user/login",
 				data:{
 					username:this.username,
 					password:this.password
