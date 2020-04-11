@@ -45,10 +45,15 @@ export default {
         })
         .then(({data}) => {
             localStorage.setItem('access_token',data.access_token)
+            this.$toast.success('Yeay, Register success! Welcome to Kanban Board', {
+                // optional options Object
+                })
             this.$emit('login')
         }) 
         .catch(err => {
-            console.log(err)
+            console.log(err.response.data.errors[0].message)
+            let error= err.response.data.errors[0].message
+            this.$toast.error(error,{})
             })
         }
     }

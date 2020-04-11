@@ -59,10 +59,15 @@ export default {
             .then(({data}) => {
                 console.log('masuk')
                 localStorage.setItem('access_token',data.access_token)
+                    this.$toast.success('Hello welcome to Kanban Board', {
+                    // optional options Object
+                    })
                 this.$emit('login')
             })
             .catch(err => {
-                console.log(err)
+                let error = err.response.data.errors[0].message
+                this.$toast.error(error,{})
+                console.log(err.response.data.errors[0].message)
             })
         },
         onSignInSuccess (googleUser) {

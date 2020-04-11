@@ -95,7 +95,9 @@ export default {
                 this.fetchTask()
             })
             .catch(err => {
-                console.log(err)
+                let error= err.response.data.errors[0].message
+                console.log(err.response.data.errors[0].message)
+                this.$toast.error(error,{})
             })
         },
         hapus(id) {
@@ -111,7 +113,9 @@ export default {
                 this.fetchTask()
             })
             .catch(err => {
-                console.log(err)
+                console.log(err.response.data.errors)
+                let error= err.response.data.errors ||err.response.data[0].message 
+                this.$toast.error(error,{})
             })
         },
         moveToTheLeft(data){
@@ -137,7 +141,9 @@ export default {
                 this.fetchTask()
             })
             .catch(err => {
-                console.log(err)
+                console.log(err.response.data.errors)
+                let error= err.response.data.errors ||err.response.data[0].message 
+                this.$toast.error(error,{})
             })
         },
         moveToTheRight(data){
@@ -163,7 +169,9 @@ export default {
                 this.fetchTask()
             })
             .catch(err => {
-                console.log(err)
+                console.log(err.response.data.errors)
+                let error= err.response.data.errors ||err.response.data[0].message 
+                this.$toast.error(error,{})
             })
         }
     },
