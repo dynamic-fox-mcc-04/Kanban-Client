@@ -147,7 +147,7 @@
       <!-- Row 2 -->
       <div class="row">
         <!-- Column 1 -->
-        <div class="col" id="first">
+        <div class="col col-3" id="first">
           <!-- Main card -->
           <div class="card" id="first">
             <div class="card-body">
@@ -157,6 +157,7 @@
               <form @submit.prevent="addTask">
                 <label>Add Your New Task</label>
                 <input
+                class="col col-12"
                   type="text"
                   id="task"
                   placeholder="Write your task here"
@@ -189,7 +190,7 @@
         <!-- End of Column 1 -->
 
         <!-- Column 2 -->
-        <div class="col" id="second">
+        <div class="col col-3" id="second">
           <!-- main card -->
           <!-- <div class="card" id="second">
                     <div class="card-body">
@@ -212,7 +213,7 @@
         <!-- End Of Colum 2 -->
 
         <!-- Column 3 -->
-        <div class="col">
+        <div class="col col-3">
           <div class="card bg-info" v-for="task in tasks" :key="task.id">
             <div class="card-body" v-if="task.category == 'process'">
               <h4 class="card-title">Process</h4>
@@ -227,7 +228,7 @@
         <!-- End of Column 3 -->
 
         <!-- Column 4 -->
-        <div class="col">
+        <div class="col col-3">
           <div class="card bg-success" v-for="task in tasks" :key="task.id">
             <div class="card-body" v-if="task.category == 'complete'">
               <h4 class="card-title">Complete</h4>

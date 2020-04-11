@@ -10908,6 +10908,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: "App",
   data: function data() {
@@ -11921,7 +11922,7 @@ exports.default = _default;
           _c("div", { staticClass: "row" }, [
             _c(
               "div",
-              { staticClass: "col", attrs: { id: "first" } },
+              { staticClass: "col col-3", attrs: { id: "first" } },
               [
                 _c("div", { staticClass: "card", attrs: { id: "first" } }, [
                   _c("div", { staticClass: "card-body" }, [
@@ -11947,6 +11948,7 @@ exports.default = _default;
                               expression: "user.task"
                             }
                           ],
+                          staticClass: "col col-12",
                           attrs: {
                             type: "text",
                             id: "task",
@@ -12021,7 +12023,7 @@ exports.default = _default;
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col", attrs: { id: "second" } },
+              { staticClass: "col col-3", attrs: { id: "second" } },
               _vm._l(_vm.tasks, function(task) {
                 return _c(
                   "div",
@@ -12072,7 +12074,7 @@ exports.default = _default;
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col" },
+              { staticClass: "col col-3" },
               _vm._l(_vm.tasks, function(task) {
                 return _c(
                   "div",
@@ -12123,7 +12125,7 @@ exports.default = _default;
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col" },
+              { staticClass: "col col-3" },
               _vm._l(_vm.tasks, function(task) {
                 return _c(
                   "div",
@@ -12511,7 +12513,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49298" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49483" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
