@@ -70,9 +70,8 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-        <button v-google-signin-button="clientId" class="google-signin-button">
-          Continue with Google
-        </button><br>
+        <button v-google-signin-button="clientId" class="google-signin-button">Continue with Google</button>
+        <br />
         <!-- <ul v-if="githubUser">
           <li v-for="repository in repositories" :key="repository.id">
             <a :href="repository.html_url" target="_blank">{{
@@ -82,7 +81,7 @@
         </ul>
         <div v-else>
           <button @click.prevent="connect">Connect to GitHub</button>
-        </div> -->
+        </div>-->
         <label>Don't Have an Account?</label>
         <button @click="registerForm">Register</button>
       </div>
@@ -91,35 +90,29 @@
 
     <!-- === MAIN PAGE === -->
     <div v-else-if="isLogin">
-      <div class="container">
-        <div class="row">
-          <button @click="logout" type="button" class="btn btn-danger">
-            Logout
-          </button>
+      <div class="container topPage">
+        <div class="row logout">
+          <button @click="logout" type="button" class="btn btn-danger">Logout</button>
         </div>
         <div class="col col-4">
           <label>Add Contributor</label>
           <form @submit.prevent="addContributor">
             <div>
-              <select
-                class="form-control form-control-sm"
-                v-model="selectedUser"
-              >
-                <option v-for="user in users" :key="user.id" :value="user.id">
-                  {{ user.email }}
-                </option>
+              <select class="form-control form-control-sm" v-model="selectedUser">
+                <option v-for="user in users" :key="user.id" :value="user.id">{{ user.email }}</option>
               </select>
             </div>
             <button class="col col-4" type="submit">Select</button>
           </form>
         </div>
         <form @submit.prevent="addProject">
-          <div class="form-group row col-5">
+          <div class="form-group row col-12">
             <label for="add-project">Add Project</label>
             <input
               type="text"
               class="form-control"
               id="add-project"
+              placeholder="write your new project here..."
               aria-describedby="addProject"
               v-model="user.currentProject"
             />
@@ -137,8 +130,7 @@
                   v-for="currentProject in currentProjects"
                   :key="currentProject.ProjectId"
                   :value="currentProject.ProjectId"
-                  >{{ currentProject.title }}</option
-                >
+                >{{ currentProject.title }}</option>
               </select>
             </div>
             <button class="col col-4" type="submit">Select</button>
@@ -186,14 +178,10 @@
               <h4 class="card-title">Prelog</h4>
               <p class="card-text">{{ task.title }}</p>
               <!-- <a href="#" class="card-link"> -->
-              <button @click="cancelTask(task.id)" class="btn btn-secondary">
-                Delete
-              </button>
+              <button @click="cancelTask(task.id)" class="btn btn-secondary">Delete</button>
               <!-- </a> -->
               <!-- <a href="#" class="card-link"> -->
-              <button @click="addTodo(task.id)" class="btn btn-dark">
-                Next
-              </button>
+              <button @click="addTodo(task.id)" class="btn btn-dark">Next</button>
               <!-- </a> -->
             </div>
           </div>
@@ -214,13 +202,9 @@
               <h4 class="card-title">Todo</h4>
               <p class="card-text">{{ task.title }}</p>
 
-              <button @click="cancelTodo(task.id)" class="btn btn-secondary">
-                Back
-              </button>
+              <button @click="cancelTodo(task.id)" class="btn btn-secondary">Back</button>
 
-              <button @click="addProcess(task.id)" class="btn btn-dark">
-                Next
-              </button>
+              <button @click="addProcess(task.id)" class="btn btn-dark">Next</button>
             </div>
           </div>
         </div>
@@ -234,13 +218,9 @@
               <h4 class="card-title">Process</h4>
               <p class="card-text">{{ task.title }}</p>
 
-              <button @click="cancelProcess(task.id)" class="btn btn-secondary">
-                Back
-              </button>
+              <button @click="cancelProcess(task.id)" class="btn btn-secondary">Back</button>
 
-              <button @click="addComplete(task.id)" class="btn btn-dark">
-                Done
-              </button>
+              <button @click="addComplete(task.id)" class="btn btn-dark">Done</button>
             </div>
           </div>
         </div>
@@ -253,12 +233,7 @@
               <h4 class="card-title">Complete</h4>
               <p class="card-text">{{ task.title }}</p>
 
-              <button
-                @click="cancelComplete(task.id)"
-                class="btn btn-secondary"
-              >
-                Back
-              </button>
+              <button @click="cancelComplete(task.id)" class="btn btn-secondary">Back</button>
             </div>
           </div>
         </div>
@@ -741,7 +716,7 @@ export default {
     },
     OnGoogleAuthFail(error) {
       console.log(error);
-    },
+    }
     // let id_token = this.GoogleAuth;
     // this.$gAuth
     //   .getAuthCode()
@@ -826,11 +801,11 @@ export default {
     //   localStorage.setItem("ProjectId", this.selectedProjectId);
     //   this.getProjects();
     // }
-  },
-  mounted: function() {
-    // Here we initialize Bearer.
-    this.$bearer = bearer("sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A");
   }
+  // mounted: function() {
+  //   // Here we initialize Bearer.
+  //   this.$bearer = bearer("sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A");
+  // }
 };
 </script>
 
@@ -843,4 +818,14 @@ export default {
   border-radius: 10px;
   padding: 10px 20px 25px 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}</style>
+}
+
+.container.topPage {
+  display: flex;
+}
+.row.logout {
+  /* width: 50%; */
+  height: 50%;
+  margin: 0;
+}
+</style>

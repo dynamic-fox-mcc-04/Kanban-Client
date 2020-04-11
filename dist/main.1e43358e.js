@@ -10908,31 +10908,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default = {
   name: "App",
   data: function data() {
@@ -11487,11 +11462,11 @@ var _default = {
     //   this.getProjects();
     // }
 
-  },
-  mounted: function mounted() {
-    // Here we initialize Bearer.
-    this.$bearer = bearer("sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A");
-  }
+  } // mounted: function() {
+  //   // Here we initialize Bearer.
+  //   this.$bearer = bearer("sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A");
+  // }
+
 };
 exports.default = _default;
         var $6de1b7 = exports.default || module.exports;
@@ -11726,8 +11701,9 @@ exports.default = _default;
                 ],
                 staticClass: "google-signin-button"
               },
-              [_vm._v("\n        Continue with Google\n      ")]
+              [_vm._v("Continue with Google")]
             ),
+            _vm._v(" "),
             _c("br"),
             _vm._v(" "),
             _c("label", [_vm._v("Don't Have an Account?")]),
@@ -11739,8 +11715,8 @@ exports.default = _default;
         ])
       : _vm.isLogin
       ? _c("div", [
-          _c("div", { staticClass: "container" }, [
-            _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "container topPage" }, [
+            _c("div", { staticClass: "row logout" }, [
               _c(
                 "button",
                 {
@@ -11748,7 +11724,7 @@ exports.default = _default;
                   attrs: { type: "button" },
                   on: { click: _vm.logout }
                 },
-                [_vm._v("\n          Logout\n        ")]
+                [_vm._v("Logout")]
               )
             ]),
             _vm._v(" "),
@@ -11799,13 +11775,7 @@ exports.default = _default;
                         return _c(
                           "option",
                           { key: user.id, domProps: { value: user.id } },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(user.email) +
-                                "\n              "
-                            )
-                          ]
+                          [_vm._v(_vm._s(user.email))]
                         )
                       }),
                       0
@@ -11832,7 +11802,7 @@ exports.default = _default;
                 }
               },
               [
-                _c("div", { staticClass: "form-group row col-5" }, [
+                _c("div", { staticClass: "form-group row col-12" }, [
                   _c("label", { attrs: { for: "add-project" } }, [
                     _vm._v("Add Project")
                   ]),
@@ -11850,6 +11820,7 @@ exports.default = _default;
                     attrs: {
                       type: "text",
                       id: "add-project",
+                      placeholder: "write your new project here...",
                       "aria-describedby": "addProject"
                     },
                     domProps: { value: _vm.user.currentProject },
@@ -12024,7 +11995,7 @@ exports.default = _default;
                                   }
                                 }
                               },
-                              [_vm._v("\n              Delete\n            ")]
+                              [_vm._v("Delete")]
                             ),
                             _vm._v(" "),
                             _c(
@@ -12037,7 +12008,7 @@ exports.default = _default;
                                   }
                                 }
                               },
-                              [_vm._v("\n              Next\n            ")]
+                              [_vm._v("Next")]
                             )
                           ])
                         : _vm._e()
@@ -12076,7 +12047,7 @@ exports.default = _default;
                                 }
                               }
                             },
-                            [_vm._v("\n              Back\n            ")]
+                            [_vm._v("Back")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -12089,7 +12060,7 @@ exports.default = _default;
                                 }
                               }
                             },
-                            [_vm._v("\n              Next\n            ")]
+                            [_vm._v("Next")]
                           )
                         ])
                       : _vm._e()
@@ -12127,7 +12098,7 @@ exports.default = _default;
                                 }
                               }
                             },
-                            [_vm._v("\n              Back\n            ")]
+                            [_vm._v("Back")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -12140,7 +12111,7 @@ exports.default = _default;
                                 }
                               }
                             },
-                            [_vm._v("\n              Done\n            ")]
+                            [_vm._v("Done")]
                           )
                         ])
                       : _vm._e()
@@ -12178,7 +12149,7 @@ exports.default = _default;
                                 }
                               }
                             },
-                            [_vm._v("\n              Back\n            ")]
+                            [_vm._v("Back")]
                           )
                         ])
                       : _vm._e()
@@ -12540,7 +12511,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50143" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49298" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
