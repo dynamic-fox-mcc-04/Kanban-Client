@@ -19,7 +19,8 @@
                 <g-signin-button class="g-signin-button"
                     :params="googleSignInParams"
                     @success="onSignInSuccess"
-                    @error="onSignInError"><i class="fab fa-google"></i>
+                    @error="onSignInError"
+                    style="display:flex; justify-content:center;">
                     Sign in with Google
                 </g-signin-button>
                 </form>
@@ -42,7 +43,7 @@ export default {
             email:'',
             password: '',
             googleSignInParams: {
-                clientId: '810068078388-9ls5svqutvajena5c4r3cerbeak9tgmd.apps.googleusercontent.com'
+                client_id: '810068078388-9ls5svqutvajena5c4r3cerbeak9tgmd.apps.googleusercontent.com'
             }
         }
     },
@@ -72,12 +73,12 @@ export default {
         },
         onSignInSuccess (googleUser) {
             const profile = googleUser.getBasicProfile();
-            const token = googleUser.getAuthResponse().id_token;
+            const id_token = googleUser.getAuthResponse().id_token;
             axios({
                 method:"POST",
                 url: "https://ancient-mesa-33338.herokuapp.com/user/googlesign",
-                headers:{
-                    token
+                data:{
+                    id_token
                 }
             })
             .then(({data}) => {
