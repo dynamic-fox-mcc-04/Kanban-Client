@@ -8542,6 +8542,17 @@ if (inBrowser) {
 
 var _default = Vue;
 exports.default = _default;
+},{}],"scr/config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  serverUrl: 'http://localhost:3000'
+};
+exports.default = _default;
 },{}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
@@ -10305,7 +10316,24 @@ module.exports.default = axios;
 
 },{"./utils":"node_modules/axios/lib/utils.js","./helpers/bind":"node_modules/axios/lib/helpers/bind.js","./core/Axios":"node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"node_modules/axios/lib/core/mergeConfig.js","./defaults":"node_modules/axios/lib/defaults.js","./cancel/Cancel":"node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"node_modules/axios/lib/helpers/spread.js"}],"node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"scr/axios/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = _axios.default.create({
+  baseURL: 'http://localhost:3000'
+});
+
+exports.default = _default;
+},{"axios":"node_modules/axios/index.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -10655,7 +10683,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios = _interopRequireDefault(require("axios"));
+var _axios = _interopRequireDefault(require("../axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10723,7 +10751,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "POST",
-        url: "https://g-kanban.herokuapp.com/user/login",
+        url: "/user/login",
         data: {
           username: this.username,
           password: this.password
@@ -10927,7 +10955,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/support/isBufferBrowser.js":[function(require,module,exports) {
+},{"../axios":"scr/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/support/isBufferBrowser.js":[function(require,module,exports) {
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
@@ -11688,7 +11716,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios = _interopRequireDefault(require("axios"));
+var _axios = _interopRequireDefault(require("../axios"));
 
 var _util = require("util");
 
@@ -11767,10 +11795,12 @@ var _default = {
       this.$emit('cancelSignIn');
     },
     createUser: function createUser() {
+      var _this = this;
+
       if (this.form.password == this.form.retypePassword) {
         (0, _axios.default)({
           method: "POST",
-          url: "https://g-kanban.herokuapp.com/user/register",
+          url: "/user/register",
           data: {
             username: this.form.username,
             email: this.form.email,
@@ -11778,6 +11808,8 @@ var _default = {
           }
         }).then(function (result) {
           localStorage.setItem('token', result.data.token);
+
+          _this.$emit('succeslogin');
         }).catch(function (err) {
           console.log(err);
         });
@@ -12058,7 +12090,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","util":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/util.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/views/Front.vue":[function(require,module,exports) {
+},{"../axios":"scr/axios/index.js","util":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/util.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/views/Front.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12129,7 +12161,9 @@ exports.default = _default;
       },
       [
         _vm.isregister
-          ? _c("register-form", { on: { cancelSignIn: _vm.loginform } })
+          ? _c("register-form", {
+              on: { succeslogin: _vm.homepage, cancelSignIn: _vm.loginform }
+            })
           : _c("login-form", {
               on: { succeslogin: _vm.homepage, registerclick: _vm.registerform }
             })
@@ -12179,7 +12213,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios = _interopRequireDefault(require("axios"));
+var _config = _interopRequireDefault(require("../config"));
+
+var _axios = _interopRequireDefault(require("../axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12215,16 +12251,14 @@ var _default = {
   },
   methods: {
     updateNext: function updateNext(id, status) {
-      var _this = this;
-
       (0, _axios.default)({
         method: "PUT",
-        url: "https://g-kanban.herokuapp.com/task/forward/" + status + "/" + id,
+        url: "/task/forward/" + status + "/" + id,
         headers: {
           token: localStorage.token
         }
       }).then(function (result) {
-        _this.$emit('refreshData');
+        io.connect(_config.default.serverUrl).emit('msg'); // this.$emit('refreshData')
 
         console.log(result);
       }).catch(function (err) {
@@ -12232,16 +12266,14 @@ var _default = {
       });
     },
     updatePrev: function updatePrev(id, status) {
-      var _this2 = this;
-
       (0, _axios.default)({
         method: "PUT",
-        url: "https://g-kanban.herokuapp.com/task/backward/" + status + "/" + id,
+        url: "/task/backward/" + status + "/" + id,
         headers: {
           token: localStorage.token
         }
       }).then(function (result) {
-        _this2.$emit('refreshData');
+        io.connect(_config.default.serverUrl).emit('msg'); //  this.$emit('refreshData')
 
         console.log(result);
       }).catch(function (err) {
@@ -12249,16 +12281,14 @@ var _default = {
       });
     },
     dele: function dele(id) {
-      var _this3 = this;
-
       (0, _axios.default)({
         method: "DELETE",
-        url: "https://g-kanban.herokuapp.com/task/" + id,
+        url: "/task/" + id,
         headers: {
           token: localStorage.token
         }
       }).then(function (result) {
-        _this3.$emit('refreshData');
+        io.connect(_config.default.serverUrl).emit('msg'); // this.$emit('refreshData')
 
         console.log(result);
       }).catch(function (err) {
@@ -12395,7 +12425,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/cardContainer.vue":[function(require,module,exports) {
+},{"../config":"scr/config.js","../axios":"scr/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/cardContainer.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12464,10 +12494,13 @@ var _default = {
   methods: {
     StatusCheck: function StatusCheck(status) {
       var datafilter = [];
-      datafilter = this.dataAllTaskFromHome.data.filter(function (item) {
-        return item.status == status;
-      });
-      console.log(datafilter);
+
+      if (this.dataAllTaskFromHome.data != undefined) {
+        datafilter = this.dataAllTaskFromHome.data.filter(function (item) {
+          return item.status == status;
+        });
+      }
+
       return datafilter;
     },
     refreshData: function refreshData() {
@@ -12612,40 +12645,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios = _interopRequireDefault(require("axios"));
+var _axios = _interopRequireDefault(require("../axios"));
 
 var _util = require("util");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -12697,7 +12702,7 @@ var _default = {
 
       (0, _axios.default)({
         method: "POST",
-        url: "https://g-kanban.herokuapp.com/task",
+        url: "/task",
         data: {
           title: this.payload.title,
           description: this.payload.description
@@ -12869,7 +12874,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","util":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/util.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/views/Home.vue":[function(require,module,exports) {
+},{"../axios":"scr/axios/index.js","util":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/util.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/views/Home.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13048,7 +13053,9 @@ render._withStripped = true
       
       }
     })();
-},{"../components/cardContainer":"scr/components/cardContainer.vue","../components/AddTask":"scr/components/AddTask.vue","axios":"node_modules/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","C:\\Users\\TOP1\\Desktop\\ACKTIV8\\Phase 2\\W6D1\\kanban client\\Kanban-Client\\images\\bg-01.jpg":[["bg-01.49446d9e.jpg","images/bg-01.jpg"],"images/bg-01.jpg"],"vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/App.vue":[function(require,module,exports) {
+},{"../components/cardContainer":"scr/components/cardContainer.vue","../components/AddTask":"scr/components/AddTask.vue","axios":"node_modules/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","C:\\Users\\TOP1\\Desktop\\ACKTIV8\\Phase 2\\W6D1\\kanban client\\Kanban-Client\\images\\bg-01.jpg":[["bg-01.49446d9e.jpg","images/bg-01.jpg"],"images/bg-01.jpg"],"vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"scr/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13056,11 +13063,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios = _interopRequireDefault(require("axios"));
+var _config = _interopRequireDefault(require("./config"));
+
+var _axios = _interopRequireDefault(require("./axios"));
 
 var _Front = _interopRequireDefault(require("./views/Front"));
 
 var _Home = _interopRequireDefault(require("./views/Home"));
+
+var _net = require("net");
+
+var _util = require("util");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13086,16 +13099,16 @@ var _default = {
   },
   methods: {
     loginsucces: function loginsucces() {
-      console.log('login suces');
       this.islogin = true;
       this.fetchAllTask();
     },
     fetchAllTask: function fetchAllTask() {
       var _this = this;
 
+      console.log('pakai urlbase');
       (0, _axios.default)({
         method: "GET",
-        url: "https://g-kanban.herokuapp.com/task",
+        url: "/task",
         headers: {
           token: localStorage.token
         }
@@ -13111,6 +13124,20 @@ var _default = {
     }
   },
   created: function created() {
+    var _this2 = this;
+
+    io.connect(_config.default.serverUrl).on('drserver', function () {
+      (0, _axios.default)({
+        method: "GET",
+        url: "/task",
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (result) {
+        _this2.alltask = result.data;
+      });
+    });
+
     if (localStorage.token) {
       this.islogin = true;
       this.fetchAllTask();
@@ -13118,8 +13145,7 @@ var _default = {
       this.islogin = false;
     }
   },
-  updated: function updated() {// this.fetchAllTask();
-  }
+  updated: function updated() {}
 };
 exports.default = _default;
         var $49aa9e = exports.default || module.exports;
@@ -13181,7 +13207,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","./views/Front":"scr/views/Front.vue","./views/Home":"scr/views/Home.vue","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/main.js":[function(require,module,exports) {
+},{"./config":"scr/config.js","./axios":"scr/axios/index.js","./views/Front":"scr/views/Front.vue","./views/Home":"scr/views/Home.vue","net":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/_empty.js","util":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/util.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/main.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
@@ -13223,7 +13249,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63232" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54364" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

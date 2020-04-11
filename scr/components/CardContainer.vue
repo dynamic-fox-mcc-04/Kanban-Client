@@ -58,8 +58,10 @@ export default {
   methods:{
     StatusCheck(status){      
      let datafilter=[]
-      datafilter= this.dataAllTaskFromHome.data.filter(function (item) { return item.status == status });
-      console.log(datafilter);
+      
+     if(this.dataAllTaskFromHome.data != undefined){
+       datafilter= this.dataAllTaskFromHome.data.filter(function (item) { return item.status == status });
+     }
       return datafilter
     },
     refreshData(){

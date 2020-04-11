@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import axios from'axios'
+import axios from '../axios'
 import { log } from 'util'
 export default {
 name:"RegisterForm",
@@ -71,13 +71,14 @@ return{
 },
 methods:{	
     cancel(){
+		
         this.$emit('cancelSignIn')
     },
     createUser(){
        if(this.form.password == this.form.retypePassword){
 		   axios({
             method:"POST",
-            url:"https://g-kanban.herokuapp.com/user/register",
+            url:"/user/register",
             data:{
                 username:this.form.username,
                 email:this.form.email,
@@ -85,9 +86,8 @@ methods:{
             }
         })
         .then(result=>{
-			localStorage.setItem('token',result.data.token)  
-			       
-            
+			localStorage.setItem('token',result.data.token)  			       
+            this.$emit('succeslogin')
         })
         .catch(err=>{
             console.log(err)

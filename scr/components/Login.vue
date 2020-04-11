@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../axios'
 export default {
 	name:"LoginForm",
 	data(){
@@ -62,13 +62,13 @@ export default {
 		login(){
 			axios({
 				method:"POST",
-				url:"https://g-kanban.herokuapp.com/user/login",
+				url:"/user/login",
 				data:{
 					username:this.username,
 					password:this.password
 				}
 			})
-			.then(result=>{
+			.then(result=>{		
 				localStorage.setItem('token',result.data.token)
 				this.$emit('succeslogin')
 			})

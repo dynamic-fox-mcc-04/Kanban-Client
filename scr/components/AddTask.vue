@@ -12,35 +12,7 @@
 						<span class="focus-input3"></span>
 					</div>
 
-					<!-- <div class="wrap-input3 validate-input" data-validate = "Description  is required">
-						<input class="input3" type="text" name="description" placeholder="Description">
-						<span class="focus-input3"></span>
-					</div> -->
-
-					<!-- <div class="wrap-input3 .select2-container ">
-						<div>
-							<select class="selection-2" name="service">
-								<option>Needed Services</option>
-								<option>eCommerce Bussiness</option>
-								<option>UI/UX Design</option>
-								<option>Online Services</option>
-							</select>
-						</div>
-						<span class="focus-input3"></span>
-					</div> -->
-
-					<!-- <div class="wrap-input3 input3-select">
-						<div>
-							<select class="selection-2" name="budget">
-								<option>Budget</option>
-								<option>1500 $</option>
-								<option>2000 $</option>
-								<option>3000 $</option>
-							</select>
-						</div>
-						<span class="focus-input3"></span>
-					</div> -->
-
+					
 					<div class="wrap-input3 validate-input" data-validate = "Description is required">
 						<textarea class="input3" name="description" placeholder="Description" v-model="payload.description"></textarea>
 						<span class="focus-input3"></span>
@@ -59,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../axios'
 import { log } from 'util'
 export default {
     name:"AddTask",
@@ -78,7 +50,7 @@ export default {
         AddingTask(){
             axios({
                 method:"POST",
-                 url:"https://g-kanban.herokuapp.com/task",
+                 url:"/task",
                  data:{
                    title: this.payload.title,
                    description : this.payload.description

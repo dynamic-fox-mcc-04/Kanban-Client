@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import config from '../config'
+import axios from '../axios'
 export default {
     
     name:"TaskCard",
@@ -35,13 +36,14 @@ export default {
         updateNext(id,status){
            axios({
                 method:"PUT",
-                url:"https://g-kanban.herokuapp.com/task/forward/"+status+"/"+id,
+                url:"/task/forward/"+status+"/"+id,
                 headers:{
                     token:localStorage.token
                 }
            })
             .then(result=>{
-                this.$emit('refreshData')
+                io.connect(config.serverUrl).emit('msg');
+                // this.$emit('refreshData')
                 console.log(result);
                 
             })
@@ -53,13 +55,14 @@ export default {
          updatePrev(id,status){
            axios({
                 method:"PUT",
-                url:"https://g-kanban.herokuapp.com/task/backward/"+status+"/"+id,
+                url:"/task/backward/"+status+"/"+id,
                 headers:{
                     token:localStorage.token
                 }
            })
             .then(result=>{
-                this.$emit('refreshData')
+                io.connect(config.serverUrl).emit('msg');
+                //  this.$emit('refreshData')
                 console.log(result);
                 
             })
@@ -71,13 +74,14 @@ export default {
         dele(id){
             axios({
                 method:"DELETE",
-                url:"https://g-kanban.herokuapp.com/task/"+id,
+                url:"/task/"+id,
                 headers:{
                     token:localStorage.token
                 }
            })
             .then(result=>{
-                this.$emit('refreshData')
+                io.connect(config.serverUrl).emit('msg');
+                // this.$emit('refreshData')
                 console.log(result);
                 
             })
