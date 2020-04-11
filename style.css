@@ -1,0 +1,234 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #02474d;
+}
+
+.loginPage {
+  width: 100vw;
+  height: 100vh;
+  background-color: #e5e6e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginPage .loginCard {
+  width: 60vw;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+}
+.loginPage .loginCard .loginCardLeft {
+  width: 40%;
+  height: 100%;
+  background-color: #267dff;
+  border-radius: 15px 0px 0px 15px;
+  box-shadow: 5px 10px rgba(0, 0, 0, 0.2);
+}
+.loginPage .loginCard .loginCardRight {
+  width: 60%;
+  height: 100%;
+  background-color: #fdfdfd;
+  border-radius: 0px 15px 15px 0px;
+  box-shadow: 5px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.loginPage .loginCard .loginCardRight .loginFormHead {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.loginPage .loginCard .loginCardRight .loginForm {
+  padding-top: 5%;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginPage .loginCard .loginCardRight .loginForm form {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.registerPage {
+  width: 100vw;
+  height: 100vh;
+  background-color: #e5e6e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.registerPage .registerCard {
+  width: 60vw;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+}
+.registerPage .registerCard .registerCardLeft {
+  width: 40%;
+  height: 100%;
+  background-color: #267dff;
+  border-radius: 15px 0px 0px 15px;
+  box-shadow: 5px 10px rgba(0, 0, 0, 0.2);
+}
+.registerPage .registerCard .registerCardRight {
+  width: 60%;
+  height: 100%;
+  background-color: #fdfdfd;
+  border-radius: 0px 15px 15px 0px;
+  box-shadow: 5px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.registerPage .registerCard .registerCardRight .registerFormHead {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.registerPage .registerCard .registerCardRight .registerForm {
+  padding-top: 5%;
+  height: 60%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.registerPage .registerCard .registerCardRight .registerForm form {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.body-header {
+  padding-top: 5%;
+  height: 10vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.body-header h1 {
+  color: white;
+  font-family: "Dancing Script", cursive;
+  font-size: 500%;
+  text-decoration: underline;
+}
+
+.addButton {
+  padding-top: 1%;
+  display: flex;
+  justify-content: center;
+  height: 5vh;
+  width: 100vw;
+}
+
+.container-body {
+  width: 100vw;
+  height: 80vh;
+  background-color: #02474d;
+  padding-top: 2%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.container-card {
+  color: black;
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 20vw;
+  max-height: 60vh;
+  border-radius: 10px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.container-card h3 {
+  font-family: "Inconsolata", monospace;
+  font-size: 150%;
+  font-weight: normal;
+}
+.container-card h4 {
+  font-family: "Raleway", sans-serif;
+  font-size: 20px;
+}
+.container-card .card-content {
+  background-color: white;
+  width: 17vw;
+  margin-bottom: 2%;
+  border-radius: 5px;
+  padding: 5px 0;
+  padding-left: 3px;
+}
+
+.modalAdd {
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modalAdd-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  /* Could be more or less, depending on screen size */
+}
+
+.logoutButton {
+  background-color: #267dff;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  right: 0px;
+  font-size: 16px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
+}
+
+/*# sourceMappingURL=style.css.map */
