@@ -11058,7 +11058,11 @@ function callbackify(original) {
 }
 
 exports.callbackify = callbackify;
-},{"./support/isBuffer":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/support/isBufferBrowser.js","inherits":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/node_modules/inherits/inherits_browser.js","process":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"./support/isBuffer":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/support/isBufferBrowser.js","inherits":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/node_modules/inherits/inherits_browser.js","process":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/vue-top-progress/dist/vue-top-progress.min.js":[function(require,module,exports) {
+var define;
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):t.vueTopProgress=e()}(this,function(){"use strict";function t(t,e,s){return t<e?e:t>s?s:t}var e=function(){function t(){var s=e.shift();s&&s(t)}var e=[];return function(s){e.push(s),1===e.length&&t()}}(),s={render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("transition",{attrs:{css:!1},on:{"before-enter":t.beforeEnter,enter:t.enter,"after-enter":t.afterEnter}},[t.show?s("div",{staticClass:"top-progress",style:t.barStyle},[s("div",{staticClass:"peg",style:t.pegStyle})]):t._e()])},staticRenderFns:[],name:"vueTopprogress",data:function(){return{error:!1,show:!1,progress:0,opacity:1,status:null,isPaused:!1}},props:{speed:{type:Number,default:350},color:{type:String,default:"#29d"},colorShadow:String,errorColor:{type:String,default:"#f44336"},trickle:{type:Boolean,default:!0},trickleSpeed:{type:Number,default:250},easing:{type:String,default:"linear"},height:{type:Number,default:3},minimum:{type:Number,default:.8},maximum:{type:Number,default:97.5},zIndex:{type:Number,default:9999}},computed:{progressColor:function(){return this.error?this.errorColor:this.color},isStarted:function(){return"number"==typeof this.status},boxShadow:function(){return this.colorShadow||this.progressColor},barStyle:function(){return{position:"fixed",top:"0",left:"0",right:"0",width:this.progress+"%",height:this.height+"px",backgroundColor:this.progressColor,transition:"all "+this.speed+"ms "+this.easing,opacity:""+this.opacity,zIndex:""+this.zIndex}},pegStyle:function(){return{display:"block",position:"absolute",right:"0",width:"100px",height:"100%",opacity:this.progress?"1":"0",boxShadow:"0 0 10px "+this.boxShadow+", 0 0 5px "+this.boxShadow,transform:"rotate(3deg) translate(0px, -4px)"}}},methods:{beforeEnter:function(t){this.opacity=0,this.progress=0,this.width=0},enter:function(t,e){this.opacity=1,e()},afterEnter:function(t){this._runStart()},_work:function(){var t=this;setTimeout(function(){t.isStarted&&!t.isPaused&&(t.increase(),t._work())},this.trickleSpeed)},_runStart:function(){this.status=100===this.progress?null:this.progress,this.trickle&&this._work()},start:function(){this.isPaused=!1,this.show?this._runStart():this.show=!0},set:function(s){var r=this;this.isPaused=!1;var i=void 0;i=this.isStarted?s<this.progress?t(s,0,100):t(s,this.minimum,100):0,this.status=100===i?null:i,e(function(t){r.progress=i,100===i?setTimeout(function(){r.opacity=0,setTimeout(function(){r.show=!1,r.error=!1,t()},r.speed)},r.speed):setTimeout(t,r.speed)})},increase:function(e){var s=this.progress;s<100&&"number"!=typeof e&&(e=s>=0&&s<25?3*Math.random()+3:s>=25&&s<50?3*Math.random():s>=50&&s<85?2*Math.random():s>=85&&s<99?.5:0),this.set(t(s+e,0,this.maximum))},decrease:function(t){0!==this.progress&&this.increase(-t)},done:function(){this.set(100)},getProgress:function(){return this.status?this.progress:0},pause:function(){this.isPaused=!0},fail:function(){this.error=!0,this.done()}}},r=function t(e){t.installed||e.component(s.name,s)};return"undefined"!=typeof window&&window.Vue&&r(window.Vue),{vueTopprogress:s,install:r}});
+
+},{}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -11412,8 +11416,11 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _util = require("util");
 
+var _vueTopProgress = require("vue-top-progress");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
 //
 //
 //
@@ -12125,6 +12132,15 @@ var _default = {
       });
     }
   },
+  beforeCreate: function beforeCreate() {
+    var _this18 = this;
+
+    this.$refs.topProgress.start(); // Use setTimeout for demo
+
+    setTimeout(function () {
+      _this18.$refs.topProgress.done();
+    }, 2000);
+  },
   created: function created() {
     if (localStorage.access_token) {
       this.isLogin = true;
@@ -12136,6 +12152,36 @@ var _default = {
       this.projects = [];
       this.users = [];
     }
+  },
+  beforeUpdate: function beforeUpdate() {
+    var _this19 = this;
+
+    this.$refs.topProgress.start(); // Use setTimeout for demo
+
+    setTimeout(function () {
+      _this19.$refs.topProgress.done();
+    }, 1000);
+  },
+  beforeDestroy: function beforeDestroy() {
+    var _this20 = this;
+
+    this.$refs.topProgress.start(); // Use setTimeout for demo
+
+    setTimeout(function () {
+      _this20.$refs.topProgress.done();
+    }, 2000);
+  },
+  mounted: function mounted() {
+    var _this21 = this;
+
+    this.$refs.topProgress.start(); // Use setTimeout for demo
+
+    setTimeout(function () {
+      _this21.$refs.topProgress.done();
+    }, 1000);
+  },
+  components: {
+    vueTopprogress: _vueTopProgress.vueTopprogress
   }
 };
 exports.default = _default;
@@ -12384,353 +12430,409 @@ exports.default = _default;
           ])
         ])
       : _vm.isLogin
-      ? _c("div", [
-          _c("div", { staticClass: "container topPage" }, [
-            _c("div", { staticClass: "row logout" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  attrs: { type: "button" },
-                  on: { click: _vm.logout }
-                },
-                [_vm._v("\n          Logout\n        ")]
-              )
-            ]),
+      ? _c(
+          "div",
+          [
+            _c("vue-topprogress", { ref: "topProgress" }),
             _vm._v(" "),
-            _c("div", { staticClass: "col col-3" }, [
-              _c("label", [_vm._v("Add Contributor")]),
+            _c("div", { staticClass: "container topPage" }, [
+              _c("div", { staticClass: "row logout" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button" },
+                    on: { click: _vm.logout }
+                  },
+                  [_vm._v("\n          Logout\n        ")]
+                )
+              ]),
               _vm._v(" "),
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.addContributor($event)
-                    }
-                  }
-                },
-                [
-                  _c("div", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedUser,
-                            expression: "selectedUser"
-                          }
-                        ],
-                        staticClass: "form-control form-control-sm",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectedUser = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      _vm._l(_vm.users, function(user) {
-                        return _c(
-                          "option",
-                          { key: user.id, domProps: { value: user.id } },
-                          [_vm._v(_vm._s(user.email))]
-                        )
-                      }),
-                      0
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Select")]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass: "col col-3",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.addProject($event)
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "form-group row col-12" }, [
-                  _c("label", { attrs: { for: "add-project" } }, [
-                    _vm._v("Add Project")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.user.currentProject,
-                        expression: "user.currentProject"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "add-project",
-                      placeholder: "write your new project here...",
-                      "aria-describedby": "addProject"
-                    },
-                    domProps: { value: _vm.user.currentProject },
+              _c("div", { staticClass: "col col-3" }, [
+                _c("label", [_vm._v("Add Contributor")]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
                     on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.user,
-                          "currentProject",
-                          $event.target.value
-                        )
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.addContributor($event)
                       }
                     }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Submit")]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col col-3" }, [
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.setProject($event)
-                    }
-                  }
-                },
-                [
-                  _c("label", { attrs: { for: "project" } }, [
-                    _vm._v("Please select the project")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selected,
-                            expression: "selected"
-                          }
-                        ],
-                        staticClass: "form-control form-control-sm",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selected = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      _vm._l(_vm.currentProjects, function(currentProject) {
-                        return _c(
-                          "option",
-                          {
-                            key: currentProject.ProjectId,
-                            domProps: { value: currentProject.ProjectId }
-                          },
-                          [_vm._v(_vm._s(currentProject.title))]
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Select")]
-                    )
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col col-3" }, [
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.quitProject($event)
-                    }
-                  }
-                },
-                [
-                  _c("label", { attrs: { for: "project" } }, [
-                    _vm._v("Select to quit the project")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.projectToQuit,
-                            expression: "projectToQuit"
-                          }
-                        ],
-                        staticClass: "form-control form-control-sm",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.projectToQuit = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      _vm._l(_vm.currentProjects, function(currentProject) {
-                        return _c(
-                          "option",
-                          {
-                            key: currentProject.ProjectId,
-                            domProps: { value: currentProject.ProjectId }
-                          },
-                          [_vm._v(_vm._s(currentProject.title))]
-                        )
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Select")]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col col-3", attrs: { id: "first" } },
-              [
-                _c("div", { staticClass: "card", attrs: { id: "first" } }, [
-                  _c("div", { staticClass: "card-body" }, [
-                    _c(
-                      "form",
-                      {
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.addTask($event)
-                          }
-                        }
-                      },
-                      [
-                        _c("label", [_vm._v("Add Your New Task")]),
-                        _vm._v(" "),
-                        _c("input", {
+                  },
+                  [
+                    _c("div", [
+                      _c(
+                        "select",
+                        {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.user.task,
-                              expression: "user.task"
+                              value: _vm.selectedUser,
+                              expression: "selectedUser"
                             }
                           ],
-                          staticClass: "col col-12",
-                          attrs: {
-                            type: "text",
-                            id: "task",
-                            placeholder: "Write your task here",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.task },
+                          staticClass: "form-control form-control-sm",
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "task", $event.target.value)
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectedUser = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
                             }
                           }
+                        },
+                        _vm._l(_vm.users, function(user) {
+                          return _c(
+                            "option",
+                            { key: user.id, domProps: { value: user.id } },
+                            [_vm._v(_vm._s(user.email))]
+                          )
                         }),
-                        _vm._v(" "),
-                        _vm._m(1)
-                      ]
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Select")]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  staticClass: "col col-3",
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addProject($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group row col-12" }, [
+                    _c("label", { attrs: { for: "add-project" } }, [
+                      _vm._v("Add Project")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.currentProject,
+                          expression: "user.currentProject"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "add-project",
+                        placeholder: "write your new project here...",
+                        "aria-describedby": "addProject"
+                      },
+                      domProps: { value: _vm.user.currentProject },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.user,
+                            "currentProject",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "submit" }
+                      },
+                      [_vm._v("Submit")]
                     )
                   ])
-                ]),
-                _vm._v(" "),
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col col-3" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.setProject($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("label", { attrs: { for: "project" } }, [
+                      _vm._v("Please select the project")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selected,
+                              expression: "selected"
+                            }
+                          ],
+                          staticClass: "form-control form-control-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selected = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        _vm._l(_vm.currentProjects, function(currentProject) {
+                          return _c(
+                            "option",
+                            {
+                              key: currentProject.ProjectId,
+                              domProps: { value: currentProject.ProjectId }
+                            },
+                            [_vm._v(_vm._s(currentProject.title))]
+                          )
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Select")]
+                      )
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col col-3" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.quitProject($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("label", { attrs: { for: "project" } }, [
+                      _vm._v("Select to quit the project")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.projectToQuit,
+                              expression: "projectToQuit"
+                            }
+                          ],
+                          staticClass: "form-control form-control-sm",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.projectToQuit = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        _vm._l(_vm.currentProjects, function(currentProject) {
+                          return _c(
+                            "option",
+                            {
+                              key: currentProject.ProjectId,
+                              domProps: { value: currentProject.ProjectId }
+                            },
+                            [_vm._v(_vm._s(currentProject.title))]
+                          )
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Select")]
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "row", attrs: { id: "card" } }, [
+              _c(
+                "div",
+                { staticClass: "col col-3", attrs: { id: "first" } },
+                [
+                  _c("div", { staticClass: "card", attrs: { id: "first" } }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.addTask($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("label", [_vm._v("Add Your New Task")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.user.task,
+                                expression: "user.task"
+                              }
+                            ],
+                            staticClass: "col col-12",
+                            attrs: {
+                              type: "text",
+                              id: "task",
+                              placeholder: "Write your task here",
+                              required: ""
+                            },
+                            domProps: { value: _vm.user.task },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.user, "task", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.tasks, function(task) {
+                    return _c(
+                      "div",
+                      { key: task.id, staticClass: "card bg-primary" },
+                      [
+                        task.category == "prelog"
+                          ? _c("div", { staticClass: "card-body" }, [
+                              _c("h4", { staticClass: "card-title" }, [
+                                _vm._v("Prelog")
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "card-text" }, [
+                                _vm._v(_vm._s(task.title))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-secondary",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.cancelTask(task.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("\n              Delete\n            ")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-dark",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.addTodo(task.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("\n              Next\n            ")]
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    )
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col col-3", attrs: { id: "second" } },
                 _vm._l(_vm.tasks, function(task) {
                   return _c(
                     "div",
-                    { key: task.id, staticClass: "card bg-primary" },
+                    { key: task.id, staticClass: "card bg-warning" },
                     [
-                      task.category == "prelog"
+                      task.category == "todo"
                         ? _c("div", { staticClass: "card-body" }, [
                             _c("h4", { staticClass: "card-title" }, [
-                              _vm._v("Prelog")
+                              _vm._v("Todo")
                             ]),
                             _vm._v(" "),
                             _c("p", { staticClass: "card-text" }, [
@@ -12743,11 +12845,11 @@ exports.default = _default;
                                 staticClass: "btn btn-secondary",
                                 on: {
                                   click: function($event) {
-                                    return _vm.cancelTask(task.id)
+                                    return _vm.cancelTodo(task.id)
                                   }
                                 }
                               },
-                              [_vm._v("\n              Delete\n            ")]
+                              [_vm._v("\n              Back\n            ")]
                             ),
                             _vm._v(" "),
                             _c(
@@ -12756,7 +12858,7 @@ exports.default = _default;
                                 staticClass: "btn btn-dark",
                                 on: {
                                   click: function($event) {
-                                    return _vm.addTodo(task.id)
+                                    return _vm.addProcess(task.id)
                                   }
                                 }
                               },
@@ -12766,152 +12868,102 @@ exports.default = _default;
                         : _vm._e()
                     ]
                   )
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col col-3", attrs: { id: "second" } },
-              _vm._l(_vm.tasks, function(task) {
-                return _c(
-                  "div",
-                  { key: task.id, staticClass: "card bg-warning" },
-                  [
-                    task.category == "todo"
-                      ? _c("div", { staticClass: "card-body" }, [
-                          _c("h4", { staticClass: "card-title" }, [
-                            _vm._v("Todo")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(_vm._s(task.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-secondary",
-                              on: {
-                                click: function($event) {
-                                  return _vm.cancelTodo(task.id)
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col col-3" },
+                _vm._l(_vm.tasks, function(task) {
+                  return _c(
+                    "div",
+                    { key: task.id, staticClass: "card bg-info" },
+                    [
+                      task.category == "process"
+                        ? _c("div", { staticClass: "card-body" }, [
+                            _c("h4", { staticClass: "card-title" }, [
+                              _vm._v("Process")
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(_vm._s(task.title))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-secondary",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.cancelProcess(task.id)
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("\n              Back\n            ")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-dark",
-                              on: {
-                                click: function($event) {
-                                  return _vm.addProcess(task.id)
+                              },
+                              [_vm._v("\n              Back\n            ")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-dark",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addComplete(task.id)
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("\n              Next\n            ")]
-                          )
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col col-3" },
-              _vm._l(_vm.tasks, function(task) {
-                return _c(
-                  "div",
-                  { key: task.id, staticClass: "card bg-info" },
-                  [
-                    task.category == "process"
-                      ? _c("div", { staticClass: "card-body" }, [
-                          _c("h4", { staticClass: "card-title" }, [
-                            _vm._v("Process")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(_vm._s(task.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-secondary",
-                              on: {
-                                click: function($event) {
-                                  return _vm.cancelProcess(task.id)
+                              },
+                              [_vm._v("\n              Done\n            ")]
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col col-3" },
+                _vm._l(_vm.tasks, function(task) {
+                  return _c(
+                    "div",
+                    { key: task.id, staticClass: "card bg-success" },
+                    [
+                      task.category == "complete"
+                        ? _c("div", { staticClass: "card-body" }, [
+                            _c("h4", { staticClass: "card-title" }, [
+                              _vm._v("Complete")
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(_vm._s(task.title))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-secondary",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.cancelComplete(task.id)
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("\n              Back\n            ")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-dark",
-                              on: {
-                                click: function($event) {
-                                  return _vm.addComplete(task.id)
-                                }
-                              }
-                            },
-                            [_vm._v("\n              Done\n            ")]
-                          )
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col col-3" },
-              _vm._l(_vm.tasks, function(task) {
-                return _c(
-                  "div",
-                  { key: task.id, staticClass: "card bg-success" },
-                  [
-                    task.category == "complete"
-                      ? _c("div", { staticClass: "card-body" }, [
-                          _c("h4", { staticClass: "card-title" }, [
-                            _vm._v("Complete")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "card-text" }, [
-                            _vm._v(_vm._s(task.title))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-secondary",
-                              on: {
-                                click: function($event) {
-                                  return _vm.cancelComplete(task.id)
-                                }
-                              }
-                            },
-                            [_vm._v("\n              Back\n            ")]
-                          )
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              }),
-              0
-            )
-          ])
-        ])
+                              },
+                              [_vm._v("\n              Back\n            ")]
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ],
+          1
+        )
       : _vm._e()
   ])
 }
@@ -12989,7 +13041,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","util":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/util.js","_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/sweetalert2/dist/sweetalert2.all.js":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","util":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/util.js","vue-top-progress":"node_modules/vue-top-progress/dist/vue-top-progress.min.js","_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/sweetalert2/dist/sweetalert2.all.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /*!
@@ -16131,7 +16183,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50511" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52292" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

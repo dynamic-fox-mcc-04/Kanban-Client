@@ -28,7 +28,8 @@
     "vue-google-oauth2": "^1.4.3",
     "vue-google-signin-button-directive": "^1.0.3",
     "vue-hot-reload-api": "^2.3.4",
-    "vue-simple-alert": "^1.1.1"
+    "vue-simple-alert": "^1.1.1",
+    "vue-top-progress": "^0.7.0"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^3.1.2",

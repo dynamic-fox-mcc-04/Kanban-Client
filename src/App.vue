@@ -92,6 +92,7 @@
 
     <!-- === MAIN PAGE === -->
     <div v-else-if="isLogin">
+      <vue-topprogress ref="topProgress"></vue-topprogress>
       <!-- COMPONENT BELOW HEADER -->
       <div class="container topPage">
         <!-- LOGOUT BUTTON -->
@@ -190,7 +191,7 @@
       </div>
       <!-- END OF KANBAN BOARD TITLE -->
       <!-- CARD FOR KANBAN -->
-      <div class="row">
+      <div class="row" id="card">
         <div class="col col-3" id="first">
           <div class="card" id="first">
             <div class="card-body">
@@ -289,7 +290,7 @@
 <script>
 import axios from "axios";
 import { log } from "util";
-
+import { vueTopprogress } from "vue-top-progress";
 export default {
   name: "App",
   data() {
@@ -681,6 +682,14 @@ export default {
         });
     }
   },
+  beforeCreate() {
+    this.$refs.topProgress.start();
+
+    // Use setTimeout for demo
+    setTimeout(() => {
+      this.$refs.topProgress.done();
+    }, 2000);
+  },
 
   created() {
     if (localStorage.access_token) {
@@ -693,6 +702,34 @@ export default {
       this.projects = [];
       this.users = [];
     }
+  },
+  beforeUpdate() {
+    this.$refs.topProgress.start();
+
+    // Use setTimeout for demo
+    setTimeout(() => {
+      this.$refs.topProgress.done();
+    }, 1000);
+  },
+  beforeDestroy() {
+    this.$refs.topProgress.start();
+
+    // Use setTimeout for demo
+    setTimeout(() => {
+      this.$refs.topProgress.done();
+    }, 2000);
+  },
+  mounted() {
+    this.$refs.topProgress.start();
+
+    // Use setTimeout for demo
+    setTimeout(() => {
+      this.$refs.topProgress.done();
+    }, 1000);
+  },
+
+  components: {
+    vueTopprogress
   }
 };
 </script>
@@ -708,6 +745,9 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+/* .row#card {
+  background-color: #c35354;
+} */
 .container.topPage {
   display: flex;
 }

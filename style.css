@@ -13,36 +13,9 @@
   /* color: white; */
 }
 
-/* .jumbotron.container {
-  display: flex;
-  align-items: flex-end;
+/* body {
+  background-color: #ca5b53;
 } */
-
-/* .jumbotron.container button{
-    justify-self: s;
-} */
-
-/* .btn-container {
-  display: flex;
-}
-.btn-container a {
-  justify-content: space-between;
-}
-
-.row#first {
-  display: flex;
-  justify-content: space-around;
-}
-
-h1 {
-  margin: 0;
-}
-
-.col {
-  background-color: white;
-}
- */
-
 .row#first {
   background-color: #e1f4f3;
   border: 3px solid;
