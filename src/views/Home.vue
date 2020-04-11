@@ -17,7 +17,8 @@ export default {
     },  
     data(){
         return {
-            isLogin : false
+            isLogin : false,
+            status : true
         }
     },
     methods : {

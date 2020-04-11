@@ -8,26 +8,61 @@
         </div>
         <div class="content">
             <div class="card-list" v-for="category in categories" :key="category.id">
-                <div class="card-title"><h3><b>{{ category.name }}</b></h3></div>
+                <div v-if="!category.editable" class="card-title"><h3><b>{{ category.name }}</b></h3></div>
+                    <form v-else @submit.prevent="updateCategory(category.id)">
+                        <input type="text" v-model="data.name" > 
+                        <button type="submit"  class="btn orange">save</button> <button @click="category.editable=false" class="btn grey">X</button> 
 
-                <draggable :id="category.id" v-model="categories" :options="{ group:'tasks'}"  @start ="drag=true" @end ="drag=false" @add ="chooseCategory">
+                    </form>
                         <div class="card-content-box" v-for="task in tasks" :key="task.id"> 
-                            <!-- <draggable :id="task.id" v-model="tasks" :options="{ group: { name:'tasks'}}" @start ="drag=true" @end ="drag=false" :move="chooseTask"> -->
                                 <div class="card-content" v-if="task.CategoryId == category.id"> 
-                                    <p style="font-size:13px">{{ task.title }}</p>                           
-                                </div>
-                            <!-- </draggable> -->
+                                          <ul>
+                                            <li>
+                                                <a href="#"><i class="fas fa-ellipsis-v"></i></a>
+                                                <ul class="dropdown">
+                                                    <li><a @click.prevent ="toggleEdit(task)" href="#"><i class="far fa-edit"></i> Edit Task</a></li>
+                                                    <li><a  @click.prevent="deleteTask(task.id)" href="#"><i class="far fa-trash-alt"></i>Delete Task</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    <div>
+                                    <div v-if="!task.editable">
+                                        <p  style="font-size:16px" >{{ task.title }}</p>
+                                        <div class="move"  v-if="task.statusMove"> 
+                                            <select  v-model="selected" style="display: block;">
+                                                <option selected value=""></option>
+                                                <option v-for="cat in categories" :key="cat.id" :value="cat.id"> {{ cat.name }}</option>
+                                            </select>
+                                            <button @click="updateTask(task.id, task)"> Move <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                        <div v-else>
+                                            <button @click="toggleMove(task)"> Move <i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                         <form @submit.prevent="updateTaskTitle(task.id, category.id)">
+                                            <input v-model="data.title" >
+                                            <button type="submit" class="btn orange"> Save </button> 
+                                            <button type="reset" class="btn grey" @click.prevent="toggleEdit(task)">X</button>
+                                        </form>
+                                    </div>
+                                </div> 
+                            </div>
+                                
                         </div>
-                </draggable>
 
                 <div v-if="!category.statusOpen">
                     <div  class="card-btn" >
-                    <button @click="toggleTask(category)">+  add task</button>
+                        <button @click="toggleTask(category)">+  add task</button>  
+                        <button @click="category.editable=true"   id=edit> <i class="far fa-edit"></i> </button>
+                        <button @click="deleteCategory(category.id)" id="delete"><i class="far fa-trash-alt"></i></button>
+                        
                     </div>
+                     
                 </div>
                 <div v-else-if="category.statusOpen"> 
                     <form  @submit.prevent="addTask(category.id)">
-                        <input cols="30" rows="10" placeholder="Enter Task here" v-model="data.title" >
+                        <input  placeholder="Enter Task here" v-model="data.title" >
                         <button type="submit" class="btn green">Add Task</button> <button type="reset" class="btn grey" @click.prevent="toggleTask(category)">X</button>
                     </form>
                 </div>
@@ -48,13 +83,9 @@
 
 <script>
 import axios from 'axios'
-import draggable from 'vuedraggable'
 
 export default {
     name : 'Dashboard',
-    components:{
-        draggable
-    },
     data(){
         return {
             data : {
@@ -64,22 +95,130 @@ export default {
             tasks : [],
             categories : [],
             isVisiblity : false,
-            targetCategory : '',
-            targetTask : ''
+            selected : '',
         }
     },
     methods : {
 
-        chooseCategory(event){
-            this.targetCategory = event.from.id
+        updateCategory(categoryId){
+             axios({
+                method:'PUT',
+                url : 'https://kanban-ids.herokuapp.com/category/' + categoryId,
+                data : {
+                    name : this.data.name
+                },
+                headers : {
+                    access_token : localStorage.access_token
+                }
+            })
+            .then(result => {
+                this.getCategory()
+                this.getTasks()
+                this.clearForm()
+            })
+            .catch(err => {
+                console.log(err.response.data);
+            })
+
         },
-        chooseTask(event){
-            this.targetTask = event.from.id
+
+        deleteCategory(categoryId){
+
+             axios({
+                method:'DELETE',
+                url : 'https://kanban-ids.herokuapp.com/category/' + categoryId,
+                headers : {
+                    access_token : localStorage.access_token
+                }
+            })
+            .then(result => {
+                this.getCategory()
+                this.getTasks()
+                this.clearForm()
+            })
+            .catch(err => {
+                console.log(err.response.data);
+            })
+        },
+
+
+        deleteTask(taskId) {
+             axios({
+                method:'DELETE',
+                url : 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+                headers : {
+                    access_token : localStorage.access_token
+                }
+            })
+            .then(result => {
+                this.getCategory()
+                this.getTasks()
+                this.clearForm()
+            })
+            .catch(err => {
+                console.log(err.response.data);
+            })
+        
+        
+        },
+
+
+
+        updateTaskTitle(taskId, categoryId){
+             if ( this.data.title ){
+                axios({
+                    method:'PUT',
+                    url : 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+                    data : {
+                        title : this.data.title,
+                        CategoryId : categoryId
+                    },
+                    headers : {
+                        access_token : localStorage.access_token
+                    }
+                })
+                .then(result => {
+                    this.getCategory()
+                    this.getTasks()
+                    this.clearForm()
+                })
+                .catch(err => {
+                    console.log(err.response.data);
+                })
+            }
+        },
+
+        updateTask(taskId, idx){
+           this.toggleMove(idx)
+
+           if (this.selected){
+                axios({
+                    method:'PATCH',
+                    url : 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+                    data : {
+                        CategoryId : this.selected
+                    },
+                    headers : {
+                        access_token : localStorage.access_token
+                    }
+                })
+                .then(result => {
+                    this.getCategory()
+                    this.getTasks()
+                    this.clearForm()
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            }
+           
+
+
         },
         addCategory(){
             axios({
                 method:'POST',
-                url : 'http://localhost:3000/category',
+                url : 'https://kanban-ids.herokuapp.com/category',
                 data :{
                     name : this.data.name
                 },
@@ -98,34 +237,35 @@ export default {
         },
 
         addTask(categoryId){
-            axios({
-                method:'POST',
-                url :'http://localhost:3000/tasks',
-                data : {
-                    title : this.data.title,
-                    CategoryId : categoryId
-                },
-                headers : {
-                    access_token : localStorage.access_token
-                }
-            })
-            .then(result => {
-                this.getTasks()
-                this.clearForm()
-                
-            })
-            .catch(err => {
-                console.log(err);
-                
-            })
+            if ( this.data.title) {
+                axios({
+                    method:'POST',
+                    url :'https://kanban-ids.herokuapp.com/tasks',
+                    data : {
+                        title : this.data.title,
+                        CategoryId : categoryId
+                    },
+                    headers : {
+                        access_token : localStorage.access_token
+                    }
+                })
+                .then(result => {
+                    this.getTasks()
+                    this.clearForm()
+                    
+                })
+                .catch(err => {
+                    console.log(err);
+                })
 
-
+            }
         },
 
         logout(){
             localStorage.clear();
             this.$emit('loginStatus', false)
         },
+
        toggleModal(){
            if ( this.isVisiblity ){
                 this.isVisiblity = !this.isVisiblity
@@ -134,6 +274,7 @@ export default {
            }
           
        },
+
        toggleTask(category){
 
             if ( category.statusOpen ){
@@ -143,10 +284,26 @@ export default {
            }
 
        },
+       
+       toggleMove( task ){
+            if ( task.statusMove ){
+                 task.statusMove = false
+           } else {
+                task.statusMove = true
+           }
+       },
+        toggleEdit( task ){
+            if ( task.editable ){
+                 task.editable = false
+           } else {
+                task.editable = true
+           }
+       },
+
        getCategory() {
            axios({
                method:'GET',
-               url : 'http://localhost:3000/category',
+               url : 'https://kanban-ids.herokuapp.com/category',
                headers : {
                    access_token : localStorage.access_token
                }
@@ -155,6 +312,7 @@ export default {
                
                result.data.categories.forEach(el => {
                    el.statusOpen = false
+                   el.editable = false
                });
                
                this.categories = result.data.categories
@@ -170,15 +328,22 @@ export default {
        getTasks(){
            axios({
                method:'GET',
-               url : 'http://localhost:3000/tasks',
+               url : 'https://kanban-ids.herokuapp.com/tasks',
                headers : {
                    access_token : localStorage.access_token
                }
            })
            .then(result => {
-               console.log(result.data);
+               
+               result.data.tasks.forEach(el => {
+                   el.statusMove = false;
+                   el.editable = false;
+               });
                
                this.tasks = result.data.tasks
+            
+               
+
            })
            .catch(err => {
                console.log(err);
@@ -189,6 +354,7 @@ export default {
        clearForm() {
            this.data.name = ''
            this.data.title = ''
+           this.selected = ''
        }
     },
     created(){

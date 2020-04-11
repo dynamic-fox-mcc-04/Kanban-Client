@@ -16,7 +16,8 @@
                             <label for="email"></label>
                             <input type="email" id="email" placeholder="Email" v-model="data.email" required><br><br>
                             <input type="password" id="password" placeholder="Password" v-model="data.password" required><br><br>
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Login</button>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Login</button>                                                                       
+                             <div class="g-signin2" data-height = "35" data-width="auto"  data-longtitle="true" data-type="submit" data-onsuccess="onSignIn"></div>
                             <p>don't have account ? <a href="" @click.prevent="isLogin"> Register </a></p>
                         </form>
                     </div>
@@ -30,6 +31,10 @@
 </template>
 
 <script>
+
+ 
+
+
 
 import axios from 'axios'
 
@@ -54,7 +59,7 @@ export default {
         login(){
             axios({
                 method : 'POST',
-                url : 'http://localhost:3000/login',
+                url : 'https://kanban-ids.herokuapp.com/login',
                 data : {
                     email : this.data.email,
                     password : this.data.password
@@ -77,6 +82,30 @@ export default {
             })
         },
 
+        onSignIn(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
+            axios({
+                method : 'POST',
+                url : 'https://kanban-ids.herokuapp.com/googleSign',
+                data : {
+                    id_token
+                }
+            })
+            .done(result => {
+                this.isError = false
+                localStorage.setItem('access_token', result.data.access_token)
+                this.$emit('loginStatus', true)
+                clearForm();
+            })
+            .fail(err => {
+                
+            })
+        },
+        signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            });
+        },
         clearForm(){
             this.data.email = '',
             this.data.password = ''

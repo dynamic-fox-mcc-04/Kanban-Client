@@ -26,8 +26,6 @@ body {
     font-family: $roboto-slab;
 }
 
-
-
 lottie-player {
 
     position: fixed;
@@ -179,7 +177,8 @@ p {
     display: flex;
     flex-direction: column; 
     background-color: $cardColor;
-    margin: 5px;
+    margin: 10px;
+    padding: 2px;
     width: 240px;
     border-radius: 3px;
 }
@@ -207,9 +206,7 @@ p {
     display: flex;
     flex-direction: column;
     min-height: auto;
-    max-height: 450px;
-    overflow-y: auto;  
-    cursor: move; 
+    max-height: 200px;
 }
 
 .card-content {
@@ -219,12 +216,40 @@ p {
     padding: 5px;
     box-shadow: 1px 0px 2px 0px grey;
     font-size: 14px;
+    display: flex;
+    flex-direction: column;   
+    justify-content: right;
     height:auto;
-    width: auto;
-    
-   
+    width: auto; 
  
 }
+
+.card-content button {
+    border: none;
+    height: 30px;
+    margin-left: 150px;
+}
+
+.card-content p {
+    margin: 0;
+    color: black;
+}
+
+.card-content button:hover {
+    cursor: pointer;
+}
+
+.card-content .options {
+    text-align: right;
+    margin: 0;
+}
+
+.card-content .options i:hover {
+    cursor: pointer;
+    display: block;
+}
+
+
 
 .card-btn button {
     height:32px;
@@ -237,8 +262,6 @@ p {
    
 }
 
-
-
 .card-btn button:hover {
    background-color: $cardColorHover;
    cursor: pointer;
@@ -246,8 +269,93 @@ p {
 }
 
 .card-btn {
+    display: flex;
+    flex-direction: row;
     padding: 5px;
 }
 
+.card-btn #edit {
+    width: auto;
+}
 
+.card-btn #delete {
+    flex: 1;
+}
+
+//dropdown
+.card-content:hover {
+    background-color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+
+
+// .card-content:hover ul li ul.dropdown {
+//     display: none;
+// }
+
+ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background:none;
+    text-align: right;
+    height: auto;
+    
+}
+ul li{
+    display: inline-block;
+    position: relative;
+    line-height: 32px;
+}
+ul li a{
+    display: block;
+    padding: 0px 10px;
+    color: gray;
+    text-decoration: none;
+    text-align: left;
+
+
+}
+ul li a:hover{
+    color: #fff;
+    background: $bgColor;
+}
+
+ul li ul.dropdown{
+     /* Set width of the dropdown */
+    width: 200;
+    background: #f2f2f2;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    display: none;
+  
+    
+}
+
+
+ul li:hover ul.dropdown{
+    display: block;	/* Display the dropdown */
+}
+ul li ul.dropdown li{
+    display: block;
+    width: 160px;
+}
+
+
+.move {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.move select {
+    flex: 1;
+    width: auto;
+}
+
+.move button {
+    margin: 2px;
+    height: auto;
+}
 

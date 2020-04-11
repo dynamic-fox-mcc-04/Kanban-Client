@@ -1,5 +1,6 @@
 <template>
 <div>
+    <div>
     <home v-if="!isLogin" @loginStatus="loginSuccess"></home>
     <dashboard v-else @loginStatus="loginSuccess"></dashboard>
 </div>
