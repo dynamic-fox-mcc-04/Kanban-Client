@@ -8550,8 +8550,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  // serverUrl:'https://g-kanban.herokuapp.com'
-  serverUrl: 'http://localhost:3000'
+  serverUrl: 'https://g-kanban.herokuapp.com' // serverUrl:'http://localhost:3000'
+
 };
 exports.default = _default;
 },{}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
@@ -10330,8 +10330,8 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = _axios.default.create({
-  // baseURL: 'https://g-kanban.herokuapp.com'
-  baseURL: 'http://localhost:3000'
+  baseURL: 'https://g-kanban.herokuapp.com' // baseURL: 'http://localhost:3000'
+
 });
 
 exports.default = _default;
@@ -12164,7 +12164,7 @@ exports.default = _default;
       {
         staticClass: "container-login100",
         staticStyle: {
-          "background-image": "url('/076d52176fb373f3ecb0869949446d9e.jpg')"
+          "background-image": "url('/bg-01.49446d9e.jpg')"
         }
       },
       [
@@ -13004,7 +13004,7 @@ exports.default = _default;
       {
         staticClass: "container-login100",
         staticStyle: {
-          "background-image": "url('/076d52176fb373f3ecb0869949446d9e.jpg')"
+          "background-image": "url('/bg-01.49446d9e.jpg')"
         }
       },
       [
@@ -13182,6 +13182,9 @@ var _default = {
         }
       }).then(function (result) {
         _this2.alltask = result.data;
+        Vue.toasted.global.my_app_info({
+          message: 'Someone Update the Task'
+        });
       });
     });
 
@@ -13296,7 +13299,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50396" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62070" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -95,11 +95,15 @@ export default {
              .then(result=>{
                 
                 this.alltask = result.data
+                 Vue.toasted.global.my_app_info({
+                    message : 'Someone Update the Task'
+                });
             })
             });
         if(localStorage.token){
             this.islogin = true
             this.fetchAllTask();
+            
         }else {
             this.islogin = false
         }       
