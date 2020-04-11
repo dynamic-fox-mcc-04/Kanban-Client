@@ -70,7 +70,9 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-        <button v-google-signin-button="clientId" class="google-signin-button">Continue with Google</button>
+        <button v-google-signin-button="clientId" class="google-signin-button">
+          Continue with Google
+        </button>
         <br />
         <!-- <ul v-if="githubUser">
           <li v-for="repository in repositories" :key="repository.id">
@@ -90,22 +92,37 @@
 
     <!-- === MAIN PAGE === -->
     <div v-else-if="isLogin">
+      <!-- COMPONENT BELOW HEADER -->
       <div class="container topPage">
+        <!-- LOGOUT BUTTON -->
         <div class="row logout">
-          <button @click="logout" type="button" class="btn btn-danger">Logout</button>
+          <button @click="logout" type="button" class="btn btn-danger">
+            Logout
+          </button>
         </div>
-        <div class="col col-4">
+        <!-- END OF LOGOUT BUTTON -->
+
+        <!-- ADDCONTRIBUTOR SELECT FORM -->
+        <div class="col col-3">
           <label>Add Contributor</label>
           <form @submit.prevent="addContributor">
             <div>
-              <select class="form-control form-control-sm" v-model="selectedUser">
-                <option v-for="user in users" :key="user.id" :value="user.id">{{ user.email }}</option>
+              <select
+                class="form-control form-control-sm"
+                v-model="selectedUser"
+              >
+                <option v-for="user in users" :key="user.id" :value="user.id">{{
+                  user.email
+                }}</option>
               </select>
             </div>
-            <button class="col col-4" type="submit">Select</button>
+            <button type="submit" class="btn btn-secondary">Select</button>
           </form>
         </div>
-        <form @submit.prevent="addProject">
+        <!-- END OF ADDCONTRIBUTOR -->
+
+        <!-- ADDPROJECT FORM -->
+        <form @submit.prevent="addProject" class="col col-3">
           <div class="form-group row col-12">
             <label for="add-project">Add Project</label>
             <input
@@ -116,12 +133,13 @@
               aria-describedby="addProject"
               v-model="user.currentProject"
             />
+            <button type="submit" class="btn btn-secondary">Submit</button>
           </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <!-- END OF ADDPROJECT -->
 
-        <div class="col col-4">
+        <!--  SETPROJECT SELECT FORM -->
+        <div class="col col-3">
           <form @submit.prevent="setProject">
             <label for="project">Please select the project</label>
             <div>
@@ -130,34 +148,56 @@
                   v-for="currentProject in currentProjects"
                   :key="currentProject.ProjectId"
                   :value="currentProject.ProjectId"
-                >{{ currentProject.title }}</option>
+                  >{{ currentProject.title }}</option
+                >
               </select>
+              <button class="btn btn-secondary" type="submit">Select</button>
             </div>
-            <button class="col col-4" type="submit">Select</button>
           </form>
         </div>
-        <!-- end of select project -->
+        <!-- END OF SETPROJECT -->
+
+        <!-- QUITPROJECT SELECT FORM -->
+        <div class="col col-3">
+          <form @submit.prevent="quitProject">
+            <label for="project">Select to quit the project</label>
+            <div>
+              <select
+                class="form-control form-control-sm"
+                v-model="projectToQuit"
+              >
+                <option
+                  v-for="currentProject in currentProjects"
+                  :key="currentProject.ProjectId"
+                  :value="currentProject.ProjectId"
+                  >{{ currentProject.title }}</option
+                >
+              </select>
+              <button class="btn btn-secondary" type="submit">Select</button>
+            </div>
+          </form>
+        </div>
+        <!-- END OF QUIT PROJECT -->
       </div>
+      <!-- END OF COMPONENT BELOW HEADER -->
+
+      <!-- KANBAN BOARD TITLE -->
       <div class="row" id="first">
         <div class="col col-3" style="background-color: gray;">Prelog</div>
         <div class="col col-3">Todo</div>
         <div class="col col-3" style="background-color: gray;">OnProcess</div>
         <div class="col col-3">Completed</div>
       </div>
-      <!-- Row 2 -->
+      <!-- END OF KANBAN BOARD TITLE -->
+      <!-- CARD FOR KANBAN -->
       <div class="row">
-        <!-- Column 1 -->
         <div class="col col-3" id="first">
-          <!-- Main card -->
           <div class="card" id="first">
             <div class="card-body">
-              <!-- <h4 class="card-title">Prelog</h4>
-              <p class="card-text">Write your task here</p>-->
-
               <form @submit.prevent="addTask">
                 <label>Add Your New Task</label>
                 <input
-                class="col col-12"
+                  class="col col-12"
                   type="text"
                   id="task"
                   placeholder="Write your task here"
@@ -172,74 +212,72 @@
               </form>
             </div>
           </div>
-          <!-- End of main card -->
 
           <div class="card bg-primary" v-for="task in tasks" :key="task.id">
             <div class="card-body" v-if="task.category == 'prelog'">
               <h4 class="card-title">Prelog</h4>
               <p class="card-text">{{ task.title }}</p>
-              <!-- <a href="#" class="card-link"> -->
-              <button @click="cancelTask(task.id)" class="btn btn-secondary">Delete</button>
-              <!-- </a> -->
-              <!-- <a href="#" class="card-link"> -->
-              <button @click="addTodo(task.id)" class="btn btn-dark">Next</button>
-              <!-- </a> -->
+              <button @click="cancelTask(task.id)" class="btn btn-secondary">
+                Delete
+              </button>
+              <button @click="addTodo(task.id)" class="btn btn-dark">
+                Next
+              </button>
             </div>
           </div>
         </div>
-        <!-- End of Column 1 -->
 
-        <!-- Column 2 -->
         <div class="col col-3" id="second">
-          <!-- main card -->
-          <!-- <div class="card" id="second">
-                    <div class="card-body">
-                 
-                    </div>
-          </div>-->
-          <!-- End of main card -->
           <div class="card bg-warning" v-for="task in tasks" :key="task.id">
             <div class="card-body" v-if="task.category == 'todo'">
               <h4 class="card-title">Todo</h4>
               <p class="card-text">{{ task.title }}</p>
 
-              <button @click="cancelTodo(task.id)" class="btn btn-secondary">Back</button>
+              <button @click="cancelTodo(task.id)" class="btn btn-secondary">
+                Back
+              </button>
 
-              <button @click="addProcess(task.id)" class="btn btn-dark">Next</button>
+              <button @click="addProcess(task.id)" class="btn btn-dark">
+                Next
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- End Of Colum 2 -->
-
-        <!-- Column 3 -->
         <div class="col col-3">
           <div class="card bg-info" v-for="task in tasks" :key="task.id">
             <div class="card-body" v-if="task.category == 'process'">
               <h4 class="card-title">Process</h4>
               <p class="card-text">{{ task.title }}</p>
 
-              <button @click="cancelProcess(task.id)" class="btn btn-secondary">Back</button>
+              <button @click="cancelProcess(task.id)" class="btn btn-secondary">
+                Back
+              </button>
 
-              <button @click="addComplete(task.id)" class="btn btn-dark">Done</button>
+              <button @click="addComplete(task.id)" class="btn btn-dark">
+                Done
+              </button>
             </div>
           </div>
         </div>
-        <!-- End of Column 3 -->
 
-        <!-- Column 4 -->
         <div class="col col-3">
           <div class="card bg-success" v-for="task in tasks" :key="task.id">
             <div class="card-body" v-if="task.category == 'complete'">
               <h4 class="card-title">Complete</h4>
               <p class="card-text">{{ task.title }}</p>
 
-              <button @click="cancelComplete(task.id)" class="btn btn-secondary">Back</button>
+              <button
+                @click="cancelComplete(task.id)"
+                class="btn btn-secondary"
+              >
+                Back
+              </button>
             </div>
           </div>
         </div>
-        <!-- End of column 4 -->
       </div>
+      <!-- END OF KANBAN CARD -->
     </div>
 
     <!-- ==END MAIN PAGE== -->
@@ -250,6 +288,7 @@
 
 <script>
 import axios from "axios";
+import { log } from "util";
 
 export default {
   name: "App",
@@ -273,21 +312,7 @@ export default {
       projects: [],
       tasks: [],
       currentProjects: [],
-      // auth2: gapi.auth2.getAuthInstance(),
-      //   ga dipake///
-      prelog: {
-        task: ""
-      },
-      todo: {
-        task: ""
-      },
-      process: {
-        task: ""
-      },
-      completed: {
-        task: ""
-      }
-      //ga dipake
+      projectToQuit: ""
     };
   },
 
@@ -308,36 +333,29 @@ export default {
       })
         .then(result => {
           const { data } = result;
-          // const { access_token } = data;
-          // localStorage.setItem("access_token", access_token);
           this.user.email = "";
           this.user.password = "";
           this.isRegister = true;
-          // this.getProjects();
+          this.$alert(`Success register, please login!`);
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
     registerForm() {
       this.isRegister = false;
     },
     setProject(event) {
-      //ok
+      this.$alert(`Project is choosen!`);
       event.preventDefault();
       if (localStorage.ProjectId) {
-        // event.preventDefault();
         localStorage.ProjectId = this.selected;
         this.selected = "";
         return this.getProjects();
-        // this.getCurrentProjects;
-        // this.getProjects();
       } else {
-        // event.preventDefault();
         localStorage.setItem("ProjectId", this.selected);
         this.selected = "";
         return this.getProjects();
-        // this.getProjects();
       }
     },
     addContributor() {
@@ -352,17 +370,17 @@ export default {
           access_token: localStorage.access_token
         }
       })
-        .then(result => {
-          // console.log(result);
+        .then(({ data }) => {
+          const { UserId } = data;
+          this.$alert(`Success add contributor with id : ${UserId}`);
           this.getProjects();
           this.selectedUser = "";
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
     login() {
-      //ok
       axios
         .post("https://evening-stream-54386.herokuapp.com/login", {
           email: this.user.email,
@@ -370,21 +388,20 @@ export default {
         })
         .then(result => {
           const { data } = result;
-          const { access_token } = data;
+          const { email, access_token } = data;
           localStorage.setItem("access_token", access_token);
           this.user.email = "";
           this.user.password = "";
           this.isLogin = true;
           this.getProjects();
-          // this.getTasks();
           this.getCurrentProjects();
+          this.$alert(`Success login. Welcome ${email}!`);
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(`Invalid password/email, please try again!`);
         });
     },
     addProject(event) {
-      //ok
       axios({
         method: "post",
         url: "https://evening-stream-54386.herokuapp.com/projects",
@@ -396,18 +413,15 @@ export default {
         }
       })
         .then(({ data }) => {
-          // console.log(data.id);
+          this.$alert(`Project "${data.title}" added!`);
           event.preventDefault();
           localStorage.setItem("ProjectId", data.id);
           this.user.currentProject = "";
           this.getCurrentProjects();
         })
-        .catch(err => console.log(err));
+        .catch(err => this.$alert(err));
     },
     getProjects() {
-      //ok
-      //bisa juga untuk manggil tasks
-      // event.preventDefault();
       axios
         .get("https://evening-stream-54386.herokuapp.com/projects", {
           headers: {
@@ -415,21 +429,10 @@ export default {
           }
         })
         .then(result => {
-          // event.preventDefault();
           const { data } = result;
           const { projects } = data;
           this.projects = projects;
           this.getUsers();
-          // console.log("YA", projects);
-          // if (this.currentProjects === 0) {
-          // projects.map(project => {
-          //   // event.preventDefault()
-          //   this.currentProjects.push({
-          //     title: project.Project.title,
-          //     ProjectId: project.ProjectId
-          //   });
-          // });
-          // }
           projects.filter(project => {
             if (project.ProjectId == localStorage.ProjectId) {
               this.tasks = project.Project.Tasks;
@@ -437,7 +440,7 @@ export default {
           });
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
     getCurrentProjects() {
@@ -448,15 +451,11 @@ export default {
           }
         })
         .then(result => {
-          // event.preventDefault();
           this.currentProjects = [];
           const { data } = result;
           const { projects } = data;
           this.projects = projects;
-          // console.log("YA", projects);
-          // if (this.currentProjects === 0) {
           projects.map(project => {
-            // event.preventDefault()
             this.currentProjects.push({
               title: project.Project.title,
               ProjectId: project.ProjectId
@@ -464,27 +463,19 @@ export default {
           });
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
     logout() {
-      //ok
-      // var auth2 = gapi.auth2.getAuthInstance();
-      // auth2.signOut().then(function() {
-      //   console.log("User signed out.");
-      // });
-      // this.auth2.signOut().then(function() {
-      //   console.log("User signed out.");
-      // });
-
       localStorage.clear();
       this.isLogin = false;
       this.projects = [];
       this.tasks = [];
       this.currentProjects = [];
+      this.projectToQuit = "";
+      this.$alert(`Thank you for your contribution. Please login next time!`);
     },
     addTask(event) {
-      //ok
       axios({
         method: "post",
         url: "https://evening-stream-54386.herokuapp.com/tasks",
@@ -496,13 +487,16 @@ export default {
           access_token: localStorage.access_token
         }
       })
-        .then(result => {
-          // console.log(data);
+        .then(({ data }) => {
+          const { title } = data;
           event.preventDefault();
           this.user.task = "";
-          return this.getProjects();
+          this.getProjects();
+          this.$alert(
+            `Your added "${title}" task, please consider it before continue!`
+          );
         })
-        .catch(err => console.log("ini", err));
+        .catch(err => this.$alert("ini", err));
     },
     cancelTask(id) {
       axios({
@@ -513,15 +507,13 @@ export default {
         }
       })
         .then(_ => {
-          // event.preventDefault();
-          console.log("ok");
+          this.$alert("the task deleted!");
           return this.getProjects();
         })
-        .catch(err => console.log(err));
+        .catch(err => this.$alert(err));
     },
 
     addTodo(id) {
-      // console.log(id);
       axios({
         method: "put",
         url: `https://evening-stream-54386.herokuapp.com/tasks/${id}`,
@@ -533,10 +525,9 @@ export default {
         }
       })
         .then(result => {
-          // console.log(result);
           this.getProjects();
         })
-        .catch(err => console.log(err));
+        .catch(err => this.$alert(err));
     },
 
     cancelTodo(id) {
@@ -551,10 +542,9 @@ export default {
         }
       })
         .then(result => {
-          // console.log(result);
           this.getProjects();
         })
-        .catch(err => console.log(err));
+        .catch(err => this.$alert(err));
     },
     addProcess(id) {
       axios({
@@ -568,11 +558,10 @@ export default {
         }
       })
         .then(result => {
-          // console.log("OK", result);
           this.getProjects();
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
     cancelProcess(id) {
@@ -587,11 +576,11 @@ export default {
         }
       })
         .then(result => {
-          // console.log("OK", result);
+          // this.$alert("OK", result);
           this.getProjects();
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
 
@@ -607,11 +596,11 @@ export default {
         }
       })
         .then(result => {
-          // console.log("OK", result);
+          this.$alert("Congrats for finishing the task!");
           this.getProjects();
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
     cancelComplete(id) {
@@ -626,11 +615,10 @@ export default {
         }
       })
         .then(result => {
-          // console.log("OK", result);
           this.getProjects();
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
     getUsers() {
@@ -643,58 +631,13 @@ export default {
       })
         .then(({ data }) => {
           this.users = data.users;
-          // console.log(data);
         })
         .catch(err => {
-          console.log(err);
+          this.$alert(err);
         });
     },
-    //kayaknya gausah dipake
-    getTasks() {
-      axios
-        .get(`https://evening-stream-54386.herokuapp.com/tasks/`, {
-          headers: {
-            access_token: localStorage.access_token,
-            ProjectId: localStorage.ProjectId
-          }
-        })
-        .then(result => {
-          const { data } = result;
-          //   const { tasks } = data; /
-          // console.log("INI", data);
-          //   this.tasks = projects;
-          //   console.log(projects);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    onSignIn(googleUser) {
-      // let profile = googleUser.getBasicProfile();
-      // console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      // console.log("Name: " + profile.getName());
-      // console.log("Image URL: " + profile.getImageUrl());
-      // console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
-      // this.isLogin = true;
-      // this.getCurrentProjects();
-      // this.getProjects();
-      return this.$gAuth
-        .signIn()
-        .then(GoogleUser => {
-          // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
-          console.log("user", GoogleUser);
-          // GoogleUser.getId() : Get the user's unique ID string.
-          // GoogleUser.getBasicProfile() : Get the user's basic profile information.
-          // GoogleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
-          this.isSignIn = this.$gAuth.isAuthorized;
-        })
-        .catch(error => {
-          //on fail do something
-          console.log(error);
-        });
-    },
+
     OnGoogleAuthSuccess(idToken) {
-      // console.log(idToken);
       // Receive the idToken and make your magic with the backend
       axios({
         method: "post",
@@ -704,109 +647,53 @@ export default {
         }
       })
         .then(({ data }) => {
-          // console.log("ini", data);
+          const { email } = data;
           localStorage.setItem("access_token", data.access_token);
           this.getProjects();
-          // this.getTasks();
           this.isLogin = true;
           this.getCurrentProjects();
-          // localStorage.setItem("email", datum.email);
-          // this.getProjects();
+          this.$alert(`Success login. Welcome ${email}!`);
         })
-        .catch(err => console.log("error", err));
+        .catch(err => this.$alert("error", err));
     },
     OnGoogleAuthFail(error) {
-      console.log(error);
+      this.$alert(error);
+    },
+    quitProject() {
+      axios({
+        method: "delete",
+        url: "https://evening-stream-54386.herokuapp.com/contributors",
+        data: {
+          ProjectId: this.projectToQuit
+        },
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          this.getProjects();
+          this.getCurrentProjects();
+          this.projectToQuit = "";
+          this.$alert(`Thanks for your contribution with this project!`);
+        })
+        .catch(err => {
+          this.$alert(err);
+        });
     }
-    // let id_token = this.GoogleAuth;
-    // this.$gAuth
-    //   .getAuthCode()
-    //   .then((authCode) => {
-    //     //on success
-    //     return this.$http.post("https://evening-stream-54386.herokuapp.com/googleSign", {
-    //       // code: authCode,
-    //       id_token: id_token
-    //     });
-    //   })
-    //   .then((response) => {
-    //     //after ajax
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     //on fail do something
-    //     console.log(error);
-    //   });
-    // axios({
-    //   method: "POST",
-    //   url: "https://evening-stream-54386.herokuapp.com/googleSign",
-    //   data: {
-    //     id_token,
-    //   },
-    // })
-    //   .then((datum) => {
-    //     localStorage.setItem("access_token", datum.access_token);
-    //     // localStorage.setItem("email", datum.email);
-    //     console.log(datum);
-    //     this.isLogin = true;
-    //     this.getProjects();
-    //     this.getTasks();
-    //     // auth();
-    //   })
-    //   .fail((err) => console.log(err));
-    // connect: function() {
-    //   // Here, we create a new method
-    //   // that "connect" a user to GitHub
-    //   this.$bearer
-    //     .connect("github")
-    //     .then(this.connectSuccess)
-    //     .catch(console.error);
-    // },
-    // connectSuccess: function(data) {
-    //   // On success, we update the user object
-    //   this.user = data.authId;
-    //   this.fetchStarringRepositories();
-    // },
-    // fetchStarringRepositories: function() {
-    //   this.$bearer
-    //     .integration("github")
-    //     .auth(this.user)
-    //     .get("/user/starred")
-    //     .then(({ data }) => {
-    //       this.repositories = data;
-    //     })
-    //     .catch(console.error);
-    // }
   },
 
   created() {
     if (localStorage.access_token) {
-      // event.preventDefault()
       this.isLogin = true;
       this.getUsers();
       this.getCurrentProjects();
       this.getProjects();
-      //   if (localStorage.ProjectId) {
-      // this.getTasks();
-      //   }
     } else {
       this.isLogin = false;
-      // if (!localStorage.ProjectId) {
       this.projects = [];
       this.users = [];
-      // }
     }
-    // if (localStorage.ProjectId) {
-    //   localStorage.ProjectId = this.selectedProjectId;
-    //   this.getProjects();
-    // } else {
-    //   localStorage.setItem("ProjectId", this.selectedProjectId);
-    //   this.getProjects();
-    // }
   }
-  // mounted: function() {
-  //   // Here we initialize Bearer.
-  //   this.$bearer = bearer("sk_production_Kg7o63YbzoXji7jE-M07rFBwJBiLFQ2A");
-  // }
 };
 </script>
 
@@ -825,7 +712,7 @@ export default {
   display: flex;
 }
 .row.logout {
-  /* width: 50%; */
+  border: solid 8px;
   height: 50%;
   margin: 0;
 }
