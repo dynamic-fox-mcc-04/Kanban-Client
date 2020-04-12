@@ -193,8 +193,20 @@ body {
     color: red;
 }
 
+
+.delete-div button {
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    margin-right: 5px;
+    display: flex;
+    flex-wrap: wrap; 
+}
+
 .edit {
     cursor: pointer;
+    width: 100%;
+    text-align: center;
 }
 
 .edit:hover {
