@@ -11,7 +11,7 @@
         </div>
         <div class="delete-div" v-show="isTitle">
           <form @submit.prevent="editTitle()">
-            <input type="text" v-model="editedTitle">
+            <input type="text" class="input-edit" v-model="editedTitle">
             <button type="submit" role="submit">
               <i class="fas fa-edit fa-lg edit"></i>
             </button>
