@@ -62,6 +62,8 @@ export default {
      if(this.dataAllTaskFromHome.data != undefined){
        datafilter= this.dataAllTaskFromHome.data.filter(function (item) { return item.status == status });
      }
+     console.log(datafilter);
+     
       return datafilter
     },
     refreshData(){

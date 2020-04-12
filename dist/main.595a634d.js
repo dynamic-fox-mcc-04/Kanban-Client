@@ -8550,8 +8550,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  serverUrl: 'https://g-kanban.herokuapp.com' // serverUrl:'http://localhost:3000'
-
+  // serverUrl:'https://g-kanban.herokuapp.com'
+  serverUrl: 'http://localhost:3000'
 };
 exports.default = _default;
 },{}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
@@ -10330,8 +10330,8 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = _axios.default.create({
-  baseURL: 'https://g-kanban.herokuapp.com' // baseURL: 'http://localhost:3000'
-
+  // baseURL: 'https://g-kanban.herokuapp.com'
+  baseURL: 'http://localhost:3000'
 });
 
 exports.default = _default;
@@ -10760,6 +10760,7 @@ var _default = {
         }
       }).then(function (result) {
         localStorage.setItem('token', result.data.token);
+        localStorage.setItem('username', _this.username);
 
         _this.$emit('succeslogin');
       }).catch(function (err) {
@@ -12213,7 +12214,7 @@ render._withStripped = true
       
       }
     })();
-},{"../components/Login":"scr/components/Login.vue","../components/Register":"scr/components/Register.vue","C:\\Users\\TOP1\\Desktop\\ACKTIV8\\Phase 2\\W6D1\\kanban client\\Kanban-Client\\images\\bg-01.jpg":[["bg-01.49446d9e.jpg","images/bg-01.jpg"],"images/bg-01.jpg"],"_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/TaskCard.vue":[function(require,module,exports) {
+},{"../components/Login":"scr/components/Login.vue","../components/Register":"scr/components/Register.vue","C:\\Users\\TOP1\\Desktop\\ACKTIV8\\Phase 2\\W6D1\\kanban client\\Kanban-Client\\images\\bg-01.jpg":[["bg-01.49446d9e.jpg","images/bg-01.jpg"],"images/bg-01.jpg"],"_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/addmember.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12221,9 +12222,192 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _axios = _interopRequireDefault(require("../axios"));
+
+var _config = _interopRequireDefault(require("../config"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "AddMember",
+  props: ['datamember'],
+  data: function data() {
+    return {
+      selected: ''
+    };
+  },
+  methods: {
+    addmember: function addmember() {
+      console.log(this.selected);
+      (0, _axios.default)({
+        method: "POST",
+        url: "/task/" + this.selected[0] + "/" + this.selected[1],
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (result) {
+        io.connect(_config.default.serverUrl).emit('msg');
+        Vue.toasted.global.my_app_success({
+          message: 'Succes Add Member '
+        });
+      }).catch(function (err) {
+        console.log(err);
+        Vue.toasted.global.my_app_error({
+          message: 'Not Authorized to Access'
+        });
+      });
+    }
+  }
+};
+exports.default = _default;
+        var $c7a61c = exports.default || module.exports;
+      
+      if (typeof $c7a61c === 'function') {
+        $c7a61c = $c7a61c.options;
+      }
+    
+        /* template */
+        Object.assign($c7a61c, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: " input-group border-0 m-0 p-1" }, [
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.selected,
+            expression: "selected"
+          }
+        ],
+        staticClass: "custom-select",
+        attrs: { id: "select" },
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.selected = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          }
+        }
+      },
+      _vm._l(_vm.datamember, function(usertask) {
+        return _c(
+          "option",
+          {
+            key: usertask.id,
+            domProps: { value: [usertask.id, usertask.idtaskchoosen] }
+          },
+          [_vm._v(_vm._s(usertask.username))]
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "input-group-append border-0 m-0" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.addmember()
+            }
+          }
+        },
+        [_vm._v("Choose")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-secondary",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.$emit("close")
+            }
+          }
+        },
+        [_vm._v("Close")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$c7a61c', $c7a61c);
+          } else {
+            api.reload('$c7a61c', $c7a61c);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"../axios":"scr/axios/index.js","../config":"scr/config.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/TaskCard.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _addmember = _interopRequireDefault(require("./addmember"));
+
 var _config = _interopRequireDefault(require("../config"));
 
 var _axios = _interopRequireDefault(require("../axios"));
+
+var _util = require("util");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12248,16 +12432,59 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "TaskCard",
+  components: {
+    addMember: _addmember.default
+  },
   props: ['content'],
   data: function data() {
     return {
       id: '',
-      status: ''
+      status: '',
+      projectmember: [],
+      showModal: false
     };
   },
   methods: {
+    checkmember: function checkmember(id) {
+      var _this = this;
+
+      this.showModal = true;
+      (0, _axios.default)({
+        method: "GET",
+        url: "/task/" + id,
+        headers: {
+          token: localStorage.token
+        }
+      }).then(function (result) {
+        // let this.projectmember = result.data.data
+        if (_this.projectmember != undefined) {
+          _this.projectmember = result.data.data.filter(function (item) {
+            return item.Usertasks.length == 0;
+          });
+
+          _this.projectmember.map(function (databaru) {
+            return databaru.idtaskchoosen = id;
+          });
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     updateNext: function updateNext(id, status) {
       (0, _axios.default)({
         method: "PUT",
@@ -12327,11 +12554,12 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "item" }, [
+  return _c("div", { staticClass: "item card text-white bg-info mb-3 " }, [
     _c(
       "div",
       {
-        staticClass: "card text-white bg-primary mb-1",
+        staticClass:
+          "card text-white bg-primary mb-1 d-flex justify-content-around",
         staticStyle: { "max-width": "18rem" }
       },
       [
@@ -12344,12 +12572,12 @@ exports.default = _default;
             _vm._v(_vm._s(_vm.content.createAt))
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
+          _c("p", { staticClass: "card-text text-white" }, [
             _vm._v(_vm._s(_vm.content.description))
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "d-flex justify-content-around" }, [
+        _c("div", { staticClass: "card-body " }, [
           _vm.content.status != "Backlog"
             ? _c(
                 "button",
@@ -12397,16 +12625,62 @@ exports.default = _default;
       ]
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "text-center font-weight-light mb-1 mt-1",
-        attrs: { id: _vm.id }
-      },
-      [_vm._v(_vm._s(_vm.content.id))]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "d-none" }, [_vm._v(_vm._s(_vm.content.status))])
+    _c("div", { staticClass: "card-footer bg-transparent p-0" }, [
+      _c("div", { staticClass: "border-0 m-0 p-0", attrs: { id: _vm.id } }, [
+        _vm._v("No Project: " + _vm._s(_vm.content.id))
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "border-0 m-0 p-0" },
+        [
+          _c(
+            "ul",
+            [
+              _vm._v("Member:\n               "),
+              _vm._l(_vm.content.Users, function(member) {
+                return _c("li", { key: member.id }, [
+                  _vm._v(
+                    "\n                   " +
+                      _vm._s(member.username) +
+                      "\n               "
+                  )
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "tn btn-light",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.checkmember(_vm.content.id)
+                }
+              }
+            },
+            [_vm._v("add member")]
+          ),
+          _vm._v(" "),
+          _vm.showModal
+            ? _c("add-member", {
+                attrs: { datamember: _vm.projectmember },
+                on: {
+                  close: function($event) {
+                    _vm.showModal = false
+                  }
+                }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-none" }, [_vm._v(_vm._s(_vm.content.status))])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -12442,7 +12716,7 @@ render._withStripped = true
       
       }
     })();
-},{"../config":"scr/config.js","../axios":"scr/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/cardContainer.vue":[function(require,module,exports) {
+},{"./addmember":"scr/components/addmember.vue","../config":"scr/config.js","../axios":"scr/axios/index.js","util":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/util/util.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"scr/components/cardContainer.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12518,6 +12792,7 @@ var _default = {
         });
       }
 
+      console.log(datafilter);
       return datafilter;
     },
     refreshData: function refreshData() {
@@ -12934,6 +13209,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: "HomePage",
   components: {
@@ -12942,13 +13218,13 @@ var _default = {
   },
   data: function data() {
     return {
-      formadd: false
+      formadd: false,
+      activeuser: localStorage.username
     };
   },
   props: ['dataAllTaskFromApp'],
   methods: {
     refreshData: function refreshData() {
-      console.log('ressssss');
       this.formadd = false;
       this.$emit('refreshData');
     },
@@ -12984,18 +13260,18 @@ exports.default = _default;
         staticStyle: { "background-color": "#e3f2fd" }
       },
       [
-        _c("div", { staticClass: "ml-auto p-2" }, [
-          _c("button", {
-            staticClass: "btn btn-primary fa fa-sign-out",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.signout($event)
-              }
+        _c("h4", [_vm._v("Welcome To G-Kanban " + _vm._s(_vm.activeuser))]),
+        _vm._v(" "),
+        _c("button", {
+          staticClass: "btn btn-primary fa fa-sign-out",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.signout($event)
             }
-          })
-        ])
+          }
+        })
       ]
     ),
     _vm._v(" "),
@@ -13129,7 +13405,6 @@ var _default = {
       var _this = this;
 
       console.log('pakai urlbase');
-      this.notification();
       (0, _axios.default)({
         method: "GET",
         url: "/task",
@@ -13145,34 +13420,32 @@ var _default = {
     logout: function logout() {
       this.islogin = false;
       localStorage.clear();
-    },
-    notification: function notification() {
-      Vue.toasted.register('my_app_error', function (payload) {
-        return payload.message;
-      }, {
-        duration: 1500,
-        theme: 'bubble',
-        type: 'error'
-      });
-      Vue.toasted.register('my_app_success', function (payload) {
-        return payload.message;
-      }, {
-        duration: 1500,
-        theme: 'bubble',
-        type: 'success'
-      });
-      Vue.toasted.register('my_app_info', function (payload) {
-        return payload.message;
-      }, {
-        duration: 1500,
-        theme: 'bubble',
-        type: 'info'
-      });
     }
   },
   created: function created() {
     var _this2 = this;
 
+    Vue.toasted.register('my_app_error', function (payload) {
+      return payload.message;
+    }, {
+      duration: 1500,
+      theme: 'bubble',
+      type: 'error'
+    });
+    Vue.toasted.register('my_app_success', function (payload) {
+      return payload.message;
+    }, {
+      duration: 1500,
+      theme: 'bubble',
+      type: 'success'
+    });
+    Vue.toasted.register('my_app_info', function (payload) {
+      return payload.message;
+    }, {
+      duration: 1500,
+      theme: 'bubble',
+      type: 'info'
+    });
     io.connect(_config.default.serverUrl).on('drserver', function () {
       (0, _axios.default)({
         method: "GET",
@@ -13299,7 +13572,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62070" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64191" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,9 +1,10 @@
 <template>
   <div id="container">
       <nav class="navbar navbar-dark bg-primary d-flex" style="background-color: #e3f2fd;">     
-          <div class="ml-auto p-2">
-            <button type="button" class="btn btn-primary fa fa-sign-out" @click.prevent="signout"></button>         
-      </div>
+                      
+            <h4>Welcome To G-Kanban {{activeuser}}</h4>
+            <button type="button" class="btn btn-primary fa fa-sign-out" @click.prevent="signout"></button>     
+          
     </nav>
     <div class="container-login100" style="background-image: url('/images/bg-01.jpg');">
 
@@ -30,16 +31,17 @@ export default {
     components:{
         CardContainer,
         AddTask
+        
     },
     data(){
       return{
-        formadd : false
+        formadd : false,
+        activeuser:localStorage.username
       }
     },
     props:['dataAllTaskFromApp'],
     methods:{
       refreshData(){
-         console.log('ressssss');
         this.formadd = false
         this.$emit('refreshData')
       },

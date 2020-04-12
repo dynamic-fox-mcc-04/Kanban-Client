@@ -29,8 +29,7 @@ export default {
           type:''
         }
     },
-    methods:{
-        
+    methods:{        
         loginsucces(){       
         
             this.islogin = true
@@ -38,7 +37,6 @@ export default {
         },
         fetchAllTask(){         
             console.log('pakai urlbase');
-            this.notification()
             axios({
                 method:"GET",
                 url:"/task",
@@ -57,33 +55,28 @@ export default {
         logout(){
             this.islogin = false
             localStorage.clear()
-        },
-        notification(){          
-
-           Vue.toasted.register('my_app_error',
-                (payload) => {
-                    return payload.message;
-                },{duration:1500,theme:'bubble' ,type:'error'}
-            )
-
-            Vue.toasted.register('my_app_success',
-                (payload) => {
-                    return payload.message;
-                },{duration:1500,theme:'bubble' ,type:'success'}
-            )
-
-            Vue.toasted.register('my_app_info',
-                (payload) => {
-                    return payload.message;
-                },{duration:1500,theme:'bubble' ,type:'info'}
-            )
         }
-        
-        
     },
-    created(){
-         
-       
+    created(){        
+       Vue.toasted.register('my_app_error',
+            (payload) => {
+                return payload.message;
+            },{duration:1500,theme:'bubble' ,type:'error'}
+        )
+
+        Vue.toasted.register('my_app_success',
+            (payload) => {
+                return payload.message;
+            },{duration:1500,theme:'bubble' ,type:'success'}
+        )
+
+        Vue.toasted.register('my_app_info',
+            (payload) => {
+                return payload.message;
+            },{duration:1500,theme:'bubble' ,type:'info'}
+        )
+    
+        
     io.connect(config.serverUrl).on('drserver', ()=> {
             axios({
                 method:"GET",
