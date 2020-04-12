@@ -6,18 +6,25 @@
                     <div class="container-icon">
                     </div>
                     <h4 class="title">{{value}}</h4>
-                    <a href="" v-bind:id="addKey(key)">
+                    <a href="" v-bind:id="addKey(key)" v-on:click.prevent="add(key)">
                     </a>
                 </div>
                 <div class="container-main">
-                    <div class="card">
-                        <div class="card-header">
-
+                    <!-- <div v-if="tasks[0] != undefined"> -->
+                        <div v-for="(task, index) in tasks" :key="index">
+                            <div class="card" v-if="task.Task.category == key">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h6 class="card-title">{{task.Task.title}}</h6>
+                                    <a href="" class="remove-task"></a>
+                                </div>
+                                <div class="card-main">
+                                    <p class="card-description">
+                                        {{task.Task.description}}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-main">
-                            
-                        </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -26,12 +33,16 @@
 
 <script>
 export default {
-    props : ["containers"],
+    props : ["containers", "tasks"],
     methods:
     {
         addKey(key)
         {
             return `add-${key}`;
+        },
+        add(category)
+        {
+            this.$emit("add", category);
         }
     }
 }

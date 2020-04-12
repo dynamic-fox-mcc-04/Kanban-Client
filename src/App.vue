@@ -1,14 +1,14 @@
 <template>
     <div>
-        <home v-show="true">
+        <home v-if="!login" @login="isLogin">
         </home>
-        <!-- <kanban v-show="false">
-        </kanban> -->
+        <kanban v-if="login" @logout="isLogin">
+        </kanban>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import Home from "./views/Home";
 import Kanban from "./views/Kanban";
 
@@ -17,7 +17,8 @@ export default {
     data()
     {
         return {
-            login : true
+            login : false,
+            // task : []
         }
     },
     components:
@@ -28,16 +29,20 @@ export default {
     {
         isLogin()
         {
-            console.log(localStorage.token)
             if(localStorage.token)
-                return this.login = true;
-            console.log(this.login)
-            return this.login = false;
+                this.login = true;
+            else
+                this.login = false;
         },
-        showTasks()
+        logout()
         {
-
+            // localStorage.clear();
+            this.login = false;
         }
+    },
+    created()
+    {
+       this.isLogin();
     }
 }
 </script>

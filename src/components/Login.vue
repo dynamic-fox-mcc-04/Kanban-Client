@@ -14,7 +14,7 @@
         </form>
         <!-- Login with Google?<div class="g-signin2" data-onsuccess="onSignIn" @click.prevent="google"></div><br> -->
         Don't have an account?
-        <a href="" class="underlined-a" style="text-decoration: none;" v-on:click.prevent="toRegister()">Register</a>
+        <a href="" class="underlined-a" style="text-decoration: none;" v-on:click.prevent="toRegister">Register</a>
     </div>
 </template>
 
@@ -38,28 +38,29 @@ export default {
             axios(
             {
                 method: "POST",
-                url: baseUrl + "/login",
+                url: "https://lit-bayou-72535.herokuapp.com/login",
                 data: 
                 {
-                    email: '',
-                    password: ''
+                    email: this.email,
+                    password: this.password
                 }
             })
             .then(data =>
             {
-                localStorage.token = data.token;
+                localStorage.token = data.data.token;
                 this.clearForm();
+                this.$emit("login");
             })
         },
         clearForm()
         {
             this.email = "";
             this.password = "";
+        },
+        toRegister()
+        {
+            this.$emit("toRegister");
         }
-    },
-    toRegister()
-    {
-        this.$emit("toRegister");
     }
 }
 </script>

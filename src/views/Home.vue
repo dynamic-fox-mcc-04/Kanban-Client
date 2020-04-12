@@ -1,8 +1,8 @@
 <template>
     <main class="d-flex align-items-center justify-content-center">
-        <register v-show="!toLogin" @toLogin="home(true)">
+        <register v-if="!inLogin" @toLogin="home(true)" @register="home(true)">
         </register>
-        <login v-show="toLogin" @toRegister="home(false)">
+        <login v-if="inLogin" @toRegister="home(false)" @login="login">
         </login>
     </main>
 </template>
@@ -16,7 +16,7 @@ export default {
     data()
     {
         return{
-            toLogin : true
+            inLogin : true
         }
     },
     components :
@@ -28,13 +28,21 @@ export default {
     {
         home(condition)
         {
-            this.toLogin = condition;
+            this.inLogin = condition;
+        },
+        login()
+        {
+            this.$emit("login");
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
+body
+{
+    background-color: #222222 !important;
+}
     main
     {
         height: 100% !important;

@@ -13,7 +13,7 @@
             <input type="submit" value="Register" class="brk-btn button">
         </form>
         Already have an account?
-        <a href="" class="underlined-a" style="text-decoration: none;" v-on:click.prevent="toLogin()">Login</a>
+        <a href="" class="underlined-a" style="text-decoration: none;" v-on:click.prevent="toLogin">Login</a>
     </div>
 </template>
 
@@ -36,27 +36,29 @@ export default {
             axios(
             {
                 method: "POST",
-                url: baseUrl + "/register",
+                url: "https://lit-bayou-72535.herokuapp.com/register",
                 data: 
                 {
-                    email: '',
-                    password: ''
+                    email: this.email,
+                    password: this.password
                 }
             })
             .then(data =>
             {
+                console.log(data.data.message);
                 this.clearForm();
+                this.$emit("register");
             })
         },
         clearForm()
         {
             this.email = "";
             this.password = "";
+        },
+        toLogin()
+        {
+            this.$emit("toLogin");
         }
-    },
-    toLogin()
-    {
-        this.$emit("toLogin");
     }
 }
 </script>
