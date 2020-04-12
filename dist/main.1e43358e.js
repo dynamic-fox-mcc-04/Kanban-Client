@@ -11940,8 +11940,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "Card",
+  data: function data() {
+    return {
+      isTitle: false,
+      editedTitle: this.filterTask.title
+    };
+  },
   props: ["filterTask", "category"],
   methods: {
     getTasks: function getTasks() {
@@ -11962,8 +11980,35 @@ var _default = {
         _this.$toasted.info("You have successfully delete a task");
       });
     },
-    moveRight: function moveRight(filterTask) {
+    editForm: function editForm() {
+      this.isTitle = !this.isTitle;
+    },
+    editTitle: function editTitle() {
       var _this2 = this;
+
+      var id = this.filterTask.id;
+      console.log(id);
+      (0, _axios.default)({
+        url: "https://kanbanhacktiv8.herokuapp.com/task/update/".concat(id),
+        method: "put",
+        data: {
+          title: this.editedTitle
+        },
+        headers: {
+          token: localStorage.getItem("token")
+        }
+      }).then(function (result) {
+        console.log(_this2.editedTitle.title);
+
+        _this2.$toasted.info("You have successfully edit a task");
+
+        _this2.editForm();
+
+        _this2.getTasks();
+      });
+    },
+    moveRight: function moveRight(filterTask) {
+      var _this3 = this;
 
       var taskId = filterTask.id;
       var category = "";
@@ -11988,13 +12033,13 @@ var _default = {
           token: localStorage.getItem("token")
         }
       }).then(function (result) {
-        _this2.getTasks();
+        _this3.getTasks();
 
-        _this2.$toasted.info("You have successfully move task to ".concat(category));
+        _this3.$toasted.info("You have successfully move task to ".concat(category));
       });
     },
     moveLeft: function moveLeft(filterTask) {
-      var _this3 = this;
+      var _this4 = this;
 
       var taskId = filterTask.id;
       var category = "";
@@ -12019,9 +12064,9 @@ var _default = {
           token: localStorage.getItem("token")
         }
       }).then(function (result) {
-        _this3.getTasks();
+        _this4.getTasks();
 
-        _this3.$toasted.info("You have successfully move task to ".concat(category));
+        _this4.$toasted.info("You have successfully move task to ".concat(category));
       });
     }
   }
@@ -12042,19 +12087,107 @@ exports.default = _default;
   return _c("div", { staticClass: "box" }, [
     _c("div", { staticClass: "media-content" }, [
       _c("div", { staticClass: "content" }, [
-        _c("div", { staticClass: "delete-div" }, [
-          _c("span", [_vm._v(_vm._s(_vm.filterTask.title))]),
-          _vm._v(" "),
-          _c("button", {
-            staticClass: "delete",
-            attrs: { "aria-label": "delete" },
-            on: {
-              click: function($event) {
-                return _vm.deleteTask(_vm.filterTask.id)
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.isTitle,
+                expression: "!isTitle"
               }
-            }
-          })
-        ])
+            ],
+            staticClass: "delete-div"
+          },
+          [
+            _c("span", [_vm._v(_vm._s(_vm.filterTask.title))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.editForm()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-edit fa-lg edit" })]
+            ),
+            _vm._v(" "),
+            _c("button", {
+              staticClass: "delete",
+              attrs: { "aria-label": "delete" },
+              on: {
+                click: function($event) {
+                  return _vm.deleteTask(_vm.filterTask.id)
+                }
+              }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isTitle,
+                expression: "isTitle"
+              }
+            ],
+            staticClass: "delete-div"
+          },
+          [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.editTitle()
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.editedTitle,
+                      expression: "editedTitle"
+                    }
+                  ],
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.editedTitle },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.editedTitle = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(0)
+              ]
+            ),
+            _vm._v(" "),
+            _c("button", {
+              staticClass: "delete",
+              attrs: { "aria-label": "delete" },
+              on: {
+                click: function($event) {
+                  return _vm.editForm()
+                }
+              }
+            })
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
@@ -12087,7 +12220,16 @@ exports.default = _default;
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { attrs: { type: "submit", role: "submit" } }, [
+      _c("i", { staticClass: "fas fa-edit fa-lg edit" })
+    ])
+  }
+]
 render._withStripped = true
 
           return {
@@ -12797,7 +12939,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "32919" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41393" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

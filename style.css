@@ -181,15 +181,24 @@ body {
 
 .delete-div {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
-.delete {
-    margin-left: 20px;
+.delete-div span {
+    width: 50vh;
+    flex-direction: flex-start;
 }
 
 .delete:hover {
     color: red;
+}
+
+.edit {
+    cursor: pointer;
+}
+
+.edit:hover {
+    color: #26ffe2;
 }
 
 .footer-todo {

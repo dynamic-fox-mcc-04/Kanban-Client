@@ -45,7 +45,6 @@
 import axios from "axios";
 import Landing from "./views/Landing.vue";
 import Dashboard from "./views/Dashboard";
-
 export default {
   name: "App",
   components: {
@@ -168,13 +167,11 @@ export default {
   background-color:transparent;
   border-radius: 300px;
 }
-
 .loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .loading-screen lottie-player {
   margin: auto;
 }
