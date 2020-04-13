@@ -17,7 +17,7 @@
                 <label for="category" class="form__label">Category</label>
             </div>
             <input type="submit" value="Add" class="brk-btn button">
-            <a href="" class="brk-btn button">Cancel</a>
+            <a href="" class="brk-btn button" v-on:click.prevent="toHome">Cancel</a>
         </form>
     </div>
 </template>
@@ -38,6 +38,10 @@ export default {
     },
     methods :
     {
+        toHome()
+        {
+            this.$emit("toHome");
+        },
         add()
         {
             axios(
@@ -57,7 +61,6 @@ export default {
             })
             .then(data =>
             {
-                console.log("add", data.data);
                 this.$emit("toHome")
             })
             .catch(err =>

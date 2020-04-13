@@ -10,12 +10,11 @@
                     </a>
                 </div>
                 <div class="container-main">
-                    <!-- <div v-if="tasks[0] != undefined"> -->
                         <div v-for="(task, index) in tasks" :key="index">
                             <div class="card" v-if="task.Task.category == key">
                                 <div class="card-header d-flex justify-content-between">
-                                    <h6 class="card-title">{{task.Task.title}}</h6>
-                                    <a href="" class="remove-task"></a>
+                                    <h6 class="card-title" v-on:click.prevent="update(task.Task.id)">{{task.Task.title}}</h6>
+                                    <a href="" class="remove-task" v-on:click.prevent="remove(task.Task.id)"></a>
                                 </div>
                                 <div class="card-main">
                                     <p class="card-description">
@@ -24,7 +23,6 @@
                                 </div>
                             </div>
                         </div>
-                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -32,6 +30,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     props : ["containers", "tasks"],
     methods:
@@ -43,6 +43,31 @@ export default {
         add(category)
         {
             this.$emit("add", category);
+        },
+        remove(id)
+        {
+            axios(
+            {
+                method: "DELETE",
+                url: `https://lit-bayou-72535.herokuapp.com/${id}/delete`,
+                headers: 
+                {
+                    token: localStorage.token
+                }
+            })
+            .then(() =>
+            {
+                this.$emit("remove");
+            })
+            .catch(err =>
+            {
+                console.log(err);
+            })
+        },
+        update(id)
+        {
+            let index = this.tasks.findIndex(task => task.Task.id == id)
+            this.$emit("update", this.tasks[index].Task);
         }
     }
 }

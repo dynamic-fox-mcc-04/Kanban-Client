@@ -1,11 +1,13 @@
 <template>
     <div>
-        <navbar @logout="logout">
+        <navbar @logout="logout" @toHome="toHome">
         </navbar>
-        <container :containers="containers" class="d-flex justify-content-around" v-if="inHome" @add="add" :tasks="tasks" @getTasks="showTasks">
+        <container :containers="containers" class="d-flex justify-content-around" v-if="inHome" @add="add" :tasks="tasks" @getTasks="showTasks" @remove="toHome" @update="toUpdate">
         </container>
-        <add v-if="!inHome" class="d-flex align-items-center justify-content-center" :type="category" :containers="containers" @toHome="toHome">
+        <add v-if="inAdd" class="d-flex align-items-center justify-content-center" :type="category" :containers="containers" @toHome="toHome">
         </add>
+        <update v-if="inUpdate" :data="updateData" @toHome="toHome" :containers="containers">
+        </update>
     </div>
 </template>
 
@@ -13,6 +15,7 @@
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
 import Add from "../components/Add";
+import Update from "../components/Update"
 import axios from "axios";
 
 export default {
@@ -28,12 +31,15 @@ export default {
             },
             inHome : true,
             tasks : [],
-            category : ""
+            category : "",
+            updateData : "",
+            inUpdate : false,
+            inAdd : false
         }
     },
     components :
     {
-        Container, Navbar, Add
+        Container, Navbar, Add, Update
     },
     methods :
     {
@@ -41,12 +47,17 @@ export default {
         {
             this.$emit("logout");
         },
+        toUpdate(data)
+        {
+            this.updateData = data;
+            this.inHome = false,
+            this.inUpdate = true
+        },
         add(category)
         {
-            // console.log(this.tasks)
             this.category = category;
             this.inHome = false;
-            console.log(this.category)
+            this.inAdd = true;
         },
         showTasks()
         {
@@ -61,10 +72,7 @@ export default {
             })
             .then(data =>
             {
-                // console.log(data.data);
                 this.tasks = data.data;
-                // console.log(this.tasks);
-                // return data;
             })
             .catch(err =>
             {
@@ -73,6 +81,8 @@ export default {
         },
         toHome()
         {
+            this.inAdd = false;
+            this.inUpdate = false;
             this.inHome = true;
             this.showTasks();
         }
@@ -80,7 +90,6 @@ export default {
     created()
     {
         this.showTasks();
-        console.log("created",this.tasks)
     }
 }
 </script>

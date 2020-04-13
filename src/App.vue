@@ -8,7 +8,6 @@
 </template>
 
 <script>
-// import axios from 'axios';
 import Home from "./views/Home";
 import Kanban from "./views/Kanban";
 
@@ -18,7 +17,6 @@ export default {
     {
         return {
             login : false,
-            // task : []
         }
     },
     components:
@@ -36,7 +34,6 @@ export default {
         },
         logout()
         {
-            // localStorage.clear();
             this.login = false;
         }
     },
