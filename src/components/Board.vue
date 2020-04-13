@@ -16,7 +16,7 @@
           </button>
           <div class="collapsible-body">
             <ul class="inline">
-              <li>Welcome back, {{ email }}  {{ profPic }}</li>
+              <li>Welcome back, {{ email }}  <img :src="avatar"></li>
               <li><button v-on:click="logout">Logout</button></li>
             </ul>
           </div>
