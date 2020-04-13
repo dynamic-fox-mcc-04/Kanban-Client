@@ -1,0 +1,139 @@
+html
+{
+    height: 100%;
+}
+
+body
+{
+    height: 100%;
+    color: white !important;
+    background-color: #f6f5f7 !important;
+}
+
+.login, .register, .add, .update
+{
+  width: 50%;
+}
+
+h4, h1
+{
+    cursor: context-menu;
+}
+
+.card
+{
+    margin: 10px 0;
+}
+
+.card-header
+{
+    padding: 0 0 !important;
+    color: black;
+}
+
+.card-title
+{
+    cursor: pointer;
+}
+
+.card-main
+{
+    color: rgb(49, 49, 49);
+}
+
+.remove-task
+{
+    background-repeat: no-repeat;
+    background-image: url(../img/icons8-delete-bin-20.png);
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+}
+
+#kanban-title
+{
+    color: #563d7c;
+    font-size: 26px;
+    font-family: 'Roboto Slab', serif;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+main
+{
+    margin-top: 40px;
+}
+
+.container-main
+{
+    background-color: #fff;
+	border-radius: 10px;
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+			0 10px 10px rgba(0,0,0,0.22);
+	position: relative;
+	overflow: hidden;
+    height: 480px;
+    width: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.container-header a
+{
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-image: url(../img/icons8-add-26-2.png);
+    background-color: transparent;
+}
+
+.container-icon
+{
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    background-repeat: no-repeat;
+}
+
+#todo .container-icon
+{
+    background-image: url(../img/icons8-todo-list-26-white.png);
+}
+
+#todo .container-header
+{
+    background-color: #2fbfbf;
+}
+
+#in_progress .container-icon
+{
+    background-image: url(../img/icons8-progress-indicator-26.png);
+}
+
+#in_progress .container-header
+{
+    background-color: #04aaff;
+}
+
+#done .container-icon
+{
+    background-image: url(../img/icons8-checkmark-26.png);
+}
+
+#done .container-header
+{
+    background-color: #8f7ee6;
+}
+
+#backlog .container-icon
+{
+    background-image: url(../img/icons8-index-26.png);
+}
+
+#backlog .container-header
+{
+    background-color: #da9dca;
+}
+
