@@ -9646,12 +9646,8 @@ exports.default = _default;
         _c("div", { staticClass: "collapsible-body" }, [
           _c("ul", { staticClass: "inline" }, [
             _c("li", [
-              _vm._v(
-                "Welcome back, " +
-                  _vm._s(_vm.email) +
-                  "  " +
-                  _vm._s(_vm.profPic)
-              )
+              _vm._v("Welcome back, " + _vm._s(_vm.email) + "  "),
+              _c("img", { attrs: { src: _vm.avatar } })
             ]),
             _vm._v(" "),
             _c("li", [
@@ -12280,13 +12276,13 @@ var _vueGoogleSigninButton = _interopRequireDefault(require("vue-google-signin-b
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_vue.default.use(_vueGoogleSigninButton.default);
+
 new _vue.default({
   render: function render(h) {
     return h(_App.default);
   }
 }).$mount('#app');
-
-_vue.default.use(_vueGoogleSigninButton.default);
 },{"vue":"node_modules/vue/dist/vue.runtime.esm.js","./App.vue":"src/App.vue","vue-google-signin-button":"node_modules/vue-google-signin-button/dist/vue-google-signin-button.min.js"}],"../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -12315,7 +12311,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62051" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52820" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
