@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.1.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "jquery": "^3.4.1",
+    "moment": "^2.24.0",
+    "vue": "^2.6.11",
+    "vue-flash-message": "^0.7.2",
+    "vue-hot-reload-api": "^2.3.4",
+    "vue-snotify": "^3.2.1",
+    "vue-toast-notification": "^0.2.0"
+  },
+  "name": "c",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iguntop/Kanban-Client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iguntop/Kanban-Client/issues"
+  },
+  "homepage": "https://github.com/iguntop/Kanban-Client#readme"
+}
