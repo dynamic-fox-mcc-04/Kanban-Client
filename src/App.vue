@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- dont disturb -->
-
+    <!-- <Access @isLogin="!isLogin" @isRegister="!isRegister" /> -->
     <!-- === REGISTER FORM === -->
     <div class="row" v-if="!isRegister && !isLogin">
       <div class="col-md-4 offset-md-4">
@@ -144,13 +144,13 @@
           <form @submit.prevent="setProject">
             <label for="project">Please select the project</label>
             <div>
-              <select class="form-control form-control-sm" v-model="selected">
+              <select id="set" class="form-control form-control-sm" v-model="selected">
                 <option
                   v-for="currentProject in currentProjects"
                   :key="currentProject.ProjectId"
                   :value="currentProject.ProjectId"
                   >{{ currentProject.title }}</option
-                >
+                > 
               </select>
               <button class="btn btn-secondary" type="submit">Select</button>
             </div>
@@ -291,16 +291,19 @@
 import axios from "axios";
 import { log } from "util";
 import { vueTopprogress } from "vue-top-progress";
+import Access from "./views/Access";
 export default {
   name: "App",
+  components: {
+    Access,
+    vueTopprogress
+  },
   data() {
     return {
       clientId:
         "1043279586008-aibiiffrpqe0h9vm1d7gmo9grvte499k.apps.googleusercontent.com",
       isLogin: false,
       isRegister: true,
-      // githubUser: null,
-      // repositories: [],
       users: [],
       user: {
         email: "",
@@ -351,11 +354,11 @@ export default {
       event.preventDefault();
       if (localStorage.ProjectId) {
         localStorage.ProjectId = this.selected;
-        this.selected = "";
+        // this.selected = "";
         return this.getProjects();
       } else {
         localStorage.setItem("ProjectId", this.selected);
-        this.selected = "";
+        // this.selected = "";
         return this.getProjects();
       }
     },
@@ -682,14 +685,6 @@ export default {
         });
     }
   },
-  beforeCreate() {
-    this.$refs.topProgress.start();
-
-    // Use setTimeout for demo
-    setTimeout(() => {
-      this.$refs.topProgress.done();
-    }, 2000);
-  },
 
   created() {
     if (localStorage.access_token) {
@@ -702,34 +697,6 @@ export default {
       this.projects = [];
       this.users = [];
     }
-  },
-  beforeUpdate() {
-    this.$refs.topProgress.start();
-
-    // Use setTimeout for demo
-    setTimeout(() => {
-      this.$refs.topProgress.done();
-    }, 1000);
-  },
-  beforeDestroy() {
-    this.$refs.topProgress.start();
-
-    // Use setTimeout for demo
-    setTimeout(() => {
-      this.$refs.topProgress.done();
-    }, 2000);
-  },
-  mounted() {
-    this.$refs.topProgress.start();
-
-    // Use setTimeout for demo
-    setTimeout(() => {
-      this.$refs.topProgress.done();
-    }, 1000);
-  },
-
-  components: {
-    vueTopprogress
   }
 };
 </script>
@@ -755,5 +722,9 @@ export default {
   border: solid 8px;
   height: 50%;
   margin: 0;
+}
+
+#set.form-control {
+  height: 40px;
 }
 </style>

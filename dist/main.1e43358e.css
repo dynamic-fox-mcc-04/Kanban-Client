@@ -19,3 +19,7 @@
   height: 50%;
   margin: 0;
 }
+
+#set.form-control {
+  height: 40px;
+}

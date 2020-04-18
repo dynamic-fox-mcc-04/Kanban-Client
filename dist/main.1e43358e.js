@@ -11404,7 +11404,317 @@ function patchScopedSlots (instance) {
   }
 }
 
-},{}],"src/App.vue":[function(require,module,exports) {
+},{}],"src/components/Register.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "Register",
+  props: ["isLogin", "isRegister", "register", "user", "backToLogin"],
+  data: function data() {
+    return {};
+  }
+};
+exports.default = _default;
+        var $a6ba7d = exports.default || module.exports;
+      
+      if (typeof $a6ba7d === 'function') {
+        $a6ba7d = $a6ba7d.options;
+      }
+    
+        /* template */
+        Object.assign($a6ba7d, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    !_vm.isRegister && !_vm.isLogin
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4 offset-md-4" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.$.emit("register")
+                  }
+                }
+              },
+              [
+                _c("h3", [_vm._v("Please Register")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+                    _vm._v("Email address")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.email,
+                        expression: "user.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "email",
+                      id: "exampleInputEmail1",
+                      "aria-describedby": "emailHelp"
+                    },
+                    domProps: { value: _vm.user.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "email", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    {
+                      staticClass: "form-text text-muted",
+                      attrs: { id: "emailHelp" }
+                    },
+                    [
+                      _vm._v(
+                        "\n            We'll never share your email with anyone else outside\n            organization.\n          "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "exampleInputPassword1" } }, [
+                    _vm._v("Password")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "password", id: "exampleInputPassword1" },
+                    domProps: { value: _vm.user.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.user, "password", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  [_vm._v("Submit")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    on: {
+                      click: function($event) {
+                        return _vm.$("backToLogin")
+                      }
+                    }
+                  },
+                  [_vm._v("Back")]
+                )
+              ]
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$a6ba7d', $a6ba7d);
+          } else {
+            api.reload('$a6ba7d', $a6ba7d);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/Access.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Register = _interopRequireDefault(require("../components/Register"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "Access",
+  components: {
+    Register: _Register.default
+  },
+  data: function data() {
+    return {
+      isLogin: false,
+      isRegister: true,
+      user: {
+        email: "",
+        password: "",
+        currentProject: "",
+        task: ""
+      }
+    };
+  }
+};
+exports.default = _default;
+        var $d3333e = exports.default || module.exports;
+      
+      if (typeof $d3333e === 'function') {
+        $d3333e = $d3333e.options;
+      }
+    
+        /* template */
+        Object.assign($d3333e, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("Register", {
+    attrs: {
+      isLogin: _vm.isLogin,
+      isRegister: _vm.isRegister,
+      register: _vm.register,
+      user: _vm.user
+    },
+    on: { backToLogin: _vm.backToLogin }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$d3333e', $d3333e);
+          } else {
+            api.reload('$d3333e', $d3333e);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"../components/Register":"src/components/Register.vue","_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11417,6 +11727,8 @@ var _axios = _interopRequireDefault(require("axios"));
 var _util = require("util");
 
 var _vueTopProgress = require("vue-top-progress");
+
+var _Access = _interopRequireDefault(require("./views/Access"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11711,13 +12023,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 var _default = {
   name: "App",
+  components: {
+    Access: _Access.default,
+    vueTopprogress: _vueTopProgress.vueTopprogress
+  },
   data: function data() {
     return {
       clientId: "1043279586008-aibiiffrpqe0h9vm1d7gmo9grvte499k.apps.googleusercontent.com",
       isLogin: false,
       isRegister: true,
-      // githubUser: null,
-      // repositories: [],
       users: [],
       user: {
         email: "",
@@ -11767,12 +12081,12 @@ var _default = {
       event.preventDefault();
 
       if (localStorage.ProjectId) {
-        localStorage.ProjectId = this.selected;
-        this.selected = "";
+        localStorage.ProjectId = this.selected; // this.selected = "";
+
         return this.getProjects();
       } else {
-        localStorage.setItem("ProjectId", this.selected);
-        this.selected = "";
+        localStorage.setItem("ProjectId", this.selected); // this.selected = "";
+
         return this.getProjects();
       }
     },
@@ -12132,15 +12446,6 @@ var _default = {
       });
     }
   },
-  beforeCreate: function beforeCreate() {
-    var _this18 = this;
-
-    this.$refs.topProgress.start(); // Use setTimeout for demo
-
-    setTimeout(function () {
-      _this18.$refs.topProgress.done();
-    }, 2000);
-  },
   created: function created() {
     if (localStorage.access_token) {
       this.isLogin = true;
@@ -12152,36 +12457,6 @@ var _default = {
       this.projects = [];
       this.users = [];
     }
-  },
-  beforeUpdate: function beforeUpdate() {
-    var _this19 = this;
-
-    this.$refs.topProgress.start(); // Use setTimeout for demo
-
-    setTimeout(function () {
-      _this19.$refs.topProgress.done();
-    }, 1000);
-  },
-  beforeDestroy: function beforeDestroy() {
-    var _this20 = this;
-
-    this.$refs.topProgress.start(); // Use setTimeout for demo
-
-    setTimeout(function () {
-      _this20.$refs.topProgress.done();
-    }, 2000);
-  },
-  mounted: function mounted() {
-    var _this21 = this;
-
-    this.$refs.topProgress.start(); // Use setTimeout for demo
-
-    setTimeout(function () {
-      _this21.$refs.topProgress.done();
-    }, 1000);
-  },
-  components: {
-    vueTopprogress: _vueTopProgress.vueTopprogress
   }
 };
 exports.default = _default;
@@ -12603,6 +12878,7 @@ exports.default = _default;
                             }
                           ],
                           staticClass: "form-control form-control-sm",
+                          attrs: { id: "set" },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -13041,7 +13317,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","util":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/util.js","vue-top-progress":"node_modules/vue-top-progress/dist/vue-top-progress.min.js","_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/sweetalert2/dist/sweetalert2.all.js":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","util":"../../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/util/util.js","vue-top-progress":"node_modules/vue-top-progress/dist/vue-top-progress.min.js","./views/Access":"src/views/Access.vue","_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/sweetalert2/dist/sweetalert2.all.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /*!
@@ -16183,7 +16459,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52292" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62078" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
