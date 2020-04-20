@@ -96,6 +96,7 @@
       <!-- COMPONENT BELOW HEADER -->
       <div class="container topPage">
         <!-- LOGOUT BUTTON -->
+       
         <div class="row logout">
           <button @click="logout" type="button" class="btn btn-danger">
             Logout
@@ -123,8 +124,10 @@
         <!-- END OF ADDCONTRIBUTOR -->
 
         <!-- ADDPROJECT FORM -->
+        
         <form @submit.prevent="addProject" class="col col-3">
           <div class="form-group row col-12">
+    
             <label for="add-project">Add Project</label>
             <input
               type="text"
