@@ -239,6 +239,7 @@ export default {
       this.email = localStorage.getItem('email')
       this.avatar = localStorage.getItem('avatar')
       this.fetchData()
+      console.log('Logged')
       // this.socket.open()
       // this.getTasks()
     }
