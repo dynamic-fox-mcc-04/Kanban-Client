@@ -1,3 +1,11 @@
+.loading-screen {
+  text-align: center;
+}
 .link {
   color: #3c82f7!important;
+}
+.success-msg{
+  position: fixed;
+  bottom: 0;
+  z-index: 30;
 }

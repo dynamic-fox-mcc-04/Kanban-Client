@@ -1,6 +1,6 @@
 <template>
-    <div class="card" style="width: 95%; margin-bottom: 15%;">
-      <div class="card-body">
+    <div class="card hoverable" style="width: 95%; margin-bottom: 15%;">
+      <div class="card-body hoverable">
         <form v-if="showEdit" class="form-group" id="add-task">
             <p> <b>Edit Task:</b> </p>
             <input type="text" id="title-edit" v-model="title" placeholder="Title"><br>

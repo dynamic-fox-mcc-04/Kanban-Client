@@ -16,18 +16,22 @@
           </button>
           <div class="collapsible-body">
             <ul class="inline">
-              <li>Welcome back, {{ email }}  <img :src="avatar"></li>
+              <li>Welcome back, {{ email }}</li>
+              <li class="align-middle"><img :src="avatar" width="35" height="35"></li>
               <li><button v-on:click="logout">Logout</button></li>
             </ul>
           </div>
         </div>
     </nav>
     <!-- End of navbar -->
-    <div class="board">
+    <div v-if="!isLoading" class="board">
       <div class="row margin-large">
         <Column v-for="cat in categories" :key="cat.cat" :category="cat" :tasks="tasks"
         @add-task="addTask" @destroy="destroy" @modify="modify"></Column>
       </div>
+    </div>
+    <div v-else class="loading-screen">
+      <h1>Loading ...</h1>
     </div>
   </div>
 </template>
@@ -40,7 +44,8 @@ export default {
   props: {
     email: String,
     avatar: String,
-    tasks: Array
+    tasks: Array,
+    isLoading: Boolean
   },
   components: {
     Column: Column
@@ -78,5 +83,7 @@ export default {
 </script>
 
 <style>
-
+  .loading-screen {
+    text-align: center;
+  }
 </style>
