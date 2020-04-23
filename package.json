@@ -1,0 +1,38 @@
+{
+  "name": "kanban-client",
+  "version": "1.0.0",
+  "description": "client side for kanban with vue",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bayuaslamaa/Kanban-Client.git"
+  },
+  "keywords": [
+    "kanban",
+    "vue",
+    "client"
+  ],
+  "author": "Bayu Aslama Zulfikar Ahmad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bayuaslamaa/Kanban-Client/issues"
+  },
+  "homepage": "https://github.com/bayuaslamaa/Kanban-Client#readme",
+  "dependencies": {
+    "@bearer/node-agent": "^3.0.0",
+    "axios": "^0.19.2",
+    "vue": "^2.6.11",
+    "vue-google-oauth2": "^1.4.3",
+    "vue-google-signin-button-directive": "^1.0.3",
+    "vue-hot-reload-api": "^2.3.4",
+    "vue-simple-alert": "^1.1.1",
+    "vue-top-progress": "^0.7.0"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.1.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
