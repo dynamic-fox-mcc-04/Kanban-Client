@@ -16,24 +16,32 @@
           <b-button class="warning" @click.prevent="showModal()">EDIT</b-button>
 
           <!-- MODAL EDIT -->
-          <b-modal :id="unitTask.id.toString()" title="BootstrapVue">
-            <form id="form-editTask" @submit.prevent="editTask4()">
-              ProjectID:
+          <b-modal :id="unitTask.id.toString()" title="EDIT TASK">
+            <form id="form-editTask">
+              ProjectID:<br>
               <input type="text" readonly id="edit-task-project-id" v-model="projectId" />
-              <br />TaskID:
+              <br /><br />TaskID:<br>
               <input type="text" readonly id="edit-task-id" v-model="taskId" />
-              <br />Title:
+              <br /><br />Title:<br>
               <input type="text" required id="edit-task-title" v-model="taskTitle" />
-              <br />Category:
+              <br /><br />Category:<br>
               <select class="task-category" v-model="taskCat">
                 <option
                   v-for="(type, idx) in categories"
                   :key="idx"
                   :value="type"
                 >{{ type.toUpperCase() }}</option>
-              </select>
+              </select><br /><br />
               <input type="submit" value="UPDATE" />
             </form>
+
+            <!-- DONT' WANNA USE BOOTSTRAP-VUE TEMPLATE. HORRIBLE! -->
+            <template v-slot:modal-footer>
+              <div class="w-100">
+              </div>
+            </template>
+              <!-- DONT' WANNA USE BOOTSTRAP-VUE TEMPLATE. HORRIBLE! -->
+
           </b-modal>
           <!-- END MODAL -->
         </div>
@@ -54,7 +62,7 @@ export default {
       projectId: this.unitTask.ProjectId,
       taskTitle: this.unitTask.title,
       taskCat: this.unitTask.category,
-      categories: ['backlog', 'pending', 'review', 'done']
+      categories: ["backlog", "pending", "review", "done"]
     };
   },
   methods: {
@@ -65,12 +73,12 @@ export default {
     editTask4() {
       console.log("EDIT TASK @ CARD ----->");
       console.log(this.taskId, this.taskTitle, this.taskCat, this.projectId);
-      this.$emit('editTask4', {
+      this.$emit("editTask4", {
         taskId: this.taskId,
         title: this.taskTitle,
         category: this.taskCat,
         projectId: this.projectId
-      })
+      });
     },
     deleteTask4() {
       this.taskId = this.unitTask.id;
@@ -95,5 +103,12 @@ export default {
   align-items: center;
   display: flex;
   flex-direction: row;
+}
+#form-editTask {
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  /* margin-left: 25%; */
 }
 </style>

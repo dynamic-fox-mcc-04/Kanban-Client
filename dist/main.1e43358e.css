@@ -9,37 +9,60 @@
   background-size: cover;
   justify-content: center;
   align-content: center;
-  align-items: center; }
-  #pg-login #pg-form-register {
+  align-items: center;
+  border-radius: 15px; }
+  #pg-login #pg-register {
     background-color: brown;
     color: bisque;
     padding: 2vh;
     margin: auto;
     width: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     top: 0; }
   #pg-login #form-login {
     display: block;
     width: 50%;
     background-color: #D8DB7C;
     margin-left: 25%;
-    padding: 2vh; }
+    padding: 2vh;
+    border-radius: 15px; }
+  #pg-login #form-register {
+    text-align: center;
+    margin-left: 25%;
+    align-content: space-between; }
   #pg-login #btn-google, #pg-login #remark {
     background-color: #D8DB7C;
     text-align: center;
+    color: black;
+    justify-content: 2vh;
+    align-content: 2vh;
     padding: 2vh;
+    margin: 2vh;
     margin-left: 25%;
     width: fit-content;
-    height: fit-content; }
+    height: fit-content;
+    border-radius: 15px; }
 
 #navbar {
   justify-content: center;
   display: flex;
-  flex-direction: row;
-  align-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  align-content: space-evenly;
   background-color: darkkhaki;
   font-weight: bold;
-  /* margin: 1vh; */
-  padding: 1vh;
+  padding: 3vh;
+  border-radius: 15px;
+}
+
+#navbar div {
+  align-items: center;
+  /* margin: 5px; */
+  padding: 5px;
 }
 .cards {
   color: black;
@@ -49,6 +72,13 @@
   align-items: center;
   display: flex;
   flex-direction: row;
+}
+#form-editTask {
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  /* margin-left: 25%; */
 }
 .cardbox {
   padding: 1vh;
@@ -60,37 +90,62 @@
 }
 #pg-dashboard {
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  border-radius: 15px; }
   #pg-dashboard .bg-box {
     display: flex;
     flex-direction: row;
     color: white;
     padding: 2vh auto;
     margin: 2vh auto;
+    border-radius: 15px;
     flex-wrap: wrap; }
   #pg-dashboard .bg-box:nth-child(1) {
-    background-color: #f06868; }
+    background-color: #fdbccf; }
   #pg-dashboard .bg-box:nth-child(2) {
-    background-color: #efa6f7; }
+    background-color: #d3c0f9; }
   #pg-dashboard .bg-box:nth-child(3) {
-    background-color: #e4f068; }
+    background-color: #d7e7a9; }
   #pg-dashboard .bg-box:nth-child(4) {
-    background-color: #87f7f9; }
+    background-color: #b5ddd1; }
 
+#pg-members-board {
+   color: blanchedalmond;
+   text-align: center;
+   justify-content: center;
+   justify-items: center;
+   align-content: center;
+   align-items: center;
+}
+#memberslist {
+   /* display: inline-block; */
+   /* float: left; */
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+   align-items: center;
+   text-align: center;
+   margin: 5px;
+   padding: 5px;
+}
 #pg-main {
   justify-content: center;
   align-content: center;
   align-items: center;
-  background-color: #3C7233; }
+  background-color: #3C7233;
+  border-radius: 15px; }
   #pg-main #title {
     color: bisque;
     margin: 2vh;
-    padding: 2vh; }
+    padding: 2vh;
+    text-align: 2vh;
+    margin-left: 25%; }
 
 #app {
   justify-content: space-evenly;
   align-content: center;
   font-family: "Courier New", Courier, monospace;
+  font-weight: bolder;
   margin: 2vh;
   padding: 2vh; }
 

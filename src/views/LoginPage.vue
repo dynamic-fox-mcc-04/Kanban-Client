@@ -1,7 +1,7 @@
 <template>
   <div v-show="!token1" id="pg-login">
     <!-- REGISTER FORM - BOOTSTRAP -->
-    <div id="pg-form-register">
+    <div id="pg-register">
       <b-form inline id="form-register">
         <label class="sr-only" for="inline-form-input-email">Email</label>
         <b-input
@@ -126,14 +126,19 @@ export default {
     justify-content: $def-align;
     align-content: $def-align;
     align-items: $def-align;
+    border-radius: 15px;
 
-    #pg-form-register {
+    #pg-register {
       background-color: brown;
       color: $font-clr-def;
       padding: $def-marpad;
       margin: auto;
       width: 100%;
+      justify-content: $def-align;
+      align-content: $def-align;
+      align-items: $def-align;
       top: 0;
+      // border-radius: 15px;
       
     }
 
@@ -142,16 +147,29 @@ export default {
       width: 50%;
       background-color: $def-bg-clr1;
       margin-left: $ctr-lft;
+      // text-align: center;
       padding: $def-marpad;
+      border-radius: 15px;
     }
 
+    #form-register {
+      text-align: center;
+      margin-left: 25%;
+      align-content: space-between;
+    }
+ 
     #btn-google, #remark {
       background-color: $def-bg-clr1;
       text-align:  $def-align;
+      color: black;
+      justify-content: $def-marpad;
+      align-content: $def-marpad;
       padding: $def-marpad;
-      margin-left: $ctr-lft;
+      margin: $def-marpad;
+      margin-left: 25%;
       width:$fitter; 
       height:$fitter; 
+      border-radius: 15px;
     }
 
 }

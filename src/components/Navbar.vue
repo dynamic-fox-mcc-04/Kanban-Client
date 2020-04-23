@@ -1,49 +1,77 @@
 <template>
   <div id="navbar">
-    
     <!-- PROJECTS SELECTBAR -->
     <div>
       Avail Projects:
-      <select id="avail-projects" v-model="projectId">
-        <option v-for="(project, idx) in projects2" :key="idx">{{ project.ProjectId }}</option>
+      <select id="avail-projects" v-model="projectId" v-on:change="enterProject2">
+        <option
+          v-for="(project, idx) in projects2"
+          :key="idx"
+          :value="project.ProjectId"
+        >{{ project.Project.title }}</option>
       </select>
       <div>
-        <b-button variant="danger" @click="dropProject2()">DROP</b-button>
-        <b-button variant="success" @click="showTasks2()">GET TASKS</b-button>
+        <b-button variant="danger" @click.prevent="dropProject2()">DROP</b-button>
+        <b-button variant="success" @click.prevent="showTasks2()">GET TASKS</b-button>
       </div>
     </div>
 
     <!-- END PROJECT SELECTBAR -->
 
     <!-- START FORM ADD PROJECT -->
-    <form id="form-add-project" @submit.prevent="addProject2()">
-      Title:
-      <input type="text" required id="add-project-title" v-model="projectTitle" />
-      <input type="submit" value="ADD PROJECT" />
-    </form>
+    <div>
+      <!-- <form id="form-add-project" @submit.prevent="addProject2()"> -->
+      <form id="form-add-project">
+        Title:
+        <input type="text" required id="add-project-title" v-model="projectTitle" />
+        <!-- <input type="submit" value="ADD PROJECT" /> -->
+      </form>
+      <div>
+        <b-button
+          variant="primary"
+          form="form-add-project"
+          @click.prevent="addProject2()"
+        >ADD PROJECT</b-button>
+      </div>
+    </div>
     <!-- END FORM ADD PROJECT -->
 
     <!-- START FORM INVITE -->
-    <form id="form-invitation" @submit.prevent="inviteMember2()">
-      Email:
-      <input type="email" required id="invitee-email" v-model="invitee" />
-      <input type="submit" value="INVITE" />
-    </form>
+    <div>
+      <!-- <form id="form-invitation" @submit.prevent="inviteMember2()"> -->
+      <form id="form-invitation">
+        Email:
+        <input type="email" required id="invitee-email" v-model="invitee" />
+        <!-- <input type="submit" value="INVITE" /> -->
+        <!-- <button form="form-invitation" @click.prevent="fireMember2()">FIRE</button> -->
+      </form>
+      <!-- <br> -->
+      <div>
+        <b-button variant="primary" form="form-invitation" @click.prevent="inviteMember2()">HIRE</b-button>
+        <b-button variant="danger" form="form-invitation" @click.prevent="fireMember2()">FIRE</b-button>
+      </div>
+    </div>
     <!-- END FORM INVITE -->
 
     <!-- START FORM ADD TASK -->
-    <form id="form-add-task" @submit.prevent="addNewTask2()">
-      Title:
-      <input type="text" required id="add-task-title" v-model="title" />
-
-      <input type="submit" value="ADD NEW TASK" />
-    </form>
+    <div>
+      <!-- <form id="form-add-task" @submit.prevent="addNewTask2()"> -->
+      <form id="form-add-task">
+        Title:
+        <input type="text" required id="add-task-title" v-model="title" />
+        <!-- <input type="submit" value="ADD NEW TASK" /> -->
+      </form>
+      <div>
+        <b-button form="form-add-task" variant="secondary" @click.prevent="addNewTask2()">ADD TASK</b-button>
+      </div>
+    </div>
     <!-- END FORM ADD TASK -->
 
     <!-- LOGOUT BUTTON -->
-    <b-button variant="dark" @click="logout2()">LOGOUT</b-button>
+    <div>
+      <b-button variant="dark" @click="logout2()">LOGOUT</b-button>
+    </div>
     <!-- END LOGOUT -->
-
   </div>
 </template>
 
@@ -61,11 +89,10 @@ export default {
     };
   },
   methods: {
-
-    // enterProject2() {
-    //   console.log("ENTER PROJECT @ NAVBAR");
-    //   this.$emit("enterProject2", Number(this.projectId))
-    // },
+    enterProject2() {
+      console.log("ENTER PROJECT @ NAVBAR ->");
+      this.$emit("enterProject2", Number(this.projectId));
+    },
 
     logout2() {
       console.log("LOGGING OUT FROM NAVBAR ->");
@@ -73,7 +100,7 @@ export default {
     },
 
     addProject2() {
-      console.log("ADD PROJECT FRO NAVBAR ->");
+      console.log("ADD PROJECT FROM NAVBAR ->");
       // const projectId = +this.projectId
       const projectTitle = this.projectTitle;
       this.$emit("addProject2", projectTitle);
@@ -81,10 +108,23 @@ export default {
 
     inviteMember2() {
       console.log("INVITE MEMBER FROM NAVBAR ->");
+      console.log("member is");
+      console.log(this.invitee);
+      console.log(this.projectId);
       const projectId = +this.projectId;
       const invitee = this.invitee;
       this.$emit("inviteMember2", {
         invitee: invitee,
+        projectId: projectId
+      });
+    },
+
+    fireMember2() {
+      console.log("FIRE MEMBER FROM NAVBAR ->");
+      const projectId = +this.projectId;
+      const member = this.invitee;
+      this.$emit("fireMember2", {
+        member: member,
         projectId: projectId
       });
     },
@@ -106,9 +146,9 @@ export default {
     },
 
     showTasks2() {
-        const projectId = +this.projectId;
-        console.log("SHOW PROJECT'S TASKS @ NAVBAR ->");
-        this.$emit("showTasks2", projectId);
+      const projectId = +this.projectId;
+      console.log("SHOW PROJECT'S TASKS @ NAVBAR ->");
+      this.$emit("showTasks2", projectId);
     }
   }
 };
@@ -118,11 +158,20 @@ export default {
 #navbar {
   justify-content: center;
   display: flex;
-  flex-direction: row;
-  align-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+  align-content: space-evenly;
   background-color: darkkhaki;
   font-weight: bold;
-  /* margin: 1vh; */
-  padding: 1vh;
+  padding: 3vh;
+  border-radius: 15px;
+}
+
+#navbar div {
+  align-items: center;
+  /* margin: 5px; */
+  padding: 5px;
 }
 </style>

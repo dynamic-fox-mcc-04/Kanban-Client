@@ -17613,8 +17613,7 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const BASEURL = 'http://localhost:3001'
-var BASEURL = 'https://desolate-ocean-86590.herokuapp.com';
+var BASEURL = 'http://localhost:3001'; // const BASEURL = 'https://desolate-ocean-86590.herokuapp.com'
 
 var _default = (0, _socket.default)(BASEURL);
 
@@ -19185,8 +19184,7 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const BASEURL = 'http://localhost:3001'
-var BASEURL = 'https://desolate-ocean-86590.herokuapp.com';
+var BASEURL = 'http://localhost:3001'; // const BASEURL = 'https://desolate-ocean-86590.herokuapp.com'
 
 var instance = _axios.default.create({
   baseURL: BASEURL
@@ -19672,7 +19670,7 @@ exports.default = _default;
     [
       _c(
         "div",
-        { attrs: { id: "pg-form-register" } },
+        { attrs: { id: "pg-register" } },
         [
           _c(
             "b-form",
@@ -19927,6 +19925,34 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "Navbar",
   props: ["projects2"],
@@ -19940,22 +19966,38 @@ var _default = {
     };
   },
   methods: {
+    enterProject2: function enterProject2() {
+      console.log("ENTER PROJECT @ NAVBAR ->");
+      this.$emit("enterProject2", Number(this.projectId));
+    },
     logout2: function logout2() {
       console.log("LOGGING OUT FROM NAVBAR ->");
       this.$emit("logout2", "NEXT ->");
     },
     addProject2: function addProject2() {
-      console.log("ADD PROJECT FRO NAVBAR ->"); // const projectId = +this.projectId
+      console.log("ADD PROJECT FROM NAVBAR ->"); // const projectId = +this.projectId
 
       var projectTitle = this.projectTitle;
       this.$emit("addProject2", projectTitle);
     },
     inviteMember2: function inviteMember2() {
       console.log("INVITE MEMBER FROM NAVBAR ->");
+      console.log("member is");
+      console.log(this.invitee);
+      console.log(this.projectId);
       var projectId = +this.projectId;
       var invitee = this.invitee;
       this.$emit("inviteMember2", {
         invitee: invitee,
+        projectId: projectId
+      });
+    },
+    fireMember2: function fireMember2() {
+      console.log("FIRE MEMBER FROM NAVBAR ->");
+      var projectId = +this.projectId;
+      var member = this.invitee;
+      this.$emit("fireMember2", {
+        member: member,
         projectId: projectId
       });
     },
@@ -19993,26 +20035,24 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "navbar" } },
-    [
-      _c("div", [
-        _vm._v("\n    Avail Projects:\n    "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.projectId,
-                expression: "projectId"
-              }
-            ],
-            attrs: { id: "avail-projects" },
-            on: {
-              change: function($event) {
+  return _c("div", { attrs: { id: "navbar" } }, [
+    _c("div", [
+      _vm._v("\n    Avail Projects:\n    "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.projectId,
+              expression: "projectId"
+            }
+          ],
+          attrs: { id: "avail-projects" },
+          on: {
+            change: [
+              function($event) {
                 var $$selectedVal = Array.prototype.filter
                   .call($event.target.options, function(o) {
                     return o.selected
@@ -20024,179 +20064,227 @@ exports.default = _default;
                 _vm.projectId = $event.target.multiple
                   ? $$selectedVal
                   : $$selectedVal[0]
+              },
+              _vm.enterProject2
+            ]
+          }
+        },
+        _vm._l(_vm.projects2, function(project, idx) {
+          return _c(
+            "option",
+            { key: idx, domProps: { value: project.ProjectId } },
+            [_vm._v(_vm._s(project.Project.title))]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "b-button",
+            {
+              attrs: { variant: "danger" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.dropProject2()
+                }
               }
+            },
+            [_vm._v("DROP")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-button",
+            {
+              attrs: { variant: "success" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.showTasks2()
+                }
+              }
+            },
+            [_vm._v("GET TASKS")]
+          )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("form", { attrs: { id: "form-add-project" } }, [
+        _vm._v("\n      Title:\n      "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.projectTitle,
+              expression: "projectTitle"
             }
-          },
-          _vm._l(_vm.projects2, function(project, idx) {
-            return _c("option", { key: idx }, [
-              _vm._v(_vm._s(project.ProjectId))
-            ])
-          }),
-          0
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          [
-            _c(
-              "b-button",
-              {
-                attrs: { variant: "danger" },
-                on: {
-                  click: function($event) {
-                    return _vm.dropProject2()
-                  }
-                }
-              },
-              [_vm._v("DROP")]
-            ),
-            _vm._v(" "),
-            _c(
-              "b-button",
-              {
-                attrs: { variant: "success" },
-                on: {
-                  click: function($event) {
-                    return _vm.showTasks2()
-                  }
-                }
-              },
-              [_vm._v("GET TASKS")]
-            )
           ],
-          1
-        )
+          attrs: { type: "text", required: "", id: "add-project-title" },
+          domProps: { value: _vm.projectTitle },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.projectTitle = $event.target.value
+            }
+          }
+        })
       ]),
       _vm._v(" "),
       _c(
-        "form",
-        {
-          attrs: { id: "form-add-project" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addProject2()
-            }
-          }
-        },
+        "div",
         [
-          _vm._v("\n    Title:\n    "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.projectTitle,
-                expression: "projectTitle"
-              }
-            ],
-            attrs: { type: "text", required: "", id: "add-project-title" },
-            domProps: { value: _vm.projectTitle },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c(
+            "b-button",
+            {
+              attrs: { variant: "primary", form: "form-add-project" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.addProject2()
                 }
-                _vm.projectTitle = $event.target.value
               }
-            }
-          }),
-          _vm._v(" "),
-          _c("input", { attrs: { type: "submit", value: "ADD PROJECT" } })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          attrs: { id: "form-invitation" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.inviteMember2()
-            }
-          }
-        },
-        [
-          _vm._v("\n    Email:\n    "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.invitee,
-                expression: "invitee"
-              }
-            ],
-            attrs: { type: "email", required: "", id: "invitee-email" },
-            domProps: { value: _vm.invitee },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.invitee = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("input", { attrs: { type: "submit", value: "INVITE" } })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          attrs: { id: "form-add-task" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addNewTask2()
-            }
-          }
-        },
-        [
-          _vm._v("\n    Title:\n    "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.title,
-                expression: "title"
-              }
-            ],
-            attrs: { type: "text", required: "", id: "add-task-title" },
-            domProps: { value: _vm.title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.title = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("input", { attrs: { type: "submit", value: "ADD NEW TASK" } })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "b-button",
-        {
-          attrs: { variant: "dark" },
-          on: {
-            click: function($event) {
-              return _vm.logout2()
-            }
-          }
-        },
-        [_vm._v("LOGOUT")]
+            },
+            [_vm._v("ADD PROJECT")]
+          )
+        ],
+        1
       )
-    ],
-    1
-  )
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("form", { attrs: { id: "form-invitation" } }, [
+        _vm._v("\n      Email:\n      "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.invitee,
+              expression: "invitee"
+            }
+          ],
+          attrs: { type: "email", required: "", id: "invitee-email" },
+          domProps: { value: _vm.invitee },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.invitee = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "b-button",
+            {
+              attrs: { variant: "primary", form: "form-invitation" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.inviteMember2()
+                }
+              }
+            },
+            [_vm._v("HIRE")]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-button",
+            {
+              attrs: { variant: "danger", form: "form-invitation" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.fireMember2()
+                }
+              }
+            },
+            [_vm._v("FIRE")]
+          )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("form", { attrs: { id: "form-add-task" } }, [
+        _vm._v("\n      Title:\n      "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.title,
+              expression: "title"
+            }
+          ],
+          attrs: { type: "text", required: "", id: "add-task-title" },
+          domProps: { value: _vm.title },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.title = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c(
+            "b-button",
+            {
+              attrs: { form: "form-add-task", variant: "secondary" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.addNewTask2()
+                }
+              }
+            },
+            [_vm._v("ADD TASK")]
+          )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _c(
+          "b-button",
+          {
+            attrs: { variant: "dark" },
+            on: {
+              click: function($event) {
+                return _vm.logout2()
+              }
+            }
+          },
+          [_vm._v("LOGOUT")]
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -20283,6 +20371,14 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "Card",
   components: {},
@@ -20293,7 +20389,7 @@ var _default = {
       projectId: this.unitTask.ProjectId,
       taskTitle: this.unitTask.title,
       taskCat: this.unitTask.category,
-      categories: ['backlog', 'pending', 'review', 'done']
+      categories: ["backlog", "pending", "review", "done"]
     };
   },
   methods: {
@@ -20304,7 +20400,7 @@ var _default = {
     editTask4: function editTask4() {
       console.log("EDIT TASK @ CARD ----->");
       console.log(this.taskId, this.taskTitle, this.taskCat, this.projectId);
-      this.$emit('editTask4', {
+      this.$emit("editTask4", {
         taskId: this.taskId,
         title: this.taskTitle,
         category: this.taskCat,
@@ -20384,147 +20480,157 @@ exports.default = _default;
                   {
                     attrs: {
                       id: _vm.unitTask.id.toString(),
-                      title: "BootstrapVue"
-                    }
+                      title: "EDIT TASK"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "modal-footer",
+                        fn: function() {
+                          return [_c("div", { staticClass: "w-100" })]
+                        },
+                        proxy: true
+                      }
+                    ])
                   },
                   [
-                    _c(
-                      "form",
-                      {
-                        attrs: { id: "form-editTask" },
+                    _c("form", { attrs: { id: "form-editTask" } }, [
+                      _vm._v("\n            ProjectID:"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.projectId,
+                            expression: "projectId"
+                          }
+                        ],
+                        attrs: {
+                          type: "text",
+                          readonly: "",
+                          id: "edit-task-project-id"
+                        },
+                        domProps: { value: _vm.projectId },
                         on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.editTask4()
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.projectId = $event.target.value
                           }
                         }
-                      },
-                      [
-                        _vm._v("\n            ProjectID:\n            "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.projectId,
-                              expression: "projectId"
-                            }
-                          ],
-                          attrs: {
-                            type: "text",
-                            readonly: "",
-                            id: "edit-task-project-id"
-                          },
-                          domProps: { value: _vm.projectId },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.projectId = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v("TaskID:\n            "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.taskId,
-                              expression: "taskId"
-                            }
-                          ],
-                          attrs: {
-                            type: "text",
-                            readonly: "",
-                            id: "edit-task-id"
-                          },
-                          domProps: { value: _vm.taskId },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.taskId = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v("Title:\n            "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.taskTitle,
-                              expression: "taskTitle"
-                            }
-                          ],
-                          attrs: {
-                            type: "text",
-                            required: "",
-                            id: "edit-task-title"
-                          },
-                          domProps: { value: _vm.taskTitle },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.taskTitle = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v("Category:\n            "),
-                        _c(
-                          "select",
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v("TaskID:"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
                           {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.taskCat,
-                                expression: "taskCat"
-                              }
-                            ],
-                            staticClass: "task-category",
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.taskCat = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.taskId,
+                            expression: "taskId"
+                          }
+                        ],
+                        attrs: {
+                          type: "text",
+                          readonly: "",
+                          id: "edit-task-id"
+                        },
+                        domProps: { value: _vm.taskId },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          },
-                          _vm._l(_vm.categories, function(type, idx) {
-                            return _c(
-                              "option",
-                              { key: idx, domProps: { value: type } },
-                              [_vm._v(_vm._s(type.toUpperCase()))]
-                            )
-                          }),
-                          0
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: { type: "submit", value: "UPDATE" }
-                        })
-                      ]
-                    )
+                            _vm.taskId = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v("Title:"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.taskTitle,
+                            expression: "taskTitle"
+                          }
+                        ],
+                        attrs: {
+                          type: "text",
+                          required: "",
+                          id: "edit-task-title"
+                        },
+                        domProps: { value: _vm.taskTitle },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.taskTitle = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v("Category:"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.taskCat,
+                              expression: "taskCat"
+                            }
+                          ],
+                          staticClass: "task-category",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.taskCat = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        _vm._l(_vm.categories, function(type, idx) {
+                          return _c(
+                            "option",
+                            { key: idx, domProps: { value: type } },
+                            [_vm._v(_vm._s(type.toUpperCase()))]
+                          )
+                        }),
+                        0
+                      ),
+                      _c("br"),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "submit", value: "UPDATE" }
+                      })
+                    ])
                   ]
                 )
               ],
@@ -20789,7 +20895,96 @@ render._withStripped = true
       
       }
     })();
-},{"./Box":"src/components/Box.vue","_css_loader":"../../../../.nvm/versions/node/v13.11.0/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/MainPage.vue":[function(require,module,exports) {
+},{"./Box":"src/components/Box.vue","_css_loader":"../../../../.nvm/versions/node/v13.11.0/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/MembersBoard.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "MembersBoard",
+  components: {},
+  props: ["members2"],
+  data: function data() {
+    return {};
+  },
+  methods: {}
+};
+exports.default = _default;
+        var $31d836 = exports.default || module.exports;
+      
+      if (typeof $31d836 === 'function') {
+        $31d836 = $31d836.options;
+      }
+    
+        /* template */
+        Object.assign($31d836, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { id: "pg-members-board" } }, [
+    _c("h4", [_vm._v("PROJECT MEMBERS")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { attrs: { id: "memberslist" } },
+      _vm._l(_vm.members2, function(member, idx) {
+        return _c("p", { key: idx }, [
+          _vm._v("\n           " + _vm._s(member.email) + " \n        ")
+        ])
+      }),
+      0
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$31d836', $31d836);
+          } else {
+            api.reload('$31d836', $31d836);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../.nvm/versions/node/v13.11.0/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/MainPage.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20801,8 +20996,18 @@ var _Navbar = _interopRequireDefault(require("../components/Navbar"));
 
 var _Dashboard = _interopRequireDefault(require("../components/Dashboard"));
 
+var _MembersBoard = _interopRequireDefault(require("../components/MembersBoard"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20837,9 +21042,10 @@ var _default = {
   name: "MainPage",
   components: {
     Navbar: _Navbar.default,
-    Dashboard: _Dashboard.default
+    Dashboard: _Dashboard.default,
+    MembersBoard: _MembersBoard.default
   },
-  props: ["token1", "projects1", "tasks1", "categories1", "taskDetails1"],
+  props: ["token1", "projects1", "tasks1", "categories1", "taskDetails1", "members1"],
   data: function data() {
     return {
       taskId: 0,
@@ -20863,9 +21069,17 @@ var _default = {
       console.log("INVITE MEMBER @ MAINPAGE -->");
       this.$emit("inviteMember1", payload);
     },
+    fireMember1: function fireMember1(payload) {
+      console.log("FIRE MEMBER @ MAINPAGE -->");
+      this.$emit("fireMember1", payload);
+    },
     addNewTask1: function addNewTask1(payload) {
       console.log("ADD NEW TASK @ MAINPAGE -->");
       this.$emit('addNewTask1', payload);
+    },
+    enterProject1: function enterProject1(payload) {
+      console.log("ENTER PROJECT @ MAINPAGE -->");
+      this.$emit('enterProject1', payload);
     },
     dropProject1: function dropProject1(payload) {
       console.log("DROP PROJECT @ MAINPAGE -->");
@@ -20923,15 +21137,19 @@ exports.default = _default;
           logout2: _vm.logout1,
           addProject2: _vm.addProject1,
           inviteMember2: _vm.inviteMember1,
+          fireMember2: _vm.fireMember1,
           addNewTask2: _vm.addNewTask1,
           dropProject2: _vm.dropProject1,
-          showTasks2: _vm.showTasks1
+          showTasks2: _vm.showTasks1,
+          enterProject2: _vm.enterProject1
         }
       }),
       _vm._v(" "),
       _c("h1", { attrs: { id: "title" } }, [
         _vm._v("WELCOME TO KANBAN HOMEPAGE")
       ]),
+      _vm._v(" "),
+      _c("MembersBoard", { attrs: { members2: _vm.members1 } }),
       _vm._v(" "),
       _c("Dashboard", {
         attrs: { tasks2: _vm.tasks1, categories2: _vm.categories1 },
@@ -20974,7 +21192,7 @@ render._withStripped = true
       
       }
     })();
-},{"../components/Navbar":"src/components/Navbar.vue","../components/Dashboard":"src/components/Dashboard.vue","_css_loader":"../../../../.nvm/versions/node/v13.11.0/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"../components/Navbar":"src/components/Navbar.vue","../components/Dashboard":"src/components/Dashboard.vue","../components/MembersBoard":"src/components/MembersBoard.vue","_css_loader":"../../../../.nvm/versions/node/v13.11.0/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21021,6 +21239,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
 var _default = {
   name: "App",
   components: {
@@ -21035,6 +21256,7 @@ var _default = {
       projects: [],
       taskDetails: {},
       projectTitle: "",
+      project: {},
       projectId: 0,
       taskId: 0,
       userId: 0,
@@ -21042,7 +21264,9 @@ var _default = {
       category: "",
       categories: ["backlog", "pending", "review", "done"],
       tpid: 0,
-      user: ""
+      user: "",
+      members: [],
+      room: ''
     };
   },
   methods: {
@@ -21257,12 +21481,82 @@ var _default = {
         });
       });
     },
+    enterProject: function enterProject(payload) {
+      var _this7 = this;
+
+      console.log("ENTER PROJECT @ APP.VUE");
+      console.log(payload);
+      (0, _api.default)({
+        method: "get",
+        url: "/projects/" + payload,
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      }).then(function (response) {
+        console.log("WHAT PROJECT UR IN NOW?");
+        console.log(response.data);
+
+        if (response.data) {
+          _this7.project = response.data; // this.members = response.data.Users
+
+          _socket.default.emit('join', response.data);
+
+          _this7.fetchMembers(response.data.id);
+
+          _this7.$toasted.success("ENTERING PROJECT# ".concat(response.data.id, ": ").concat(response.data.title));
+        } // this.fetchMembers()
+        // this.showTasks(payload)
+
+      }).catch(function (err) {
+        console.log(err.response);
+        var arr = err.response.data.errors;
+        var code = err.response.status;
+        var type = err.response.statusText;
+        var ct = code + " " + type;
+        arr.forEach(function (el) {
+          _this7.$toasted.error("".concat(ct, ": ").concat(el));
+        });
+      });
+    },
+    fetchMembers: function fetchMembers(payload) {
+      var _this8 = this;
+
+      console.log("FETCH PROJECT MEMBERS @ APP.VUE");
+      console.log(payload);
+      (0, _api.default)({
+        method: "get",
+        url: "/projects/" + payload + '/members',
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      }).then(function (response) {
+        console.log("WHO ARE MEMBERS?");
+        console.log(response.data);
+
+        if (response.data) {
+          _this8.members = response.data;
+          console.log("members r");
+          console.log(_this8.members);
+        } else {
+          _this8.members = [];
+        }
+      }).catch(function (err) {
+        console.log(err.response);
+        var arr = err.response.data.errors;
+        var code = err.response.status;
+        var type = err.response.statusText;
+        var ct = code + " " + type;
+        arr.forEach(function (el) {
+          _this8.$toasted.error("".concat(ct, ": ").concat(el));
+        });
+      });
+    },
     // fillInvitation(projectid) {
     //   console.log("FILLING THE PROJECT ID PARAMETER");
     //   this.projectId = projectid;
     // },
     inviteMember: function inviteMember(payload) {
-      var _this7 = this;
+      var _this9 = this;
 
       console.log("SANITY CHECK BEFORE INVITE");
       console.log(payload.invitee, payload.projectId);
@@ -21282,8 +21576,8 @@ var _default = {
         _socket.default.emit("new_member", response.data); // this.$toasted.success("MEMBER INVITED");
 
 
-        _this7.projectId = 0;
-        _this7.invitee = "";
+        _this9.projectId = 0;
+        _this9.invitee = "";
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
@@ -21291,12 +21585,46 @@ var _default = {
         var type = err.response.statusText;
         var ct = code + " " + type;
         arr.forEach(function (el) {
-          _this7.$toasted.error("".concat(ct, ": ").concat(el));
+          _this9.$toasted.error("".concat(ct, ": ").concat(el));
+        });
+      });
+    },
+    fireMember: function fireMember(payload) {
+      var _this10 = this;
+
+      console.log("SANITY CHECK BEFORE FIRE @ APP");
+      console.log(payload.member, payload.projectId);
+      this.projectId = payload.projectId;
+      (0, _api.default)({
+        method: "delete",
+        url: "/projects/" + this.projectId + "/fire",
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          member_email: payload.member
+        }
+      }).then(function (response) {
+        console.log("NEW MEMBER INVITED");
+        console.log(response.data.message);
+
+        _socket.default.emit("member_fired", {
+          msg: response.data.message,
+          pid: _this10.projectId
+        });
+      }).catch(function (err) {
+        console.log(err.response);
+        var arr = err.response.data.errors;
+        var code = err.response.status;
+        var type = err.response.statusText;
+        var ct = code + " " + type;
+        arr.forEach(function (el) {
+          _this10.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     },
     dropProject: function dropProject(payload) {
-      var _this8 = this;
+      var _this11 = this;
 
       console.log("DELETE ONE");
       console.log(payload);
@@ -21318,12 +21646,12 @@ var _default = {
         var type = err.response.statusText;
         var ct = code + " " + type;
         arr.forEach(function (el) {
-          _this8.$toasted.error("".concat(ct, ": ").concat(el));
+          _this11.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     },
     showTasks: function showTasks(payload) {
-      var _this9 = this;
+      var _this12 = this;
 
       console.log("SHOWING ALL TASKS OF DAT PROJECT");
       console.log(payload);
@@ -21336,8 +21664,8 @@ var _default = {
       }).then(function (response) {
         console.log("WHAT'S DAT PROJECTS' TASKS?");
         console.log(response.data);
-        _this9.projectId = response.data.ProjectId;
-        _this9.tasks = response.data; // socket.emit("getTasks", response.data);
+        _this12.projectId = response.data.ProjectId;
+        _this12.tasks = response.data; // socket.emit("getTasks", response.data);
         // socket.on("getTasks2", payload => {
         //   this.$toasted.success("FETCHING TASKS OF A PROJECT");
         // });
@@ -21348,7 +21676,7 @@ var _default = {
         var type = err.response.statusText;
         var ct = code + " " + type;
         arr.forEach(function (el) {
-          _this9.$toasted.error("".concat(ct, ": ").concat(el));
+          _this12.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     },
@@ -21357,7 +21685,7 @@ var _default = {
       this.projectId = Number(projectid);
     },
     addNewTask: function addNewTask(payload) {
-      var _this10 = this;
+      var _this13 = this;
 
       console.log("ADDING NEW TASK");
       console.log(payload.title, payload.projectId);
@@ -21373,7 +21701,7 @@ var _default = {
       }).then(function (response) {
         console.log("NEW TASK ADDED");
         console.log(response.data);
-        _this10.title = "";
+        _this13.title = "";
 
         _socket.default.emit("new_task", response.data); // this.$toasted.success("TASK ADDED");
         // console.log("WHAT'S ID?");
@@ -21387,12 +21715,12 @@ var _default = {
         var type = err.response.statusText;
         var ct = code + " " + type;
         arr.forEach(function (el) {
-          _this10.$toasted.error("".concat(ct, ": ").concat(el));
+          _this13.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     },
     showEditTaskForm: function showEditTaskForm(payload) {
-      var _this11 = this;
+      var _this14 = this;
 
       console.log("FILLING THE DETAILS OF TASK WE'RE ABT UPDATING");
       console.log(payload);
@@ -21405,7 +21733,7 @@ var _default = {
       }).then(function (response) {
         console.log("FOUND'EM, NOW POPULATING");
         console.log(response.data);
-        _this11.taskDetails = response.data;
+        _this14.taskDetails = response.data;
       }).catch(function (err) {
         console.log(err.response);
         var arr = err.response.data.errors;
@@ -21413,12 +21741,12 @@ var _default = {
         var type = err.response.statusText;
         var ct = code + " " + type;
         arr.forEach(function (el) {
-          _this11.$toasted.error("".concat(ct, ": ").concat(el));
+          _this14.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     },
     editTask: function editTask(payload) {
-      var _this12 = this;
+      var _this15 = this;
 
       console.log("NOW EDITING TASK");
       console.log(payload);
@@ -21445,16 +21773,17 @@ var _default = {
         var type = err.response.statusText;
         var ct = code + " " + type;
         arr.forEach(function (el) {
-          _this12.$toasted.error("".concat(ct, ": ").concat(el));
+          _this15.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     },
     deleteTask: function deleteTask(payload) {
-      var _this13 = this;
+      var _this16 = this;
 
-      console.log("DELETE ONE TASK");
-      console.log(payload.taskId);
-      console.log(payload.projectId);
+      console.log("DELETE ONE TASK @ APP.VUE");
+      console.log(payload);
+      this.projectId = payload.projectId;
+      var pid = this.projectId;
       (0, _api.default)({
         method: "delete",
         url: "/projects/" + payload.projectId + "/tasks/" + payload.taskId,
@@ -21465,7 +21794,10 @@ var _default = {
         console.log("TASK DROPPED");
         console.log(response.data);
 
-        _socket.default.emit("task_deleted", response.data); // this.showTasks(projectid);
+        _socket.default.emit("task_deleted", {
+          msg: response.data,
+          pid: pid
+        }); // this.showTasks(projectid);
 
       }).catch(function (err) {
         console.log(err.response);
@@ -21474,14 +21806,14 @@ var _default = {
         var type = err.response.statusText;
         var ct = code + " " + type;
         arr.forEach(function (el) {
-          _this13.$toasted.error("".concat(ct, ": ").concat(el));
+          _this16.$toasted.error("".concat(ct, ": ").concat(el));
         });
       });
     }
   },
   watch: {},
   created: function created() {
-    var _this14 = this;
+    var _this17 = this;
 
     // console.log(io);
     // io.on('success', (msg) => {
@@ -21489,43 +21821,61 @@ var _default = {
     // })
     this.test(); // this.fetchProjects()
 
+    _socket.default.on('join2', function (payload) {
+      _this17.$toasted.success("NOW ENTERING ROOM ".concat(payload));
+
+      _this17.room = payload;
+    });
+
     _socket.default.on("new_member2", function (payload) {
       var ms = "User ".concat(payload.UserId, " has been added to Project ").concat(payload.ProjectId);
       console.log(ms);
 
-      _this14.$toasted.success(ms);
+      _this17.$toasted.success(ms);
 
-      _this14.fetchProjects();
+      _this17.fetchMembers(payload.ProjectId);
+
+      _this17.fetchProjects();
+    });
+
+    _socket.default.on('member_fired2', function (payload) {
+      _this17.$toasted.show(payload.msg);
+
+      console.log(payload.msg);
+
+      _this17.fetchMembers(payload.pid);
+
+      _this17.fetchProjects();
     });
 
     _socket.default.on("droppedProject", function (msg) {
-      _this14.$toasted.show(msg);
+      _this17.$toasted.show(msg);
 
       console.log(msg);
 
-      _this14.fetchProjects();
+      _this17.fetchProjects();
     });
 
     _socket.default.on("added_task", function (payload) {
-      _this14.$toasted.success("Task ".concat(payload.title, " has been added."));
+      _this17.$toasted.success("Task ".concat(payload.title, " has been added."));
 
-      _this14.showTasks(payload.ProjectId);
+      _this17.showTasks(payload.ProjectId);
     });
 
     _socket.default.on("updated_task", function (payload) {
-      _this14.$toasted.success("".concat(payload.title, " has been updated"));
+      _this17.$toasted.success("".concat(payload.title, " has been updated"));
 
-      _this14.showTasks(payload.ProjectId);
+      _this17.showTasks(payload.ProjectId);
 
       console.log("".concat(payload.title, " has been updated"));
     });
 
-    _socket.default.on("deleted_task", function (msg) {
+    _socket.default.on("deleted_task", function (payload) {
       console.log("TASK HAS BEEN DROPPED");
 
-      _this14.$toasted.success(msg);
+      _this17.$toasted.success(payload.msg.message);
 
-      _this14.showTasks(payload.projectId); // this.fetchProjects()
+      _this17.showTasks(payload.pid); // this.fetchProjects()
 
     });
   }
@@ -21578,13 +21928,16 @@ exports.default = _default;
           projects1: _vm.projects,
           categories1: _vm.categories,
           tasks1: _vm.tasks,
-          taskDetails1: _vm.taskDetails
+          taskDetails1: _vm.taskDetails,
+          members1: _vm.members
         },
         on: {
           logout1: _vm.logout,
           addProject1: _vm.addProject,
           dropProject1: _vm.dropProject,
+          enterProject1: _vm.enterProject,
           inviteMember1: _vm.inviteMember,
+          fireMember1: _vm.fireMember,
           addNewTask1: _vm.addNewTask,
           showTasks1: _vm.showTasks,
           editTask1: _vm.editTask,
@@ -68784,7 +69137,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63017" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54767" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

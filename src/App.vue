@@ -15,11 +15,14 @@
       :categories1="categories"
       :tasks1="tasks"
       :taskDetails1="taskDetails"
+      :members1="members"
       v-show="token"
       @logout1="logout"
       @addProject1="addProject"
       @dropProject1="dropProject"
+      @enterProject1="enterProject"
       @inviteMember1="inviteMember"
+      @fireMember1="fireMember"
       @addNewTask1="addNewTask"
       @showTasks1="showTasks"
       @editTask1="editTask"
@@ -46,6 +49,7 @@ export default {
       projects: [],
       taskDetails: {},
       projectTitle: "",
+      project: {},
       projectId: 0,
       taskId: 0,
       userId: 0,
@@ -53,7 +57,9 @@ export default {
       category: "",
       categories: ["backlog", "pending", "review", "done"],
       tpid: 0,
-      user: ""
+      user: "",
+      members: [],
+      room: ''
     };
   },
   methods: {
@@ -257,6 +263,79 @@ export default {
           });
         });
     },
+    enterProject(payload) {
+      console.log("ENTER PROJECT @ APP.VUE");
+      console.log(payload);
+      axios({
+        method: "get",
+        url: "/projects/" + payload,
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      })
+        .then(response => {
+          console.log("WHAT PROJECT UR IN NOW?");
+          console.log(response.data);
+
+          if(response.data) {
+            this.project = response.data
+            // this.members = response.data.Users
+            
+            socket.emit('join', response.data)
+           
+            this.fetchMembers(response.data.id)
+            this.$toasted.success(`ENTERING PROJECT# ${response.data.id}: ${response.data.title}`)
+          } 
+         
+          // this.fetchMembers()
+          // this.showTasks(payload)
+
+        })
+        .catch(err => {
+          console.log(err.response);
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
+          arr.forEach(el => {
+            this.$toasted.error(`${ct}: ${el}`);
+          });
+        });
+    },
+    fetchMembers(payload) {
+      console.log("FETCH PROJECT MEMBERS @ APP.VUE");
+      console.log(payload);
+      axios({
+        method: "get",
+        url: "/projects/" + payload + '/members',
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      })
+        .then(response => {
+          console.log("WHO ARE MEMBERS?");
+          console.log(response.data);
+
+          if(response.data) {
+            this.members = response.data
+            console.log("members r");
+            console.log(this.members);
+          } else {
+            this.members = []
+          }
+
+        })
+        .catch(err => {
+          console.log(err.response);
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
+          arr.forEach(el => {
+            this.$toasted.error(`${ct}: ${el}`);
+          });
+        });
+    },
     // fillInvitation(projectid) {
     //   console.log("FILLING THE PROJECT ID PARAMETER");
     //   this.projectId = projectid;
@@ -281,6 +360,39 @@ export default {
           // this.$toasted.success("MEMBER INVITED");
           this.projectId = 0;
           this.invitee = "";
+        })
+        .catch(err => {
+          console.log(err.response);
+          let arr = err.response.data.errors;
+          let code = err.response.status;
+          let type = err.response.statusText;
+          let ct = code + " " + type;
+          arr.forEach(el => {
+            this.$toasted.error(`${ct}: ${el}`);
+          });
+        });
+    },
+    fireMember(payload) {
+      console.log("SANITY CHECK BEFORE FIRE @ APP");
+      console.log(payload.member, payload.projectId);
+      this.projectId = payload.projectId
+      axios({
+        method: "delete",
+        url: "/projects/" + this.projectId + "/fire",
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          member_email: payload.member
+        }
+      })
+        .then(response => {
+          console.log("NEW MEMBER INVITED");
+          console.log(response.data.message);
+          socket.emit("member_fired", {
+            msg: response.data.message,
+            pid: this.projectId
+          });
         })
         .catch(err => {
           console.log(err.response);
@@ -450,10 +562,10 @@ export default {
         });
     },
     deleteTask(payload) {
-      console.log("DELETE ONE TASK");
-      console.log(payload.taskId);
-      console.log(payload.projectId);
-
+      console.log("DELETE ONE TASK @ APP.VUE");
+      console.log(payload);
+      this.projectId = payload.projectId
+      var pid = this.projectId
       axios({
         method: "delete",
         url: "/projects/" + payload.projectId + "/tasks/" + payload.taskId,
@@ -464,7 +576,10 @@ export default {
         .then(response => {
           console.log("TASK DROPPED");
           console.log(response.data);
-          socket.emit("task_deleted", response.data);
+          socket.emit("task_deleted", {
+            msg: response.data,
+            pid: pid
+          });
           // this.showTasks(projectid);
         })
         .catch(err => {
@@ -487,12 +602,23 @@ export default {
     // })
     this.test();
     // this.fetchProjects()
+    socket.on('join2', payload => {
+      this.$toasted.success(`NOW ENTERING ROOM ${payload}`)
+      this.room = payload
+    })
     socket.on("new_member2", payload => {
       let ms = `User ${payload.UserId} has been added to Project ${payload.ProjectId}`;
       console.log(ms);
       this.$toasted.success(ms);
+      this.fetchMembers(payload.ProjectId)
       this.fetchProjects();
     });
+    socket.on('member_fired2', (payload) => {
+      this.$toasted.show(payload.msg)
+      console.log(payload.msg);
+      this.fetchMembers(payload.pid)
+      this.fetchProjects();
+    }) 
     socket.on("droppedProject", msg => {
       this.$toasted.show(msg);
       console.log(msg);
@@ -508,10 +634,10 @@ export default {
       this.showTasks(payload.ProjectId);
       console.log(`${payload.title} has been updated`);
     });
-    socket.on("deleted_task", msg => {
+    socket.on("deleted_task", payload => {
       console.log("TASK HAS BEEN DROPPED");
-      this.$toasted.success(msg);
-      this.showTasks(payload.projectId);
+      this.$toasted.success(payload.msg.message);
+      this.showTasks(payload.pid);
       // this.fetchProjects()
     });
   }
@@ -528,6 +654,7 @@ export default {
     justify-content: space-evenly;
     align-content: center;
     font-family: $def-font;
+    font-weight: bolder;
     margin: $def-margin;
     padding: $def-pad;
 

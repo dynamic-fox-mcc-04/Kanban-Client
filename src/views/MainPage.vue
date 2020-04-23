@@ -8,13 +8,21 @@
       @logout2="logout1"
       @addProject2="addProject1"
       @inviteMember2="inviteMember1"
+      @fireMember2="fireMember1"
       @addNewTask2="addNewTask1"
       @dropProject2="dropProject1"
       @showTasks2="showTasks1"
+      @enterProject2="enterProject1"
     ></Navbar>
     <!-- END NAVBAR -->
 
     <h1 id="title">WELCOME TO KANBAN HOMEPAGE</h1>
+
+    <!-- SHOW PROJECT MEMBERS -->
+     <MembersBoard
+      :members2="members1">
+     </MembersBoard>
+    <!-- SHOW PROJECT MEMBERS END -->
 
     <!-- START DASHBOARD -->
       <Dashboard
@@ -31,17 +39,20 @@
 <script>
 import Navbar from "../components/Navbar";
 import Dashboard from '../components/Dashboard'
+import MembersBoard from '../components/MembersBoard'
 export default {
   name: "MainPage",
   components: {
     Navbar, 
-    Dashboard
+    Dashboard,
+    MembersBoard
   },
   props: ["token1", 
   "projects1", 
   "tasks1", 
   "categories1",
-  "taskDetails1"],
+  "taskDetails1",
+  "members1"],
   data() {
     return {
       taskId: 0,
@@ -65,9 +76,17 @@ export default {
       console.log("INVITE MEMBER @ MAINPAGE -->");
       this.$emit("inviteMember1", payload);
     },
+    fireMember1(payload) {
+      console.log("FIRE MEMBER @ MAINPAGE -->");
+      this.$emit("fireMember1", payload);
+    },
     addNewTask1(payload) {
       console.log("ADD NEW TASK @ MAINPAGE -->");
       this.$emit('addNewTask1', payload)
+    },
+    enterProject1(payload) {
+      console.log("ENTER PROJECT @ MAINPAGE -->");
+      this.$emit('enterProject1', payload)
     },
     dropProject1(payload) {
       console.log("DROP PROJECT @ MAINPAGE -->");
@@ -108,11 +127,14 @@ export default {
     align-content: $def-align;
     align-items: $def-align;
     background-color: $bg-dashboard;
+    border-radius: 15px;
     
     #title {
       color: $font-clr-def;
       margin: $def-marpad;
       padding: $def-marpad;
+      text-align: $def-marpad;
+      margin-left: 25%;
     }
   }
 </style>

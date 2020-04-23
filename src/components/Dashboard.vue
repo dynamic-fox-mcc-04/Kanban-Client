@@ -43,9 +43,11 @@ $def-marpad: 2vh;
 $def-align: center;
 $ctr-lft: 25%;
 $fitter: fit-content;
+$brad: 15px;
 #pg-dashboard {
   justify-content: $def-align;
   align-items: $def-align;
+  border-radius: $brad;
 
   .bg-box {
     display: flex;
@@ -53,20 +55,21 @@ $fitter: fit-content;
     color: white;
     padding: $def-marpad auto;
     margin: $def-marpad auto;
+    border-radius: $brad;
     flex-wrap: wrap
     
   }
   .bg-box:nth-child(1) {
-    background-color: #f06868;
+    background-color: #fdbccf;
   }
   .bg-box:nth-child(2) {
-    background-color: #efa6f7;
+    background-color: #d3c0f9;
   }
   .bg-box:nth-child(3) {
-    background-color: #e4f068;
+    background-color: #d7e7a9;
   }
   .bg-box:nth-child(4) {
-    background-color: #87f7f9;
+    background-color: #b5ddd1;
   }
 }
 </style>
