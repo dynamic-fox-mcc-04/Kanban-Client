@@ -61,6 +61,12 @@ export default {
     };
   },
   methods: {
+
+    // enterProject2() {
+    //   console.log("ENTER PROJECT @ NAVBAR");
+    //   this.$emit("enterProject2", Number(this.projectId))
+    // },
+
     logout2() {
       console.log("LOGGING OUT FROM NAVBAR ->");
       this.$emit("logout2", "NEXT ->");
