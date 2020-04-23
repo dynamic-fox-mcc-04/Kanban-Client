@@ -95,7 +95,7 @@ export default {
       })
         .then(response => {
           console.log("WELCOME NEW USER!");
-          socket.emit("registered", response);
+          socket.emit("registered", response.data);
         })
         .catch(err => {
           console.log(err);
@@ -602,6 +602,9 @@ export default {
     // })
     this.test();
     // this.fetchProjects()
+    socket.on('registered2', payload => {
+      this.$toasted.success(`WELCOME TO KANBAN, ${payload.email}. PLEASE LOGIN.`)
+    })
     socket.on('join2', payload => {
       this.$toasted.success(`NOW ENTERING ROOM ${payload}`)
       this.room = payload

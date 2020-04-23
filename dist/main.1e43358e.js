@@ -21302,7 +21302,7 @@ var _default = {
       }).then(function (response) {
         console.log("WELCOME NEW USER!");
 
-        _socket.default.emit("registered", response);
+        _socket.default.emit("registered", response.data);
       }).catch(function (err) {
         console.log(err);
         var arr = err.responseJSON.errors;
@@ -21820,6 +21820,10 @@ var _default = {
     //     this.$toasted.show(msg.message)
     // })
     this.test(); // this.fetchProjects()
+
+    _socket.default.on('registered2', function (payload) {
+      _this17.$toasted.success("WELCOME TO KANBAN, ".concat(payload.email, ". PLEASE LOGIN."));
+    });
 
     _socket.default.on('join2', function (payload) {
       _this17.$toasted.success("NOW ENTERING ROOM ".concat(payload));
@@ -69137,7 +69141,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54767" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56308" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
