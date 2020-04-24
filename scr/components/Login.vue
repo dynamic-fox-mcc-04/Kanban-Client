@@ -1,4 +1,11 @@
 <template>
+<div>
+	<g-signin-button
+						:params="googleSignInParams"
+						@success="onSignInSuccess"
+						@error="onSignInError">
+						Sign in with Google
+	</g-signin-button>
   <div class="wrap-login100">
 				<form class="login100-form validate-form">
 					<span class="login100-form-logo">
@@ -35,24 +42,26 @@
 						<button  @click.prevent ="register">
 							sign in
 						</button>
-					</div>
-					<div class="text-center p-t-20">
-						<a class="txt1" href="#">
-							Forgot Password?
-						</a>
+						
 					</div>
 				</form>
+	</div>
 	</div>
 </template>
 
 <script>
+import GSignInButton from 'vue-google-signin-button'
 import axios from '../axios'
 export default {
 	name:"LoginForm",
 	data(){
 		return{
 			username:'',
-			password:''
+			password:'',
+			googleSignInParams: {
+        		client_id: '636705423948-jk7m1fvtdv0go84aorh7g79agb78lvk1.apps.googleusercontent.com'
+     		 }
+
 		}
 	},
 	methods:{
@@ -79,8 +88,36 @@ export default {
                 });
 				
 			})
+		},
+		onSignInSuccess (googleUser) {
+		// `googleUser` is the GoogleUser object that represents the just-signed-in user.
+		// See https://developers.google.com/identity/sign-in/web/reference#users
+		const profile = googleUser.getBasicProfile() // etc etc
+		console.log(profile);
+		axios({
+				method:"POST",
+				url:"/user/gmail",
+				data:{
+					username:profile.yu
+				}
+			})
+			.then(result=>{		
+				localStorage.setItem('token',result.data.token)
+				localStorage.setItem('username',profile.yu)
+				this.$emit('succeslogin')
+			})
+			.catch(err=>{
+				Vue.toasted.global.my_app_error({
+                    message : 'Username/Password not Found'                   
+                });
+				
+			})
+		},
+		onSignInError (error) {
+		// `error` contains any error occurred.
+		console.log('OH NOES', error)
 		}
-	}
+	},
 }
 </script>
 

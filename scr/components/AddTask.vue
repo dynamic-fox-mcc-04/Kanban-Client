@@ -60,7 +60,8 @@ export default {
                     token:localStorage.token
                 }
             })
-            .then(result=>{               
+            .then(result=>{        
+                io.connect(config.serverUrl).emit('msg');       
 				this.$emit('refreshData')
 				Vue.toasted.global.my_app_success({
                     message : 'Add Task Succes'
