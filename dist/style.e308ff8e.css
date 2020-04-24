@@ -1,0 +1,100 @@
+h2{
+    color: white;
+}
+
+/* PAGE 1 | KANBAN TASKS SECTION STARTS HERE */
+
+#kanban-tasks-section{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding:10px;
+    background-color: #0984e3;
+}
+
+/* SECTION 1 -- BACKLOG */
+
+#backlog-section{
+    background-color: #04a4ec;
+    padding:20px;
+    margin:0px 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-cards-backlog{
+    background-color: tan;
+    padding:5px;
+    margin: 10px;
+}
+
+/* SECTION 3 -- TODO */
+
+#todo-section{
+    background-color: #04a4ec;
+    padding:20px;
+    margin:0px 5px;
+}
+
+.task-cards-todo{
+    background-color: red;
+    padding:5px;
+}
+
+/* SECTION 3 -- DONE */
+
+#done-section{
+    background-color: #04a4ec;
+    padding:20px;
+    margin:0px 5px;
+}
+
+.task-cards-done{
+    background-color: red;
+    padding:5px;
+}
+
+/* SECTION 4 -- COMPLETED */
+
+#completed-section{
+    background-color: #04a4ec;
+    padding:20px;
+    margin:0px 5px;
+}
+
+.task-cards-completed{
+    background-color: red;
+    padding:5px;
+}
+
+
+/* CARD STYLING HERE */
+
+.sample-card{
+    background-color: wheat;
+    display:flex;
+    flex-direction: row;
+}
+
+.card-image-box{
+    background-color: cornflowerblue;
+}
+
+.card-description-box{
+    display:flex;
+    flex-direction: column;
+    padding:5px;
+}
+
+
+.cards-action-box {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+button{
+    margin: 5px;
+}
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */

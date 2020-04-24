@@ -65,7 +65,31 @@ var app = new Vue({
         console.log(error)
       })
     },
+    onSignIn(googleUser) {
+      let id_token = googleUser.getAuthResponse().id_token; //id token ini nanti akan kita kirimkan ke server
+      $.axios({
+          method: 'POST',
+          url: baseUrl + '/googleSign',
+          data: {
+            id_token
+          }
+      })
+      .done(data =>{
+        localStorage.setItem("token", data.access_token)
+        this.isLoggedIn = true
+        this.isMainPage = true
+        this.getTasks()
+      })
+      .fail(error => {
+        console.log(error, "error di main.js onSignIn")
+      })
+  
+  },
     logout(){
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
       localStorage.clear()
       this.isLoggedIn = false
     },
@@ -210,7 +234,6 @@ var app = new Vue({
         let displayDate = StringDate.toISOString().substring(0, 10)
         result.data.task.due_date = displayDate
         this.selectedTask = result.data.task
-
 
       })
       .catch(error => {
