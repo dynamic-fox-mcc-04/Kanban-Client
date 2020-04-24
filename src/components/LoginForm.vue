@@ -4,8 +4,8 @@
         <li v-for="error in errors" :key="error.id">
             {{  error.message }}
         </li>
-        
-        </div>
+    </div>
+    
         <div class="login-container" >
                 <div class="login-form">
                     <div class="left">
@@ -33,8 +33,6 @@
 <script>
 
  
-
-
 
 import axios from 'axios'
 

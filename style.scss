@@ -19,6 +19,13 @@ $cardColorHover : #ccd3d3;
     };
 }
 
+.loading {
+    height: 100vh;
+    width: 100vw;
+    // background-color: white;
+    opacity: 100%;
+}
+
 body {
     margin : 0;
     padding: 0;
@@ -34,9 +41,9 @@ lottie-player {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
-    
 
 }
+
 
 .msg {
     margin: 5px;
@@ -165,7 +172,7 @@ p {
 
 
 .content {
-    height: 100%;
+    height: 100vh;
     display:flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -181,6 +188,7 @@ p {
     padding: 2px;
     width: 240px;
     border-radius: 3px;
+    min-width: 250px;
 }
 
 .card-list-add {

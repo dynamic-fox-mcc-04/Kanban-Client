@@ -19769,7 +19769,110 @@ render._withStripped = true
       
       }
     })();
-},{"../components/LoginForm":"src/components/LoginForm.vue","../components/RegisterForm":"src/components/RegisterForm.vue","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/Dashboard.vue":[function(require,module,exports) {
+},{"../components/LoginForm":"src/components/LoginForm.vue","../components/RegisterForm":"src/components/RegisterForm.vue","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/Navbar.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: 'Navbar',
+  methods: {
+    logout: function logout() {
+      localStorage.clear();
+      this.$emit('loginStatus', false);
+    }
+  }
+};
+exports.default = _default;
+        var $f71b64 = exports.default || module.exports;
+      
+      if (typeof $f71b64 === 'function') {
+        $f71b64 = $f71b64.options;
+      }
+    
+        /* template */
+        Object.assign($f71b64, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "navbar" }, [
+      _c("div", { staticClass: "logo" }),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          attrs: { id: "logout-btn" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.logout($event)
+            }
+          }
+        },
+        [_c("b", [_vm._v("logout")])]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "kanban-title" }, [
+      _c("h4", [_vm._v("Papan mlebu")])
+    ])
+  }
+]
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$f71b64', $f71b64);
+          } else {
+            api.reload('$f71b64', $f71b64);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/Card.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -19864,8 +19967,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
-  name: 'Dashboard',
+  name: 'Card',
   data: function data() {
     return {
       data: {
@@ -19875,16 +19979,20 @@ var _default = {
       tasks: [],
       categories: [],
       isVisiblity: false,
-      selected: ''
+      selected: '',
+      isLoading: true,
+      isLoad: false
     };
   },
   methods: {
     updateCategory: function updateCategory(categoryId) {
       var _this = this;
 
+      this.isLoad = true;
       (0, _axios.default)({
         method: 'PUT',
-        url: 'https://kanban-ids.herokuapp.com/category/' + categoryId,
+        // url : 'https://kanban-ids.herokuapp.com/category/' + categoryId,
+        url: 'http://localhost:3000/category/' + categoryId,
         data: {
           name: this.data.name
         },
@@ -19904,9 +20012,11 @@ var _default = {
     deleteCategory: function deleteCategory(categoryId) {
       var _this2 = this;
 
+      this.isLoad = true;
       (0, _axios.default)({
         method: 'DELETE',
-        url: 'https://kanban-ids.herokuapp.com/category/' + categoryId,
+        // url : 'https://kanban-ids.herokuapp.com/category/' + categoryId,
+        url: 'http://localhost:3000/category/' + categoryId,
         headers: {
           access_token: localStorage.access_token
         }
@@ -19923,9 +20033,11 @@ var _default = {
     deleteTask: function deleteTask(taskId) {
       var _this3 = this;
 
+      this.isLoad = true;
       (0, _axios.default)({
         method: 'DELETE',
-        url: 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+        // url : 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+        url: 'http://localhost:3000/tasks/' + taskId,
         headers: {
           access_token: localStorage.access_token
         }
@@ -19942,10 +20054,13 @@ var _default = {
     updateTaskTitle: function updateTaskTitle(taskId, categoryId) {
       var _this4 = this;
 
+      this.isLoad = true;
+
       if (this.data.title) {
         (0, _axios.default)({
           method: 'PUT',
-          url: 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+          // url : 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+          url: 'http://localhost:3000/tasks/' + taskId,
           data: {
             title: this.data.title,
             CategoryId: categoryId
@@ -19968,11 +20083,13 @@ var _default = {
       var _this5 = this;
 
       this.toggleMove(idx);
+      this.isLoad = true;
 
       if (this.selected) {
         (0, _axios.default)({
           method: 'PATCH',
-          url: 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+          // url : 'https://kanban-ids.herokuapp.com/tasks/' + taskId,
+          url: 'http://localhost:3000/tasks/' + taskId,
           data: {
             CategoryId: this.selected
           },
@@ -19993,9 +20110,11 @@ var _default = {
     addCategory: function addCategory() {
       var _this6 = this;
 
+      this.isLoad = true;
       (0, _axios.default)({
         method: 'POST',
-        url: 'https://kanban-ids.herokuapp.com/category',
+        // url : 'https://kanban-ids.herokuapp.com/category',
+        url: 'http://localhost:3000/category',
         data: {
           name: this.data.name
         },
@@ -20016,7 +20135,8 @@ var _default = {
       if (this.data.title) {
         (0, _axios.default)({
           method: 'POST',
-          url: 'https://kanban-ids.herokuapp.com/tasks',
+          // url :'https://kanban-ids.herokuapp.com/tasks',
+          url: 'http://localhost:3000/tasks',
           data: {
             title: this.data.title,
             CategoryId: categoryId
@@ -20033,10 +20153,10 @@ var _default = {
         });
       }
     },
-    logout: function logout() {
-      localStorage.clear();
-      this.$emit('loginStatus', false);
-    },
+    // logout(){
+    //     localStorage.clear();
+    //     this.$emit('loginStatus', false)
+    // },
     toggleModal: function toggleModal() {
       if (this.isVisiblity) {
         this.isVisiblity = !this.isVisiblity;
@@ -20070,7 +20190,8 @@ var _default = {
 
       (0, _axios.default)({
         method: 'GET',
-        url: 'https://kanban-ids.herokuapp.com/category',
+        //    url : 'https://kanban-ids.herokuapp.com/category',
+        url: 'http://localhost:3000/category',
         headers: {
           access_token: localStorage.access_token
         }
@@ -20080,14 +20201,20 @@ var _default = {
           el.editable = false;
         });
         _this8.categories = result.data.categories;
-      }).then(function (err) {});
+      }).catch(function (err) {
+        console.log(err.response.data);
+      }).finally(function () {
+        _this8.isLoading = false;
+        _this8.isLoad = false;
+      });
     },
     getTasks: function getTasks() {
       var _this9 = this;
 
       (0, _axios.default)({
         method: 'GET',
-        url: 'https://kanban-ids.herokuapp.com/tasks',
+        //    url : 'https://kanban-ids.herokuapp.com/tasks',
+        url: 'http://localhost:3000/tasks',
         headers: {
           access_token: localStorage.access_token
         }
@@ -20097,8 +20224,9 @@ var _default = {
           el.editable = false;
         });
         _this9.tasks = result.data.tasks;
-      }).catch(function (err) {
-        console.log(err);
+      }).catch(function (err) {}).finally(function () {
+        _this9.isLoading = false;
+        _this9.isLoad = false;
       });
     },
     clearForm: function clearForm() {
@@ -20113,38 +20241,60 @@ var _default = {
   }
 };
 exports.default = _default;
-        var $fff802 = exports.default || module.exports;
+        var $316d1e = exports.default || module.exports;
       
-      if (typeof $fff802 === 'function') {
-        $fff802 = $fff802.options;
+      if (typeof $316d1e === 'function') {
+        $316d1e = $316d1e.options;
       }
     
         /* template */
-        Object.assign($fff802, (function () {
+        Object.assign($316d1e, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "navbar" }, [
-      _c("div", { staticClass: "logo" }),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          attrs: { id: "logout-btn" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.logout($event)
-            }
-          }
-        },
-        [_c("b", [_vm._v("logout")])]
-      )
-    ]),
+  return _c("div", [
+    _vm.isLoading
+      ? _c(
+          "div",
+          { staticClass: "loading" },
+          [
+            _c("lottie-player", {
+              staticStyle: { width: "300px", height: "300px" },
+              attrs: {
+                src:
+                  "https://assets10.lottiefiles.com/packages/lf20_jIuMBG.json",
+                background: "transparent",
+                speed: "1",
+                loop: "",
+                autoplay: ""
+              }
+            })
+          ],
+          1
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.isLoad
+      ? _c(
+          "div",
+          { staticClass: "loading" },
+          [
+            _c("lottie-player", {
+              staticStyle: { width: "300px", height: "300px" },
+              attrs: {
+                src:
+                  "https://assets8.lottiefiles.com/packages/lf20_FRN4R4.json",
+                background: "transparent",
+                speed: "1",
+                loop: "",
+                autoplay: ""
+              }
+            })
+          ],
+          1
+        )
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -20224,7 +20374,7 @@ exports.default = _default;
                       ? _c("div", { staticClass: "card-content" }, [
                           _c("ul", [
                             _c("li", [
-                              _vm._m(1, true),
+                              _vm._m(0, true),
                               _vm._v(" "),
                               _c("ul", { staticClass: "dropdown" }, [
                                 _c("li", [
@@ -20632,19 +20782,118 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "kanban-title" }, [
-      _c("h4", [_vm._v("Papan mlebu")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("a", { attrs: { href: "#" } }, [
       _c("i", { staticClass: "fas fa-ellipsis-v" })
     ])
   }
 ]
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$316d1e', $316d1e);
+          } else {
+            api.reload('$316d1e', $316d1e);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/Dashboard.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Navbar = _interopRequireDefault(require("../components/Navbar.vue"));
+
+var _Card = _interopRequireDefault(require("../components/Card.vue"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: 'Dashboard',
+  components: {
+    Navbar: _Navbar.default,
+    Card: _Card.default
+  },
+  data: function data() {
+    return {
+      isLoading: true
+    };
+  },
+  methods: {
+    loginStatus: function loginStatus(e) {
+      this.$emit('loginStatus', e);
+    },
+    loadingStatus: function loadingStatus(e) {
+      this.isLoading = e;
+    }
+  }
+};
+exports.default = _default;
+        var $fff802 = exports.default || module.exports;
+      
+      if (typeof $fff802 === 'function') {
+        $fff802 = $fff802.options;
+      }
+    
+        /* template */
+        Object.assign($fff802, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("Navbar", { on: { loginStatus: _vm.loginStatus } }),
+        _vm._v(" "),
+        _c("Card")
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
           return {
@@ -20677,7 +20926,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"../components/Navbar.vue":"src/components/Navbar.vue","../components/Card.vue":"src/components/Card.vue","_css_loader":"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20825,7 +21074,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55613" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50889" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
