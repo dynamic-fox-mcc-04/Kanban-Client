@@ -1,0 +1,59 @@
+{
+"tasks": [
+    {
+    "id": 4,
+    "title": "Code OAuth Facebook AND Google login process",
+    "category": "backlog",
+    "tags": "coding",
+    "description": "Check documentation and use process code",
+    "due_date": "2020-08-07T17:00:00.000Z",
+    "UserId": 1,
+    "createdAt": "2020-04-08T01:51:34.201Z",
+    "updatedAt": "2020-04-09T15:10:06.235Z"
+    },
+    {
+    "id": 5,
+    "title": "Code an additional 3rd Party API",
+    "category": "backlog",
+    "tags": "coding",
+    "description": "Check for an Avatar API",
+    "due_date": "2020-07-06T17:00:00.000Z",
+    "UserId": 1,
+    "createdAt": "2020-04-08T01:53:15.913Z",
+    "updatedAt": "2020-04-09T15:12:08.851Z"
+    },
+    {
+    "id": 9,
+    "title": "Review how Vue works",
+    "category": "done",
+    "tags": "Coding",
+    "description": "Re-watch Wednesday lecture and recap",
+    "due_date": "2020-07-06T17:00:00.000Z",
+    "UserId": 1,
+    "createdAt": "2020-04-09T14:54:22.261Z",
+    "updatedAt": "2020-04-09T15:13:05.274Z"
+    },
+    {
+    "id": 10,
+    "title": "Review Vue Component lecture",
+    "category": "completed",
+    "tags": "Coding",
+    "description": "Re-watch Thursday lecture and recap",
+    "due_date": "2020-07-06T17:00:00.000Z",
+    "UserId": 1,
+    "createdAt": "2020-04-09T15:11:32.492Z",
+    "updatedAt": "2020-04-09T15:11:32.492Z"
+    },
+    {
+    "id": 11,
+    "title": "Collect gifts for girlfriend's birthday",
+    "category": "todo",
+    "tags": "relationship",
+    "description": "Browse Tokoped for gifts",
+    "due_date": "2020-07-06T17:00:00.000Z",
+    "UserId": 1,
+    "createdAt": "2020-04-09T15:14:23.867Z",
+    "updatedAt": "2020-04-09T15:14:23.867Z"
+    }
+]
+}
