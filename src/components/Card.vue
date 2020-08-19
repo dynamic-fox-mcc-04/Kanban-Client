@@ -1,5 +1,5 @@
 <template>
-    <div class="card hoverable" style="width: 95%; margin-bottom: 15%;">
+    <div class="card hoverable item">
       <div class="card-body hoverable">
         <form v-if="showEdit" class="form-group" id="add-task">
             <p> <b>Edit Task:</b> </p>
@@ -81,5 +81,18 @@ export default {
 </script>
 
 <style>
-
+  .item {
+    width: 95%;
+    margin-bottom: 15px;
+  }
+  @media only screen and (min-width: 600px) {
+    .item {
+      width: 75%;
+    }
+  }
+  @media only screen and (min-width: 900px) {
+    .item {
+      width: 95%;
+    }
+  }
 </style>

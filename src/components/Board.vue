@@ -25,7 +25,7 @@
     </nav>
     <!-- End of navbar -->
     <div v-if="!isLoading" class="board">
-      <div class="row margin-large">
+      <div class="row flex-middle padding-left padding-right margin kanboard">
         <Column v-for="cat in categories" :key="cat.cat" :category="cat" :tasks="tasks"
         @add-task="addTask" @destroy="destroy" @modify="modify"></Column>
       </div>
@@ -83,7 +83,17 @@ export default {
 </script>
 
 <style>
+  .board {
+    overflow: auto !important;
+  }
   .loading-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 95vh;
+    width: 100vw;
+    margin: auto;
     text-align: center;
   }
 </style>

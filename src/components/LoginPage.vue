@@ -9,7 +9,7 @@
         <button v-on:click.prevent="login">Login</button>
       </form>
       <div>
-        <p>Don't have an account? Register <a class="link" href="" v-on:click.prevent="toRegister">Here.</a></p>
+        <p>Click <a class="link" href="" v-on:click.prevent="toRegister">here</a> to register.</p>
       </div>
     </div>
     <div v-else id="register-form">

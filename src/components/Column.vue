@@ -1,5 +1,5 @@
 <template>
-        <div class="card col-3 col padding-none cat" style="width: 20rem;">
+        <div class="card padding-none align-middle cat">
           <div class="card-header">{{ category.cat }}</div>
             <div class="card-body column-bod">
               <Card v-for="task in selector" :key="task.id" :task="task"
@@ -13,7 +13,7 @@
                 <button v-on:click.prevent="addTask">Add</button>
                 <button v-on:click.prevent="hideForm">close</button>
             </form>
-            <button v-on:click="summonForm">Add Task</button></div>
+            <button class="margin-none" v-on:click="summonForm">Add Task</button></div>
         </div>
 </template>
 
@@ -72,5 +72,36 @@ export default {
 </script>
 
 <style>
-
+  .cat {
+    margin: 5px;
+    margin-top: 10%;
+    width: 100% !important;
+    min-height: 15cm;
+  }
+  @media only screen and (min-width: 600px) {
+    .cat {
+      margin-top: 7%;
+      width: 100% !important;
+    }
+    .column-bod {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  @media only screen and (min-width: 900px) {
+    .cat {
+      margin-top: 5%;
+      width: 45% !important;
+    }
+    .column-bod {
+      display: inline;
+    }
+  }
+  @media only screen and (min-width: 1280px) {
+    .cat {
+      margin-top: 2%;
+      width: 9cm !important;
+    }
+  }
 </style>
